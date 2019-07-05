@@ -28,137 +28,153 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.panel1.SuspendLayout();
+            this.chooseFileLabel = new System.Windows.Forms.Label();
+            this.chooseFormButton = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
+            this.startButton = new System.Windows.Forms.Button();
+            this.chooseSavePathButton = new System.Windows.Forms.Button();
+            this.savePathTextBox = new System.Windows.Forms.TextBox();
+            this.testSettingsPanel = new System.Windows.Forms.Panel();
+            this.questionScoreLabel = new System.Windows.Forms.Label();
+            this.questionScoreTextBox = new System.Windows.Forms.TextBox();
+            this.allowOverallNegativeScoreCheckBox = new System.Windows.Forms.CheckBox();
+            this.enableNegativeMarkingCheckBox = new System.Windows.Forms.CheckBox();
+            this.chosenFormFilenameLabel = new System.Windows.Forms.Label();
+            this.testSettingsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
+            // chooseFileLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(121, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Choose a question form:";
+            this.chooseFileLabel.AutoSize = true;
+            this.chooseFileLabel.Location = new System.Drawing.Point(13, 13);
+            this.chooseFileLabel.Name = "chooseFileLabel";
+            this.chooseFileLabel.Size = new System.Drawing.Size(121, 13);
+            this.chooseFileLabel.TabIndex = 0;
+            this.chooseFileLabel.Text = "Choose a question form:";
             // 
-            // button1
+            // chooseFormButton
             // 
-            this.button1.Location = new System.Drawing.Point(13, 30);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(121, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Choose";
-            this.button1.UseVisualStyleBackColor = true;
+            this.chooseFormButton.Location = new System.Drawing.Point(13, 30);
+            this.chooseFormButton.Name = "chooseFormButton";
+            this.chooseFormButton.Size = new System.Drawing.Size(121, 23);
+            this.chooseFormButton.TabIndex = 1;
+            this.chooseFormButton.Text = "Choose";
+            this.chooseFormButton.UseVisualStyleBackColor = true;
+            this.chooseFormButton.Click += new System.EventHandler(this.chooseFormButton_Click);
             // 
-            // button2
+            // cancelButton
             // 
-            this.button2.Location = new System.Drawing.Point(390, 285);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Cancel";
-            this.button2.UseVisualStyleBackColor = true;
+            this.cancelButton.Location = new System.Drawing.Point(390, 285);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(75, 23);
+            this.cancelButton.TabIndex = 2;
+            this.cancelButton.Text = "Cancel";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
-            // button3
+            // startButton
             // 
-            this.button3.Location = new System.Drawing.Point(309, 285);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "Start";
-            this.button3.UseVisualStyleBackColor = true;
+            this.startButton.Location = new System.Drawing.Point(309, 285);
+            this.startButton.Name = "startButton";
+            this.startButton.Size = new System.Drawing.Size(75, 23);
+            this.startButton.TabIndex = 3;
+            this.startButton.Text = "Start";
+            this.startButton.UseVisualStyleBackColor = true;
+            this.startButton.Click += new System.EventHandler(this.startButton_Click);
             // 
-            // button4
+            // chooseSavePathButton
             // 
-            this.button4.Location = new System.Drawing.Point(13, 285);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "Choose";
-            this.button4.UseVisualStyleBackColor = true;
+            this.chooseSavePathButton.Location = new System.Drawing.Point(13, 285);
+            this.chooseSavePathButton.Name = "chooseSavePathButton";
+            this.chooseSavePathButton.Size = new System.Drawing.Size(75, 23);
+            this.chooseSavePathButton.TabIndex = 4;
+            this.chooseSavePathButton.Text = "Choose";
+            this.chooseSavePathButton.UseVisualStyleBackColor = true;
+            this.chooseSavePathButton.Click += new System.EventHandler(this.chooseSavePathButton_Click);
             // 
-            // textBox1
+            // savePathTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(94, 287);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(199, 20);
-            this.textBox1.TabIndex = 5;
+            this.savePathTextBox.Location = new System.Drawing.Point(94, 287);
+            this.savePathTextBox.Name = "savePathTextBox";
+            this.savePathTextBox.ReadOnly = true;
+            this.savePathTextBox.Size = new System.Drawing.Size(199, 20);
+            this.savePathTextBox.TabIndex = 5;
             // 
-            // panel1
+            // testSettingsPanel
             // 
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.textBox2);
-            this.panel1.Controls.Add(this.checkBox2);
-            this.panel1.Controls.Add(this.checkBox1);
-            this.panel1.Location = new System.Drawing.Point(16, 73);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(231, 173);
-            this.panel1.TabIndex = 6;
+            this.testSettingsPanel.Controls.Add(this.questionScoreLabel);
+            this.testSettingsPanel.Controls.Add(this.questionScoreTextBox);
+            this.testSettingsPanel.Controls.Add(this.allowOverallNegativeScoreCheckBox);
+            this.testSettingsPanel.Controls.Add(this.enableNegativeMarkingCheckBox);
+            this.testSettingsPanel.Location = new System.Drawing.Point(16, 73);
+            this.testSettingsPanel.Name = "testSettingsPanel";
+            this.testSettingsPanel.Size = new System.Drawing.Size(231, 173);
+            this.testSettingsPanel.TabIndex = 6;
             // 
-            // checkBox1
+            // questionScoreLabel
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(12, 13);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(146, 17);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Enable Negative Marking";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.questionScoreLabel.AutoSize = true;
+            this.questionScoreLabel.Cursor = System.Windows.Forms.Cursors.SizeAll;
+            this.questionScoreLabel.Location = new System.Drawing.Point(43, 64);
+            this.questionScoreLabel.Name = "questionScoreLabel";
+            this.questionScoreLabel.Size = new System.Drawing.Size(182, 13);
+            this.questionScoreLabel.TabIndex = 3;
+            this.questionScoreLabel.Text = "Score For Each Question (default 10)";
             // 
-            // checkBox2
+            // questionScoreTextBox
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(12, 37);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(164, 17);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Allow Overall Negative Score";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.questionScoreTextBox.Location = new System.Drawing.Point(12, 61);
+            this.questionScoreTextBox.Name = "questionScoreTextBox";
+            this.questionScoreTextBox.Size = new System.Drawing.Size(25, 20);
+            this.questionScoreTextBox.TabIndex = 2;
+            this.questionScoreTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.questionScoreTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.questionScoreTextBox_KeyPress);
             // 
-            // textBox2
+            // allowOverallNegativeScoreCheckBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(12, 61);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(25, 20);
-            this.textBox2.TabIndex = 2;
+            this.allowOverallNegativeScoreCheckBox.AutoSize = true;
+            this.allowOverallNegativeScoreCheckBox.Location = new System.Drawing.Point(12, 37);
+            this.allowOverallNegativeScoreCheckBox.Name = "allowOverallNegativeScoreCheckBox";
+            this.allowOverallNegativeScoreCheckBox.Size = new System.Drawing.Size(164, 17);
+            this.allowOverallNegativeScoreCheckBox.TabIndex = 1;
+            this.allowOverallNegativeScoreCheckBox.Text = "Allow Overall Negative Score";
+            this.allowOverallNegativeScoreCheckBox.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // enableNegativeMarkingCheckBox
             // 
-            this.label2.AutoSize = true;
-            this.label2.Cursor = System.Windows.Forms.Cursors.SizeAll;
-            this.label2.Location = new System.Drawing.Point(43, 64);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(182, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Score For Each Question (default 10)";
+            this.enableNegativeMarkingCheckBox.AutoSize = true;
+            this.enableNegativeMarkingCheckBox.Location = new System.Drawing.Point(12, 13);
+            this.enableNegativeMarkingCheckBox.Name = "enableNegativeMarkingCheckBox";
+            this.enableNegativeMarkingCheckBox.Size = new System.Drawing.Size(146, 17);
+            this.enableNegativeMarkingCheckBox.TabIndex = 0;
+            this.enableNegativeMarkingCheckBox.Text = "Enable Negative Marking";
+            this.enableNegativeMarkingCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // chosenFormFilenameLabel
+            // 
+            this.chosenFormFilenameLabel.AutoSize = true;
+            this.chosenFormFilenameLabel.Location = new System.Drawing.Point(140, 35);
+            this.chosenFormFilenameLabel.Name = "chosenFormFilenameLabel";
+            this.chosenFormFilenameLabel.Size = new System.Drawing.Size(0, 13);
+            this.chosenFormFilenameLabel.TabIndex = 7;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(477, 320);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.chosenFormFilenameLabel);
+            this.Controls.Add(this.testSettingsPanel);
+            this.Controls.Add(this.savePathTextBox);
+            this.Controls.Add(this.chooseSavePathButton);
+            this.Controls.Add(this.startButton);
+            this.Controls.Add(this.cancelButton);
+            this.Controls.Add(this.chooseFormButton);
+            this.Controls.Add(this.chooseFileLabel);
             this.Name = "Form1";
             this.Text = "Blackboard Test Creator";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.testSettingsPanel.ResumeLayout(false);
+            this.testSettingsPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -166,17 +182,18 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label chooseFileLabel;
+        private System.Windows.Forms.Button chooseFormButton;
+        private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.Button startButton;
+        private System.Windows.Forms.Button chooseSavePathButton;
+        private System.Windows.Forms.TextBox savePathTextBox;
+        private System.Windows.Forms.Panel testSettingsPanel;
+        private System.Windows.Forms.Label questionScoreLabel;
+        private System.Windows.Forms.TextBox questionScoreTextBox;
+        private System.Windows.Forms.CheckBox allowOverallNegativeScoreCheckBox;
+        private System.Windows.Forms.CheckBox enableNegativeMarkingCheckBox;
+        private System.Windows.Forms.Label chosenFormFilenameLabel;
     }
 }
 

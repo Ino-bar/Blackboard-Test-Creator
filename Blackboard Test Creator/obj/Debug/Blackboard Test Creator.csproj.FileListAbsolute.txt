@@ -1,0 +1,10 @@
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Debug\Blackboard Test Creator.exe.config
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Debug\Blackboard Test Creator.exe
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Debug\Blackboard Test Creator.pdb
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debug\Blackboard Test Creator.csprojAssemblyReference.cache
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debug\Blackboard_Test_Creator.Form1.resources
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debug\Blackboard_Test_Creator.Properties.Resources.resources
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debug\Blackboard Test Creator.csproj.GenerateResource.cache
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debug\Blackboard Test Creator.csproj.CoreCompileInputs.cache
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debug\Blackboard Test Creator.exe
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debug\Blackboard Test Creator.pdb
