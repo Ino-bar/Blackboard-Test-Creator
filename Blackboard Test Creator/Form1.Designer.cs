@@ -173,6 +173,7 @@
             this.Controls.Add(this.chooseFileLabel);
             this.Name = "Form1";
             this.Text = "Blackboard Test Creator";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.testSettingsPanel.ResumeLayout(false);
             this.testSettingsPanel.PerformLayout();
             this.ResumeLayout(false);

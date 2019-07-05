@@ -13,7 +13,7 @@ namespace Blackboard_Test_Creator
 {
     public partial class Form1 : Form
     {
-        public string TestFormFilePath;
+        public static string TestFormFilePath;
         public static string TestFilePath;
         public Form1()
         {
@@ -33,11 +33,18 @@ namespace Blackboard_Test_Creator
                     TestFormFilePath = getTestForm.FileName;
                     chosenFormFilenameLabel.Text = getTestForm.FileName;
                 }
+                QuestionFormLoader questionFormLoader = new QuestionFormLoader();
+                questionFormLoader.FormLoader();
             }
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
+            if (QuestionFormLoader.Form != null)
+            {
+                QuestionFormLoader.Form.Close();
+                QuestionFormLoader.wordApp.Quit();
+            }
             this.Close();
         }
 
@@ -74,6 +81,15 @@ namespace Blackboard_Test_Creator
             for(int i = 1; i < methods.Count(); i++)
             {
                 methods[i].Invoke(testCreator, null);
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (QuestionFormLoader.Form != null)
+            {
+                QuestionFormLoader.Form.Close();
+                QuestionFormLoader.wordApp.Quit();
             }
         }
     }
