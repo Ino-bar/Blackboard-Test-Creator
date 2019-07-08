@@ -43,6 +43,7 @@ namespace Blackboard_Test_Creator
             if (QuestionFormLoader.Form != null)
             {
                 QuestionFormLoader.Form.Close();
+                QuestionFormLoader.wordprocessingDocument.Close();
                 QuestionFormLoader.wordApp.Quit();
             }
             this.Close();
@@ -89,6 +90,7 @@ namespace Blackboard_Test_Creator
             if (QuestionFormLoader.Form != null)
             {
                 QuestionFormLoader.Form.Close();
+                QuestionFormLoader.wordprocessingDocument.Close();
                 QuestionFormLoader.wordApp.Quit();
             }
         }
