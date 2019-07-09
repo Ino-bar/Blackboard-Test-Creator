@@ -29,6 +29,7 @@ namespace Blackboard_Test_Creator
         public static Word.Document Form;
         public static WordprocessingDocument wordprocessingDocument;
         public static XmlDocument XMLForm = new XmlDocument();
+        List<OpenXmlElement> contentBlockParts;
         public void FormLoader()
         {
             if (formPath != null)
@@ -39,12 +40,40 @@ namespace Blackboard_Test_Creator
                 Stream stream = File.Open(formPath, FileMode.Open);
                 wordprocessingDocument = WordprocessingDocument.Open(stream, true);
                 List<OpenXmlElement> documentParts = new List<OpenXmlElement>();
-                
+                //List<OpenXmlElement> contentBlockParts = new List<OpenXmlElement>();
                 documentParts = wordprocessingDocument.MainDocumentPart.Document.Body.Descendants().ToList();
+
                 foreach (OpenXmlElement part in documentParts)
                 {
-                    documentParts.Add(part);
-                    Debug.WriteLine(part);
+                    var partType = part.GetType().ToString();
+                    if(partType == "DocumentFormat.OpenXml.Wordprocessing.SdtContentBlock")
+                    {
+                        var part1stchild = part.FirstChild.FirstChild.FirstChild;
+                        Debug.WriteLine(part1stchild);
+                        if(part1stchild.ToString() == "DocumentFormat.OpenXml.Wordprocessing.Tag")
+                        {
+                            Debug.WriteLine("1st child is a tag");
+                        }
+                        /*
+                        if (part.GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.SdtBlock>().GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.SdtProperties>().GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.Tag>().ToString() != null)
+                        {
+                            var questionBlock = part.GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.SdtBlock>().GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.SdtProperties>().GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.Tag>();
+                            Debug.WriteLine(questionBlock);
+                        }
+                        */
+                        /*
+                        if (questionBlock.ToString() == "DocumentFormat.OpenXml.Wordprocessing.Tag" && questionBlock != null)
+                        {
+                            contentBlockParts = new List<OpenXmlElement>();
+                            contentBlockParts = part.ChildElements.ToList();
+                            foreach (OpenXmlElement openXmlElement in contentBlockParts)
+                            {
+                                Debug.WriteLine(openXmlElement);
+                            }
+                        }
+                        */
+                    }
+                    //Debug.WriteLine(part);
                 }
             }
         }
