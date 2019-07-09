@@ -38,9 +38,10 @@ namespace Blackboard_Test_Creator
                 //Debug.WriteLine(content);
                 Stream stream = File.Open(formPath, FileMode.Open);
                 wordprocessingDocument = WordprocessingDocument.Open(stream, true);
-                List<DataPart> documentParts = new List<DataPart>();
-                documentParts = wordprocessingDocument.DataParts.ToList();
-                foreach (DataPart part in documentParts)
+                List<OpenXmlElement> documentParts = new List<OpenXmlElement>();
+                
+                documentParts = wordprocessingDocument.MainDocumentPart.Document.Body.Descendants().ToList();
+                foreach (OpenXmlElement part in documentParts)
                 {
                     documentParts.Add(part);
                     Debug.WriteLine(part);
