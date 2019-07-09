@@ -30,29 +30,46 @@ namespace Blackboard_Test_Creator
         public static WordprocessingDocument wordprocessingDocument;
         public static XmlDocument XMLForm = new XmlDocument();
         List<OpenXmlElement> contentBlockParts;
+        OpenXmlElement part2ndchild;
+        OpenXmlElement part3rdchild;
         public void FormLoader()
         {
             if (formPath != null)
             {
                 //Form = wordApp.Documents.Open(formPath);
                 //string content = GetWordDocumentContent(formPath);
-                //Debug.WriteLine(content);
                 Stream stream = File.Open(formPath, FileMode.Open);
                 wordprocessingDocument = WordprocessingDocument.Open(stream, true);
                 List<OpenXmlElement> documentParts = new List<OpenXmlElement>();
+                List<DocumentFormat.OpenXml.OpenXmlAttribute> partAttributes = new List<OpenXmlAttribute>();
                 //List<OpenXmlElement> contentBlockParts = new List<OpenXmlElement>();
                 documentParts = wordprocessingDocument.MainDocumentPart.Document.Body.Descendants().ToList();
-
                 foreach (OpenXmlElement part in documentParts)
                 {
+                    if(part.HasAttributes)
+                    {
+                        foreach (OpenXmlAttribute xmlAttribute in part.GetAttributes())
+                        {
+                            partAttributes.Add(xmlAttribute);
+                            if(xmlAttribute.Value == "Container")
+                            {
+                                Debug.WriteLine("container part");
+                            }
+                        }
+                    }
                     var partType = part.GetType().ToString();
                     if(partType == "DocumentFormat.OpenXml.Wordprocessing.SdtContentBlock")
                     {
-                        var part1stchild = part.FirstChild.FirstChild.FirstChild;
-                        Debug.WriteLine(part1stchild);
-                        if(part1stchild.ToString() == "DocumentFormat.OpenXml.Wordprocessing.Tag")
+                        var part1stchild = part.FirstChild;
+                        if (part1stchild.HasChildren) {part2ndchild = part1stchild.FirstChild;}
+                        if (part2ndchild.HasChildren) { part3rdchild = part2ndchild.FirstChild; }
+                        if(part3rdchild.ToString() == "DocumentFormat.OpenXml.Wordprocessing.Tag")
                         {
-                            Debug.WriteLine("1st child is a tag");
+                            contentBlockParts = new List<OpenXmlElement>();
+                            contentBlockParts = part.Descendants().ToList();
+                            foreach (OpenXmlElement openXmlElement in contentBlockParts)
+                            {
+                            }
                         }
                         /*
                         if (part.GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.SdtBlock>().GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.SdtProperties>().GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.Tag>().ToString() != null)
