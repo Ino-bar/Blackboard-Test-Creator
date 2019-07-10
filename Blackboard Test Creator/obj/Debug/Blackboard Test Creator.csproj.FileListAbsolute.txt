@@ -22,3 +22,7 @@ C:\Users\jdunbar\Github\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debu
 C:\Users\jdunbar\Github\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debug\Blackboard Test Creator.exe
 C:\Users\jdunbar\Github\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debug\Blackboard Test Creator.pdb
 C:\Users\jdunbar\Github\Blackboard-Test-Creator\Blackboard Test Creator\bin\Debug\WindowsBase.dll
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Debug\DocumentFormat.OpenXml.dll
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Debug\WindowsBase.dll
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Debug\DocumentFormat.OpenXml.xml
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debug\Blackboard Test Creator.csproj.CopyComplete

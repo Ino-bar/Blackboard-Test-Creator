@@ -22,6 +22,12 @@ using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Blackboard_Test_Creator
 {
+    public class Question
+    {
+        public OpenXmlElement QuestionItem { get; set; }
+        public int QuestionNumber { get; set; }
+        public List<DocumentFormat.OpenXml.Wordprocessing.Text> QuestionTextElements { get; set; }
+    }
     class QuestionFormLoader
     {
         public string formPath = Form1.TestFormFilePath;
@@ -29,9 +35,10 @@ namespace Blackboard_Test_Creator
         public static Word.Document Form;
         public static WordprocessingDocument wordprocessingDocument;
         public static XmlDocument XMLForm = new XmlDocument();
-        List<OpenXmlElement> contentBlockParts;
-        OpenXmlElement part2ndchild;
-        OpenXmlElement part3rdchild;
+        List<DocumentFormat.OpenXml.Wordprocessing.Text> contentBlockParts;
+        //OpenXmlElement part2ndchild;
+        //OpenXmlElement part3rdchild;
+        List<OpenXmlElement> containerPart = new List<OpenXmlElement>();
         public void FormLoader()
         {
             if (formPath != null)
@@ -42,7 +49,6 @@ namespace Blackboard_Test_Creator
                 wordprocessingDocument = WordprocessingDocument.Open(stream, true);
                 List<OpenXmlElement> documentParts = new List<OpenXmlElement>();
                 List<DocumentFormat.OpenXml.OpenXmlAttribute> partAttributes = new List<OpenXmlAttribute>();
-                //List<OpenXmlElement> contentBlockParts = new List<OpenXmlElement>();
                 documentParts = wordprocessingDocument.MainDocumentPart.Document.Body.Descendants().ToList();
                 foreach (OpenXmlElement part in documentParts)
                 {
@@ -50,13 +56,15 @@ namespace Blackboard_Test_Creator
                     {
                         foreach (OpenXmlAttribute xmlAttribute in part.GetAttributes())
                         {
-                            partAttributes.Add(xmlAttribute);
                             if(xmlAttribute.Value == "Container")
                             {
                                 Debug.WriteLine("container part");
+                                Debug.WriteLine(part.Ancestors<DocumentFormat.OpenXml.Wordprocessing.SdtBlock>().First().InnerText);
+                                containerPart.Add(part.Ancestors<DocumentFormat.OpenXml.Wordprocessing.SdtBlock>().First());
                             }
                         }
                     }
+                    /*
                     var partType = part.GetType().ToString();
                     if(partType == "DocumentFormat.OpenXml.Wordprocessing.SdtContentBlock")
                     {
@@ -71,26 +79,39 @@ namespace Blackboard_Test_Creator
                             {
                             }
                         }
-                        /*
-                        if (part.GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.SdtBlock>().GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.SdtProperties>().GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.Tag>().ToString() != null)
-                        {
-                            var questionBlock = part.GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.SdtBlock>().GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.SdtProperties>().GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.Tag>();
-                            Debug.WriteLine(questionBlock);
-                        }
                         */
-                        /*
-                        if (questionBlock.ToString() == "DocumentFormat.OpenXml.Wordprocessing.Tag" && questionBlock != null)
-                        {
-                            contentBlockParts = new List<OpenXmlElement>();
-                            contentBlockParts = part.ChildElements.ToList();
-                            foreach (OpenXmlElement openXmlElement in contentBlockParts)
-                            {
-                                Debug.WriteLine(openXmlElement);
-                            }
-                        }
-                        */
+                    /*
+                    if (part.GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.SdtBlock>().GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.SdtProperties>().GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.Tag>().ToString() != null)
+                    {
+                        var questionBlock = part.GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.SdtBlock>().GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.SdtProperties>().GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.Tag>();
+                        Debug.WriteLine(questionBlock);
                     }
+                    */
+                    /*
+                    if (questionBlock.ToString() == "DocumentFormat.OpenXml.Wordprocessing.Tag" && questionBlock != null)
+                    {
+                        contentBlockParts = new List<OpenXmlElement>();
+                        contentBlockParts = part.ChildElements.ToList();
+                        foreach (OpenXmlElement openXmlElement in contentBlockParts)
+                        {
+                            Debug.WriteLine(openXmlElement);
+                        }
+                    }
+
+                }
+                */
                     //Debug.WriteLine(part);
+                }
+                foreach(OpenXmlElement containerpart in containerPart)
+                {
+                    Question NewQuestion = new Question();
+                    NewQuestion.QuestionItem = containerpart;
+                    NewQuestion.QuestionTextElements = new List<Text>();
+                    NewQuestion.QuestionTextElements = containerpart.Descendants<DocumentFormat.OpenXml.Wordprocessing.Text>().ToList();
+                    foreach (Text text in NewQuestion.QuestionTextElements)
+                    {
+                        Debug.WriteLine(text.InnerText);
+                    }
                 }
             }
         }
