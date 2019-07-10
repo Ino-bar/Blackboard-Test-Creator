@@ -25,8 +25,9 @@ namespace Blackboard_Test_Creator
     public class Question
     {
         public OpenXmlElement QuestionItem { get; set; }
-        public int QuestionNumber { get; set; }
+        public OpenXmlElement QuestionNumber { get; set; }
         public List<DocumentFormat.OpenXml.Wordprocessing.Text> QuestionTextElements { get; set; }
+        public List<OpenXmlElement> AnswerParts { get; set; }
     }
     class QuestionFormLoader
     {
@@ -35,9 +36,8 @@ namespace Blackboard_Test_Creator
         public static Word.Document Form;
         public static WordprocessingDocument wordprocessingDocument;
         public static XmlDocument XMLForm = new XmlDocument();
-        List<DocumentFormat.OpenXml.Wordprocessing.Text> contentBlockParts;
-        //OpenXmlElement part2ndchild;
-        //OpenXmlElement part3rdchild;
+        public static List<Question> questionList = new List<Question>();
+        public static List<OpenXmlElement> questionPart = new List<OpenXmlElement>();
         List<OpenXmlElement> containerPart = new List<OpenXmlElement>();
         public void FormLoader()
         {
@@ -52,66 +52,48 @@ namespace Blackboard_Test_Creator
                 documentParts = wordprocessingDocument.MainDocumentPart.Document.Body.Descendants().ToList();
                 foreach (OpenXmlElement part in documentParts)
                 {
-                    if(part.HasAttributes)
+                    if (part.HasAttributes)
                     {
                         foreach (OpenXmlAttribute xmlAttribute in part.GetAttributes())
                         {
                             if(xmlAttribute.Value == "Container")
                             {
-                                Debug.WriteLine("container part");
-                                Debug.WriteLine(part.Ancestors<DocumentFormat.OpenXml.Wordprocessing.SdtBlock>().First().InnerText);
-                                containerPart.Add(part.Ancestors<DocumentFormat.OpenXml.Wordprocessing.SdtBlock>().First());
+                                containerPart.Add(part.Ancestors<DocumentFormat.OpenXml.Wordprocessing.SdtContentBlock>().First());
                             }
-                        }
-                    }
-                    /*
-                    var partType = part.GetType().ToString();
-                    if(partType == "DocumentFormat.OpenXml.Wordprocessing.SdtContentBlock")
-                    {
-                        var part1stchild = part.FirstChild;
-                        if (part1stchild.HasChildren) {part2ndchild = part1stchild.FirstChild;}
-                        if (part2ndchild.HasChildren) { part3rdchild = part2ndchild.FirstChild; }
-                        if(part3rdchild.ToString() == "DocumentFormat.OpenXml.Wordprocessing.Tag")
-                        {
-                            contentBlockParts = new List<OpenXmlElement>();
-                            contentBlockParts = part.Descendants().ToList();
-                            foreach (OpenXmlElement openXmlElement in contentBlockParts)
+                            else if(xmlAttribute.Value == "question")
                             {
+                                questionPart.Add(part.Parent.Parent);
                             }
                         }
-                        */
-                    /*
-                    if (part.GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.SdtBlock>().GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.SdtProperties>().GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.Tag>().ToString() != null)
-                    {
-                        var questionBlock = part.GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.SdtBlock>().GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.SdtProperties>().GetFirstChild<DocumentFormat.OpenXml.Wordprocessing.Tag>();
-                        Debug.WriteLine(questionBlock);
                     }
-                    */
-                    /*
-                    if (questionBlock.ToString() == "DocumentFormat.OpenXml.Wordprocessing.Tag" && questionBlock != null)
-                    {
-                        contentBlockParts = new List<OpenXmlElement>();
-                        contentBlockParts = part.ChildElements.ToList();
-                        foreach (OpenXmlElement openXmlElement in contentBlockParts)
-                        {
-                            Debug.WriteLine(openXmlElement);
-                        }
-                    }
-
                 }
-                */
-                    //Debug.WriteLine(part);
-                }
+                var i = 0;
                 foreach(OpenXmlElement containerpart in containerPart)
                 {
                     Question NewQuestion = new Question();
+                    questionList.Add(NewQuestion);
+                    NewQuestion.AnswerParts = new List<OpenXmlElement>();
+                    NewQuestion.AnswerParts = containerpart.Descendants<OpenXmlElement>().Last(or => or.Descendants<SdtBlock>().Any()).ToList();
                     NewQuestion.QuestionItem = containerpart;
+                    NewQuestion.QuestionNumber = questionPart[i];
                     NewQuestion.QuestionTextElements = new List<Text>();
                     NewQuestion.QuestionTextElements = containerpart.Descendants<DocumentFormat.OpenXml.Wordprocessing.Text>().ToList();
+                    Debug.WriteLine(NewQuestion.QuestionNumber.InnerText);
+                    foreach (OpenXmlElement element in NewQuestion.AnswerParts)
+                    {
+                        Debug.WriteLine(element.InnerText);
+                        if(element.InnerXml.Contains("FF0000"))
+                        {
+                            Debug.WriteLine("Answer " + (NewQuestion.AnswerParts.IndexOf(element) + 1) + " is correct");
+                        }
+                    }
+                    /*
                     foreach (Text text in NewQuestion.QuestionTextElements)
                     {
                         Debug.WriteLine(text.InnerText);
                     }
+                    */
+                    i++;
                 }
             }
         }
