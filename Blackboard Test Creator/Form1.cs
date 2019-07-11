@@ -40,11 +40,11 @@ namespace Blackboard_Test_Creator
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            if (QuestionFormLoader.Form != null)
+            if (QuestionFormLoader.wordprocessingDocument != null)
             {
-                QuestionFormLoader.Form.Close();
-                QuestionFormLoader.wordprocessingDocument.Close();
-                QuestionFormLoader.wordApp.Quit();
+                //QuestionFormLoader.wordprocessingDocument.Close();
+                //QuestionFormLoader.stream.Close();
+                //QuestionFormLoader.wordprocessingDocument.Dispose();
             }
             this.Close();
         }
@@ -87,11 +87,11 @@ namespace Blackboard_Test_Creator
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (QuestionFormLoader.Form != null)
+            if (QuestionFormLoader.wordprocessingDocument != null)
             {
-                QuestionFormLoader.Form.Close();
-                QuestionFormLoader.wordprocessingDocument.Close();
-                QuestionFormLoader.wordApp.Quit();
+                //QuestionFormLoader.wordprocessingDocument.Close();
+                //QuestionFormLoader.stream.Close();
+                //QuestionFormLoader.wordprocessingDocument.Dispose();
             }
         }
     }

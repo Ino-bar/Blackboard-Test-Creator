@@ -32,7 +32,8 @@ namespace Blackboard_Test_Creator
     class QuestionFormLoader
     {
         public string formPath = Form1.TestFormFilePath;
-        public static Word.Application wordApp = new Word.Application();
+        //public static Word.Application wordApp = new Word.Application();
+        public static Stream stream;
         public static Word.Document Form;
         public static WordprocessingDocument wordprocessingDocument;
         public static XmlDocument XMLForm = new XmlDocument();
@@ -45,7 +46,7 @@ namespace Blackboard_Test_Creator
             {
                 //Form = wordApp.Documents.Open(formPath);
                 //string content = GetWordDocumentContent(formPath);
-                Stream stream = File.Open(formPath, FileMode.Open);
+                stream = File.Open(formPath, FileMode.Open);
                 wordprocessingDocument = WordprocessingDocument.Open(stream, true);
                 List<OpenXmlElement> documentParts = new List<OpenXmlElement>();
                 List<DocumentFormat.OpenXml.OpenXmlAttribute> partAttributes = new List<OpenXmlAttribute>();
