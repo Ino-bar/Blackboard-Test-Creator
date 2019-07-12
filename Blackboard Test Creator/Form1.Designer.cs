@@ -40,6 +40,10 @@
             this.allowOverallNegativeScoreCheckBox = new System.Windows.Forms.CheckBox();
             this.enableNegativeMarkingCheckBox = new System.Windows.Forms.CheckBox();
             this.chosenFormFilenameLabel = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.TestNameTextBox = new System.Windows.Forms.TextBox();
+            this.TestNameLabel = new System.Windows.Forms.Label();
+            this.AnswerRandomOrderEnabledCheckBox = new System.Windows.Forms.CheckBox();
             this.testSettingsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -102,28 +106,31 @@
             // 
             // testSettingsPanel
             // 
+            this.testSettingsPanel.Controls.Add(this.AnswerRandomOrderEnabledCheckBox);
+            this.testSettingsPanel.Controls.Add(this.TestNameLabel);
+            this.testSettingsPanel.Controls.Add(this.TestNameTextBox);
             this.testSettingsPanel.Controls.Add(this.questionScoreLabel);
             this.testSettingsPanel.Controls.Add(this.questionScoreTextBox);
             this.testSettingsPanel.Controls.Add(this.allowOverallNegativeScoreCheckBox);
             this.testSettingsPanel.Controls.Add(this.enableNegativeMarkingCheckBox);
             this.testSettingsPanel.Location = new System.Drawing.Point(16, 73);
             this.testSettingsPanel.Name = "testSettingsPanel";
-            this.testSettingsPanel.Size = new System.Drawing.Size(231, 173);
+            this.testSettingsPanel.Size = new System.Drawing.Size(231, 208);
             this.testSettingsPanel.TabIndex = 6;
             // 
             // questionScoreLabel
             // 
             this.questionScoreLabel.AutoSize = true;
             this.questionScoreLabel.Cursor = System.Windows.Forms.Cursors.SizeAll;
-            this.questionScoreLabel.Location = new System.Drawing.Point(43, 64);
+            this.questionScoreLabel.Location = new System.Drawing.Point(44, 147);
             this.questionScoreLabel.Name = "questionScoreLabel";
-            this.questionScoreLabel.Size = new System.Drawing.Size(182, 13);
+            this.questionScoreLabel.Size = new System.Drawing.Size(176, 13);
             this.questionScoreLabel.TabIndex = 3;
-            this.questionScoreLabel.Text = "Score For Each Question (default 10)";
+            this.questionScoreLabel.Text = "Score For Each Question (default 1)";
             // 
             // questionScoreTextBox
             // 
-            this.questionScoreTextBox.Location = new System.Drawing.Point(12, 61);
+            this.questionScoreTextBox.Location = new System.Drawing.Point(13, 144);
             this.questionScoreTextBox.Name = "questionScoreTextBox";
             this.questionScoreTextBox.Size = new System.Drawing.Size(25, 20);
             this.questionScoreTextBox.TabIndex = 2;
@@ -158,11 +165,45 @@
             this.chosenFormFilenameLabel.Size = new System.Drawing.Size(0, 13);
             this.chosenFormFilenameLabel.TabIndex = 7;
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(309, 256);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(156, 23);
+            this.progressBar1.TabIndex = 8;
+            // 
+            // TestNameTextBox
+            // 
+            this.TestNameTextBox.Location = new System.Drawing.Point(12, 183);
+            this.TestNameTextBox.Name = "TestNameTextBox";
+            this.TestNameTextBox.Size = new System.Drawing.Size(213, 20);
+            this.TestNameTextBox.TabIndex = 4;
+            // 
+            // TestNameLabel
+            // 
+            this.TestNameLabel.AutoSize = true;
+            this.TestNameLabel.Location = new System.Drawing.Point(10, 167);
+            this.TestNameLabel.Name = "TestNameLabel";
+            this.TestNameLabel.Size = new System.Drawing.Size(62, 13);
+            this.TestNameLabel.TabIndex = 5;
+            this.TestNameLabel.Text = "Test Name:";
+            // 
+            // AnswerRandomOrderEnabledCheckBox
+            // 
+            this.AnswerRandomOrderEnabledCheckBox.AutoSize = true;
+            this.AnswerRandomOrderEnabledCheckBox.Location = new System.Drawing.Point(12, 60);
+            this.AnswerRandomOrderEnabledCheckBox.Name = "AnswerRandomOrderEnabledCheckBox";
+            this.AnswerRandomOrderEnabledCheckBox.Size = new System.Drawing.Size(169, 17);
+            this.AnswerRandomOrderEnabledCheckBox.TabIndex = 6;
+            this.AnswerRandomOrderEnabledCheckBox.Text = "Enable Random Answer Order";
+            this.AnswerRandomOrderEnabledCheckBox.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(477, 320);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.chosenFormFilenameLabel);
             this.Controls.Add(this.testSettingsPanel);
             this.Controls.Add(this.savePathTextBox);
@@ -195,6 +236,10 @@
         private System.Windows.Forms.CheckBox allowOverallNegativeScoreCheckBox;
         private System.Windows.Forms.CheckBox enableNegativeMarkingCheckBox;
         private System.Windows.Forms.Label chosenFormFilenameLabel;
+        private System.Windows.Forms.Label TestNameLabel;
+        private System.Windows.Forms.TextBox TestNameTextBox;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.CheckBox AnswerRandomOrderEnabledCheckBox;
     }
 }
 

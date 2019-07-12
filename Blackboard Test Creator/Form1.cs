@@ -15,6 +15,11 @@ namespace Blackboard_Test_Creator
     {
         public static string TestFormFilePath;
         public static string TestFilePath;
+        public static string TestName;
+        public static int QuestionScore;
+        public static string DefaultScore;
+        public static string AnswerNegativePointsEnabled;
+        public static string AnswerRandomOrderEnabled;
         public Form1()
         {
             InitializeComponent();
@@ -82,6 +87,33 @@ namespace Blackboard_Test_Creator
             for(int i = 1; i < methods.Count(); i++)
             {
                 methods[i].Invoke(testCreator, null);
+                TestName = TestNameTextBox.Text;
+                if(enableNegativeMarkingCheckBox.Checked == true)
+                {
+                    AnswerNegativePointsEnabled = "true";
+                }
+                else if (enableNegativeMarkingCheckBox.Checked == false)
+                {
+                    AnswerNegativePointsEnabled = "false";
+                }
+                if (questionScoreTextBox.Text != null)
+                {
+                    QuestionScore = Int32.Parse(questionScoreTextBox.Text);
+                    DefaultScore = "false";
+                }
+                else if(questionScoreTextBox.Text == null)
+                {
+                    QuestionScore = 1;
+                    DefaultScore = "true";
+                }
+                if(AnswerRandomOrderEnabledCheckBox.Checked == true)
+                {
+                    AnswerRandomOrderEnabled = "true";
+                }
+                else if (AnswerRandomOrderEnabledCheckBox.Checked == false)
+                {
+                    AnswerRandomOrderEnabled = "false";
+                }
             }
         }
 
