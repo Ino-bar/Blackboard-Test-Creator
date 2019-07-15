@@ -10,6 +10,84 @@ namespace Blackboard_Test_Creator
     class TestCreator
     {
         public string savePath = Form1.TestFilePath;
+        static int totalScore = QuestionFormLoader.questionList.Count() * Form1.QuestionScore;
+        string[] res0001assessdata =
+        {
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+            "<questestinterop>",
+            "<assessment title=\"" + Form1.TestName + "\">",
+            "<assessmentmetadata>",
+            "<bbmd_asi_object_id>" + Form1.TestName + " " + DateTime.Today + "</bbmd_asi_object_id>",
+            "<bbmd_asitype>Assessment</bbmd_asitype>",
+            "<bbmd_assessmenttype>Test</bbmd_assessmenttype>",
+            "<bbmd_sectiontype>Subsection</bbmd_sectiontype>",
+            "<bbmd_questiontype>Multiple Choice</bbmd_questiontype>",
+            "<bbmd_is_from_cartridge>false</bbmd_is_from_cartridge>",
+            "<bbmd_is_disabled>false</bbmd_is_disabled>",
+            "<bbmd_negative_points_ind>N</bbmd_negative_points_ind>",
+            "<bbmd_canvas_fullcrdt_ind>false</bbmd_canvas_fullcrdt_ind>",
+            "<bbmd_all_fullcredit_ind>false</bbmd_all_fullcredit_ind>",
+            "<bbmd_numbertype>none</bbmd_numbertype>",
+            "<bbmd_partialcredit>",
+            "</bbmd_partialcredit>",
+            "<bbmd_orientationtype>vertical</bbmd_orientationtype>",
+            "<bbmd_is_extracredit>false</bbmd_is_extracredit>",
+            "<qmd_absolutescore_max>" + totalScore + "</qmd_absolutescore_max>",
+            "<qmd_weighting>0.0</qmd_weighting>",
+            "<qmd_instructornotes>",
+            "</qmd_instructornotes>",
+            "</assessmentmetadata>",
+            "<rubric view=\"All\">",
+            "<flow_mat class=\"Block\">",
+            "<material>",
+            "<mat_extension>",
+            "<mat_formattedtext type = \"HTML\"/>",
+            "</mat_extension>",
+            "</material>",
+            "</flow_mat>",
+            "</rubric>",
+            "<presentation_material>",
+            "<flow_mat class=\"Block\">",
+            "<material>",
+            "<mat_extension>",
+            "<mat_formattedtext type = \"HTML\"/>",
+            "</mat_extension>",
+            "</material>",
+            "</flow_mat>",
+            "</presentation_material>",
+            "<section>",
+            "<sectionmetadata>",
+            "<bbmd_asi_object_id> section_0 </bbmd_asi_object_id>",
+            "<bbmd_asitype> Section </bbmd_asitype>",
+            "<bbmd_assessmenttype> Test </bbmd_assessmenttype>",
+            "<bbmd_sectiontype> Subsection </bbmd_sectiontype>",
+            "<bbmd_questiontype > Multiple Choice</bbmd_questiontype>",
+            "<bbmd_is_from_cartridge>false</bbmd_is_from_cartridge>",
+            "<bbmd_is_disabled>false</bbmd_is_disabled>",
+            "<bbmd_negative_points_ind>N</bbmd_negative_points_ind>",
+            "<bbmd_canvas_fullcrdt_ind>false</bbmd_canvas_fullcrdt_ind>",
+            "<bbmd_all_fullcredit_ind>false</bbmd_all_fullcredit_ind>",
+            "<bbmd_numbertype>none</bbmd_numbertype>",
+            "<bbmd_partialcredit>",
+            "</bbmd_partialcredit>",
+            "<bbmd_orientationtype>vertical</bbmd_orientationtype>",
+            "<bbmd_is_extracredit>false</bbmd_is_extracredit>",
+            "<qmd_absolutescore_max>" + totalScore + "</qmd_absolutescore_max>",
+            "<qmd_weighting>0.0</qmd_weighting>",
+            "<qmd_instructornotes>",
+            "</qmd_instructornotes>",
+            "</sectionmetadata>"
+        };
+        string[] res0001questionblock =
+        {
+
+        };
+        string[] res0001assessdataend =
+        {
+            "</section>",
+            "</assessment>",
+            "</questestinterop>"
+        };
         public FileStream CreateFile(string FilePath, string FileName)
         {
             FileStream file = File.Create(FilePath + "\\" + FileName);
@@ -17,7 +95,11 @@ namespace Blackboard_Test_Creator
         }
         public void CreateBBPackage()
         {
-            FileStream BBPackage = CreateFile(savePath, ".bb-package-info");
+            string path = savePath + "\\.bb-package-info";
+            using (StreamWriter BBPackage = new StreamWriter(path))
+            {
+                BBPackage.WriteLine("cx.package.info.version=6.0");
+            }
         }
         public void Createimsmanifest()
         {
@@ -74,6 +156,10 @@ namespace Blackboard_Test_Creator
         public void Createres00001()
         {
             FileStream res00001 = CreateFile(savePath, "res00001.dat");
+            foreach(var question in QuestionFormLoader.questionList)
+            {
+                
+            }
         }
         public void Createres00002()
         {
