@@ -93,6 +93,10 @@ namespace Blackboard_Test_Creator
             FileStream file = File.Create(FilePath + "\\" + FileName);
             return file;
         }
+        public void CreatecsfilesFolder()
+        {
+            Directory.CreateDirectory(savePath + "\\csfiles\\home_dir");
+        }
         public void CreateBBPackage()
         {
             string path = savePath + "\\.bb-package-info";

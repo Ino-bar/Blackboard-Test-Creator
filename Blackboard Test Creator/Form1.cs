@@ -96,12 +96,12 @@ namespace Blackboard_Test_Creator
                 {
                     AnswerNegativePointsEnabled = "false";
                 }
-                if (questionScoreTextBox.Text != null)
+                if (!string.IsNullOrEmpty(questionScoreTextBox.Text))
                 {
                     QuestionScore = Int32.Parse(questionScoreTextBox.Text);
                     DefaultScore = "false";
                 }
-                else if(questionScoreTextBox.Text == null)
+                else if(string.IsNullOrEmpty(questionScoreTextBox.Text))
                 {
                     QuestionScore = 1;
                     DefaultScore = "true";
