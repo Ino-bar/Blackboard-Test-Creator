@@ -19,6 +19,8 @@ using System.Windows;
 using System.IO;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using System.Drawing;
+using Color = DocumentFormat.OpenXml.Wordprocessing.Color;
 
 namespace Blackboard_Test_Creator
 {
@@ -26,8 +28,12 @@ namespace Blackboard_Test_Creator
     {
         public OpenXmlElement QuestionItem { get; set; }
         public OpenXmlElement QuestionNumber { get; set; }
-        public List<DocumentFormat.OpenXml.Wordprocessing.Text> QuestionTextElements { get; set; }
+        public List<Paragraph> QuestionTextElements { get; set; }
         public List<OpenXmlElement> AnswerParts { get; set; }
+        public List<Paragraph> IndividualAnswerParagraphs { get; set; }
+        public List<List<Paragraph>> ListOfIndividualAnswerParagraphLists { get; set; }
+        public List<OpenXmlElement> CorrectAnswers { get; set; }
+        public List<ImagePart> AnswerImages { get; set; }
     }
     class QuestionFormLoader
     {
@@ -40,6 +46,7 @@ namespace Blackboard_Test_Creator
         public static List<Question> questionList = new List<Question>();
         public static List<OpenXmlElement> questionPart = new List<OpenXmlElement>();
         List<OpenXmlElement> containerPart = new List<OpenXmlElement>();
+        public static List<ImagePart> imgPart;
         public void FormLoader()
         {
             if (formPath != null)
@@ -51,8 +58,10 @@ namespace Blackboard_Test_Creator
                 List<OpenXmlElement> documentParts = new List<OpenXmlElement>();
                 List<DocumentFormat.OpenXml.OpenXmlAttribute> partAttributes = new List<OpenXmlAttribute>();
                 documentParts = wordprocessingDocument.MainDocumentPart.Document.Body.Descendants().ToList();
+                imgPart = wordprocessingDocument.MainDocumentPart.ImageParts.ToList();
                 foreach (OpenXmlElement part in documentParts)
                 {
+                    //Debug.WriteLine(part);
                     if (part.HasAttributes)
                     {
                         foreach (OpenXmlAttribute xmlAttribute in part.GetAttributes())
@@ -63,7 +72,7 @@ namespace Blackboard_Test_Creator
                             }
                             else if(xmlAttribute.Value == "question")
                             {
-                                questionPart.Add(part.Parent.Parent);
+                                questionPart.Add(part.Ancestors<DocumentFormat.OpenXml.Wordprocessing.SdtBlock>().First());
                             }
                         }
                     }
@@ -75,25 +84,34 @@ namespace Blackboard_Test_Creator
                     questionList.Add(NewQuestion);
                     NewQuestion.AnswerParts = new List<OpenXmlElement>();
                     NewQuestion.AnswerParts = containerpart.Descendants<OpenXmlElement>().Last(or => or.Descendants<SdtBlock>().Any()).ToList();
-                    NewQuestion.QuestionItem = containerpart;
-                    NewQuestion.QuestionNumber = questionPart[i];
-                    NewQuestion.QuestionTextElements = new List<Text>();
-                    NewQuestion.QuestionTextElements = containerpart.Descendants<DocumentFormat.OpenXml.Wordprocessing.Text>().ToList();
-                    Debug.WriteLine(NewQuestion.QuestionNumber.InnerText);
-                    foreach (OpenXmlElement element in NewQuestion.AnswerParts)
+                    NewQuestion.ListOfIndividualAnswerParagraphLists = new List<List<Paragraph>>();
+                    foreach(OpenXmlElement answer in NewQuestion.AnswerParts)
                     {
-                        Debug.WriteLine(element.InnerText);
-                        if(element.InnerXml.Contains("FF0000"))
+                        NewQuestion.IndividualAnswerParagraphs = new List<Paragraph>();
+                        NewQuestion.IndividualAnswerParagraphs = answer.Descendants<Paragraph>().AsParallel().ToList();
+                        NewQuestion.ListOfIndividualAnswerParagraphLists.Add(NewQuestion.IndividualAnswerParagraphs);
+                    }
+                    NewQuestion.QuestionItem = questionPart[i];
+                    NewQuestion.QuestionNumber = questionPart[i];
+                    NewQuestion.QuestionTextElements = new List<Paragraph>();
+                    NewQuestion.QuestionTextElements = NewQuestion.QuestionItem.Descendants<Paragraph>().ToList();
+                    NewQuestion.CorrectAnswers = new List<OpenXmlElement>();
+                    foreach (Paragraph questiontext in NewQuestion.QuestionTextElements)
+                    { 
+                        Debug.WriteLine(questiontext.InnerText);
+                    }
+                    foreach (List<Paragraph> list in NewQuestion.ListOfIndividualAnswerParagraphLists)
+                    {
+                        foreach(OpenXmlElement answer in list)
                         {
-                            Debug.WriteLine("Answer " + (NewQuestion.AnswerParts.IndexOf(element) + 1) + " is correct");
+                            Debug.WriteLine(answer.InnerText);
+                            if(answer.Descendants<Color>().Any())
+                            {
+                                Debug.WriteLine("Answer " + (NewQuestion.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + " is correct");
+                                NewQuestion.CorrectAnswers.Add(answer);
+                            }
                         }
                     }
-                    /*
-                    foreach (Text text in NewQuestion.QuestionTextElements)
-                    {
-                        Debug.WriteLine(text.InnerText);
-                    }
-                    */
                     i++;
                 }
             }

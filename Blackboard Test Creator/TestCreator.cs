@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using DocumentFormat.OpenXml.Packaging;
+using System.Drawing;
+using System.Diagnostics;
 
 namespace Blackboard_Test_Creator
 {
@@ -96,6 +99,34 @@ namespace Blackboard_Test_Creator
         public void CreatecsfilesFolder()
         {
             Directory.CreateDirectory(savePath + "\\csfiles\\home_dir");
+        }
+        public void SaveImageFiles()
+        {
+            int i = 1;
+            string[] lines =
+            {
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+                "<lom xmlns=\"http://www.imsglobal.org/xsd/imsmd_rootv1p2p1\" xmlns:xsi = \"http://www.w3.org/2001/XMLSchema-instance\" xsi: schemaLocation = \"http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd\">",
+                "<relation>",
+                "<resource>",
+                "<identifier>0000001_1#/courses/FAKE-COURSE/" + Form1.TestName + "/image00" + i + ".png</identifier>",
+                "</resource>",
+                "</relation>",
+                "</lom>"
+            };
+            foreach (ImagePart image in QuestionFormLoader.imgPart)
+            {
+                Image img = Image.FromStream(image.GetStream());
+                string fileName = savePath + "\\csfiles\\home_dir\\image00" + i + "__xid-000000" + i + "_1.png";
+                img.Save(fileName);
+                string path = savePath + "\\csfiles\\home_dir\\image00" + i + "__xid-000000" + i + "_1.png.xml";
+                using (StreamWriter imgxmlfile = new StreamWriter(path))
+                {
+                    foreach (string line in lines)
+                        imgxmlfile.WriteLine(line);
+                }
+                i++;
+            }
         }
         public void CreateBBPackage()
         {
