@@ -12,6 +12,7 @@ namespace Blackboard_Test_Creator
 {
     class TestCreator
     {
+        private int progress = 0;
         public string savePath = Form1.TestFilePath;
         static int totalScore = QuestionFormLoader.questionList.Count() * Form1.QuestionScore;
         string[] res0001assessdata =

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -79,10 +80,26 @@ namespace Blackboard_Test_Creator
                 e.Handled = true;
             }
         }
-
+        void bw_DoWork(object sender, DoWorkEventArgs e)
+        {
+            // INSERT TIME CONSUMING OPERATIONS HERE
+            // THAT DON'T REPORT PROGRESS
+            Thread.Sleep(10000);
+        }
+        void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            progressBar1.MarqueeAnimationSpeed = 0;
+            progressBar1.Style = ProgressBarStyle.Blocks;
+            progressBar1.Value = progressBar1.Minimum;
+        }
         private void startButton_Click(object sender, EventArgs e)
         {
             TestCreator testCreator = new TestCreator();
+            progressBar1.MarqueeAnimationSpeed = 50;
+            BackgroundWorker bw = new BackgroundWorker();
+            bw.DoWork += bw_DoWork;
+            bw.RunWorkerCompleted += bw_RunWorkerCompleted;
+            bw.RunWorkerAsync();
             var methods = testCreator.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Static);
             for(int i = 1; i < methods.Count(); i++)
             {

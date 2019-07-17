@@ -35,15 +35,15 @@
             this.chooseSavePathButton = new System.Windows.Forms.Button();
             this.savePathTextBox = new System.Windows.Forms.TextBox();
             this.testSettingsPanel = new System.Windows.Forms.Panel();
+            this.AnswerRandomOrderEnabledCheckBox = new System.Windows.Forms.CheckBox();
+            this.TestNameLabel = new System.Windows.Forms.Label();
+            this.TestNameTextBox = new System.Windows.Forms.TextBox();
             this.questionScoreLabel = new System.Windows.Forms.Label();
             this.questionScoreTextBox = new System.Windows.Forms.TextBox();
             this.allowOverallNegativeScoreCheckBox = new System.Windows.Forms.CheckBox();
             this.enableNegativeMarkingCheckBox = new System.Windows.Forms.CheckBox();
             this.chosenFormFilenameLabel = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.TestNameTextBox = new System.Windows.Forms.TextBox();
-            this.TestNameLabel = new System.Windows.Forms.Label();
-            this.AnswerRandomOrderEnabledCheckBox = new System.Windows.Forms.CheckBox();
             this.testSettingsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -118,6 +118,32 @@
             this.testSettingsPanel.Size = new System.Drawing.Size(231, 208);
             this.testSettingsPanel.TabIndex = 6;
             // 
+            // AnswerRandomOrderEnabledCheckBox
+            // 
+            this.AnswerRandomOrderEnabledCheckBox.AutoSize = true;
+            this.AnswerRandomOrderEnabledCheckBox.Location = new System.Drawing.Point(12, 60);
+            this.AnswerRandomOrderEnabledCheckBox.Name = "AnswerRandomOrderEnabledCheckBox";
+            this.AnswerRandomOrderEnabledCheckBox.Size = new System.Drawing.Size(169, 17);
+            this.AnswerRandomOrderEnabledCheckBox.TabIndex = 6;
+            this.AnswerRandomOrderEnabledCheckBox.Text = "Enable Random Answer Order";
+            this.AnswerRandomOrderEnabledCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // TestNameLabel
+            // 
+            this.TestNameLabel.AutoSize = true;
+            this.TestNameLabel.Location = new System.Drawing.Point(10, 167);
+            this.TestNameLabel.Name = "TestNameLabel";
+            this.TestNameLabel.Size = new System.Drawing.Size(62, 13);
+            this.TestNameLabel.TabIndex = 5;
+            this.TestNameLabel.Text = "Test Name:";
+            // 
+            // TestNameTextBox
+            // 
+            this.TestNameTextBox.Location = new System.Drawing.Point(12, 183);
+            this.TestNameTextBox.Name = "TestNameTextBox";
+            this.TestNameTextBox.Size = new System.Drawing.Size(213, 20);
+            this.TestNameTextBox.TabIndex = 4;
+            // 
             // questionScoreLabel
             // 
             this.questionScoreLabel.AutoSize = true;
@@ -168,35 +194,11 @@
             // progressBar1
             // 
             this.progressBar1.Location = new System.Drawing.Point(309, 256);
+            this.progressBar1.MarqueeAnimationSpeed = 0;
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(156, 23);
+            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.progressBar1.TabIndex = 8;
-            // 
-            // TestNameTextBox
-            // 
-            this.TestNameTextBox.Location = new System.Drawing.Point(12, 183);
-            this.TestNameTextBox.Name = "TestNameTextBox";
-            this.TestNameTextBox.Size = new System.Drawing.Size(213, 20);
-            this.TestNameTextBox.TabIndex = 4;
-            // 
-            // TestNameLabel
-            // 
-            this.TestNameLabel.AutoSize = true;
-            this.TestNameLabel.Location = new System.Drawing.Point(10, 167);
-            this.TestNameLabel.Name = "TestNameLabel";
-            this.TestNameLabel.Size = new System.Drawing.Size(62, 13);
-            this.TestNameLabel.TabIndex = 5;
-            this.TestNameLabel.Text = "Test Name:";
-            // 
-            // AnswerRandomOrderEnabledCheckBox
-            // 
-            this.AnswerRandomOrderEnabledCheckBox.AutoSize = true;
-            this.AnswerRandomOrderEnabledCheckBox.Location = new System.Drawing.Point(12, 60);
-            this.AnswerRandomOrderEnabledCheckBox.Name = "AnswerRandomOrderEnabledCheckBox";
-            this.AnswerRandomOrderEnabledCheckBox.Size = new System.Drawing.Size(169, 17);
-            this.AnswerRandomOrderEnabledCheckBox.TabIndex = 6;
-            this.AnswerRandomOrderEnabledCheckBox.Text = "Enable Random Answer Order";
-            this.AnswerRandomOrderEnabledCheckBox.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
