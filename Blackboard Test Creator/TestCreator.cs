@@ -265,15 +265,13 @@ namespace Blackboard_Test_Creator
                     {
                         if (paragraph.InnerXml.Contains("Drawing"))
                         {
-                            questionParagraphs.Add("&lt;p&gt; &lt;img src=\"@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1\" /&gt;&lt;/p&gt;");
+                            res00001.WriteLine("&lt;p&gt; &lt;img src=\"@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1\" /&gt;&lt;/p&gt;");
                             imagenumber += 1;
                         }
                         else
                         {
-                            questionParagraphs.Add("&lt;p&gt;" + paragraph.InnerText + "&lt;/p&gt;");
+                            res00001.WriteLine("&lt;p&gt;" + paragraph.InnerText + "&lt;/p&gt;");
                         }
-                        foreach (string line in questionParagraphs)
-                            res00001.WriteLine(line);
                     }
                     string[] endQuestionTextBlock =
                     {
@@ -309,15 +307,13 @@ namespace Blackboard_Test_Creator
                         {
                             if (answer.InnerXml.Contains("Drawing"))
                             {
-                                answerParagraphs.Add("&lt;p&gt; &lt;img src=\"@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1\" /&gt;&lt;/p&gt;");
+                                res00001.WriteLine("&lt;p&gt; &lt;img src=\"@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1\" /&gt;&lt;/p&gt;");
                                 imagenumber += 1;
                             }
                             else
                             {
-                                answerParagraphs.Add("&lt;p&gt;" + answer.InnerText + "&lt;/p&gt;");
+                                res00001.WriteLine("&lt;p&gt;" + answer.InnerText + "&lt;/p&gt;");
                             }
-                            foreach (string line in answerParagraphs)
-                                res00001.WriteLine(line);
                         }
                         string[] answerEnd =
                         {
