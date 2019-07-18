@@ -7,14 +7,21 @@ using System.IO;
 using DocumentFormat.OpenXml.Packaging;
 using System.Drawing;
 using System.Diagnostics;
+using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml;
 
 namespace Blackboard_Test_Creator
 {
     class TestCreator
     {
-        private int progress = 0;
+        int imagenumber = 1;
         public string savePath = Form1.TestFilePath;
+        string questionType = string.Empty;
+        string negativepointsind = string.Empty;
+        string rcardinality = string.Empty;
         static int totalScore = QuestionFormLoader.questionList.Count() * Form1.QuestionScore;
+        List<string> questionParagraphs = new List<string>();
+        List<string> answerParagraphs = new List<string>();
         string[] res0001assessdata =
         {
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
@@ -81,10 +88,6 @@ namespace Blackboard_Test_Creator
             "<qmd_instructornotes>",
             "</qmd_instructornotes>",
             "</sectionmetadata>"
-        };
-        string[] res0001questionblock =
-        {
-
         };
         string[] res0001assessdataend =
         {
@@ -191,10 +194,160 @@ namespace Blackboard_Test_Creator
         }
         public void Createres00001()
         {
-            FileStream res00001 = CreateFile(savePath, "res00001.dat");
-            foreach(var question in QuestionFormLoader.questionList)
+            string path = savePath + "\\res00001.dat";
+            using (StreamWriter res00001 = new StreamWriter(path))
             {
-                
+                //FileStream res00001 = CreateFile(savePath, "res00001.dat");
+                foreach (string line in res0001assessdata)
+                    res00001.WriteLine(line);
+                foreach (var question in QuestionFormLoader.questionList)
+                {
+                    if (question.AnswerParts.Count() <= 2)
+                    {
+                        questionType = "True or False";
+                        rcardinality = "Single";
+                    }
+                    else if (question.AnswerParts.Count() > 2)
+                    {
+                        if (question.CorrectAnswers.Count() >= 2)
+                        {
+                            questionType = "Multiple Answer";
+                            rcardinality = "Multiple";
+                        }
+                        else if (question.CorrectAnswers.Count < 2)
+                        {
+                            questionType = "Multiple Choice";
+                            rcardinality = "Single";
+                        }
+                    }
+                    if (Form1.AnswerNegativePointsEnabled == "true")
+                    {
+                        negativepointsind = "Y";
+                    }
+                    else
+                    {
+                        negativepointsind = "N";
+                    }
+                    string[] res0001itemmetadata =
+                    {
+                    "<item title=\"" + Form1.TestName + question.QuestionNumber + "\" maxattempts=\"0\">",
+                    "<itemmetadata>",
+                    "<bbmd_asi_object_id>question" + question.QuestionNumber + "</bbmd_asi_object_id>",
+                    "<bbmd_asitype>Item</bbmd_asitype>",
+                    "<bbmd_assessmenttype>Test</bbmd_assessmenttype>",
+                    "<bbmd_sectiontype>Subsection</bbmd_sectiontype>",
+                    "<bbmd_questiontype>" + questionType + "</bbmd_questiontype>",
+                    "<bbmd_is_from_cartridge>false</bbmd_is_from_cartridge>",
+                    "<bbmd_is_disabled>false</bbmd_is_disabled>",
+                    "<bbmd_negative_points_ind>" + negativepointsind + "</bbmd_negative_points_ind>",
+                    "<bbmd_canvas_fullcrdt_ind>false</bbmd_canvas_fullcrdt_ind>",
+                    "<bbmd_all_fullcredit_ind>false</bbmd_all_fullcredit_ind>",
+                    "<bbmd_numbertype>letter_lower</bbmd_numbertype>",
+                    "<bbmd_partialcredit>" + Form1.AnswerNegativePointsEnabled + "</bbmd_partialcredit>",
+                    "<bbmd_orientationtype>vertical</bbmd_orientationtype>",
+                    "<bbmd_is_extracredit>false</bbmd_is_extracredit>",
+                    "<qmd_absolutescore_max>" + Form1.QuestionScore + "</qmd_absolutescore_max>",
+                    "<qmd_weighting>0</qmd_weighting>",
+                    "<qmd_instructornotes>",
+                    "</qmd_instructornotes>",
+                    "</itemmetadata>",
+                    "<presentation>",
+                    "<flow class=\"Block\">",
+                    "<flow class=\"QUESTION_BLOCK\">",
+                    "<flow class=\"FORMATTED_TEXT_BLOCK\">",
+                    "<material>",
+                    "<mat_extension>",
+                    "<mat_formattedtext type = \"HTML\" >"
+                    };
+                    foreach (string line in res0001itemmetadata)
+                        res00001.WriteLine(line);
+                    foreach (Paragraph paragraph in question.QuestionTextElements)
+                    {
+                        if (paragraph.InnerXml.Contains("Drawing"))
+                        {
+                            questionParagraphs.Add("&lt;p&gt; &lt;img src=\"@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1\" /&gt;&lt;/p&gt;");
+                            imagenumber += 1;
+                        }
+                        else
+                        {
+                            questionParagraphs.Add("&lt;p&gt;" + paragraph.InnerText + "&lt;/p&gt;");
+                        }
+                        foreach (string line in questionParagraphs)
+                            res00001.WriteLine(line);
+                    }
+                    string[] endQuestionTextBlock =
+                    {
+                    "</mat_extension>",
+                    "</material>",
+                    "</flow>",
+                    "</flow>"
+                    };
+                    foreach (string line in endQuestionTextBlock)
+                        res00001.WriteLine(line);
+                    string[] responseBlockStart =
+                    {
+                    "<flow class=\"RESPONSE_BLOCK\">",
+                    "<response_lid ident = \"response\" rcardinality=\"Multiple\" rtiming=\"No\">",
+                    "<render_choice shuffle = \"No\" minnumber=\"0\" maxnumber=\"0\">"
+                    };
+                    foreach (string line in responseBlockStart)
+                        res00001.WriteLine(line);
+                    foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
+                    {
+                        string[] answerStart =
+                        {
+                        "<flow_label class=\"Block\">",
+                        "<response_label ident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\" shuffle=\"Yes\" rarea=\"Ellipse\" rrange=\"Exact\">",
+                        "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
+                        "<material>",
+                        "<mat_extension>",
+                        "<mat_formattedtext type = \"HTML\">"
+                        };
+                        foreach (string line in answerStart)
+                            res00001.WriteLine(line);
+                        foreach (OpenXmlElement answer in list)
+                        {
+                            if (answer.InnerXml.Contains("Drawing"))
+                            {
+                                answerParagraphs.Add("&lt;p&gt; &lt;img src=\"@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1\" /&gt;&lt;/p&gt;");
+                                imagenumber += 1;
+                            }
+                            else
+                            {
+                                answerParagraphs.Add("&lt;p&gt;" + answer.InnerText + "&lt;/p&gt;");
+                            }
+                            foreach (string line in answerParagraphs)
+                                res00001.WriteLine(line);
+                        }
+                        string[] answerEnd =
+                        {
+                        "</mat_formattedtext>",
+                        "</mat_extension>",
+                        "</material>",
+                        "</flow_mat>",
+                        "</response_label>",
+                        "</flow_label>"
+                        };
+                        foreach (string line in answerEnd)
+                            res00001.WriteLine(line);
+                    }
+                    string[] responseBlockEnd =
+                    {
+                    "</render_choice>",
+                    "</response_lid>",
+                    "</flow>",
+                    "</flow>",
+                    "</presentation>"
+                    };
+                    foreach (string line in responseBlockEnd)
+                        res00001.WriteLine(line);
+                    string[] questionMarking =
+                    {
+
+                    };
+                }
+                foreach(string line in res0001assessdataend)
+                    res00001.WriteLine(line);
             }
         }
         public void Createres00002()

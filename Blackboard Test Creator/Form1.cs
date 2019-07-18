@@ -82,9 +82,7 @@ namespace Blackboard_Test_Creator
         }
         void bw_DoWork(object sender, DoWorkEventArgs e)
         {
-            // INSERT TIME CONSUMING OPERATIONS HERE
-            // THAT DON'T REPORT PROGRESS
-            Thread.Sleep(10000);
+            Thread.Sleep(1000);
         }
         void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {

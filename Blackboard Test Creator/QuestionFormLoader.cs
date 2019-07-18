@@ -27,13 +27,14 @@ namespace Blackboard_Test_Creator
     public class Question
     {
         public OpenXmlElement QuestionItem { get; set; }
-        public OpenXmlElement QuestionNumber { get; set; }
+        public int QuestionNumber { get; set; }
         public List<Paragraph> QuestionTextElements { get; set; }
         public List<OpenXmlElement> AnswerParts { get; set; }
         public List<Paragraph> IndividualAnswerParagraphs { get; set; }
         public List<List<Paragraph>> ListOfIndividualAnswerParagraphLists { get; set; }
         public List<OpenXmlElement> CorrectAnswers { get; set; }
-        public List<ImagePart> AnswerImages { get; set; }
+        public Dictionary<string, int> QuestionImages { get; set; }
+        public Dictionary<string, int> AnswerImages { get; set; }
     }
     class QuestionFormLoader
     {
@@ -47,6 +48,7 @@ namespace Blackboard_Test_Creator
         public static List<OpenXmlElement> questionPart = new List<OpenXmlElement>();
         List<OpenXmlElement> containerPart = new List<OpenXmlElement>();
         public static List<ImagePart> imgPart;
+        int imageNumber = 1;
         public void FormLoader()
         {
             if (formPath != null)
@@ -82,19 +84,39 @@ namespace Blackboard_Test_Creator
                 {
                     Question NewQuestion = new Question();
                     questionList.Add(NewQuestion);
+                    NewQuestion.QuestionItem = questionPart[i];
+                    NewQuestion.QuestionNumber = i + 1;
+                    NewQuestion.QuestionTextElements = new List<Paragraph>();
+                    NewQuestion.QuestionTextElements = NewQuestion.QuestionItem.Descendants<Paragraph>().ToList();
+                    NewQuestion.QuestionImages = new Dictionary<string, int>();
+                    if(NewQuestion.QuestionItem.Descendants<Drawing>().Any())
+                    {
+                        foreach(Drawing drawing in NewQuestion.QuestionItem.Descendants<Drawing>().AsParallel().ToList())
+                        {
+                            NewQuestion.QuestionImages.Add("xid-000000" + imageNumber + "_1", questionList.IndexOf(NewQuestion));
+                            imageNumber += 1;
+                            Debug.WriteLine(NewQuestion.QuestionImages.Count());
+                        }
+                    }
                     NewQuestion.AnswerParts = new List<OpenXmlElement>();
                     NewQuestion.AnswerParts = containerpart.Descendants<OpenXmlElement>().Last(or => or.Descendants<SdtBlock>().Any()).ToList();
+                    NewQuestion.AnswerImages = new Dictionary<string, int>();
                     NewQuestion.ListOfIndividualAnswerParagraphLists = new List<List<Paragraph>>();
                     foreach(OpenXmlElement answer in NewQuestion.AnswerParts)
                     {
                         NewQuestion.IndividualAnswerParagraphs = new List<Paragraph>();
                         NewQuestion.IndividualAnswerParagraphs = answer.Descendants<Paragraph>().AsParallel().ToList();
                         NewQuestion.ListOfIndividualAnswerParagraphLists.Add(NewQuestion.IndividualAnswerParagraphs);
+                        if(answer.Descendants<Drawing>().Any())
+                        {
+                            foreach(Drawing drawing in answer.Descendants<Drawing>().AsParallel().ToList())
+                            {
+                                NewQuestion.AnswerImages.Add("xid-000000" + imageNumber + "_1", NewQuestion.AnswerParts.IndexOf(answer));
+                                imageNumber += 1;
+                                Debug.WriteLine(NewQuestion.AnswerImages.Count());
+                            }
+                        }
                     }
-                    NewQuestion.QuestionItem = questionPart[i];
-                    NewQuestion.QuestionNumber = questionPart[i];
-                    NewQuestion.QuestionTextElements = new List<Paragraph>();
-                    NewQuestion.QuestionTextElements = NewQuestion.QuestionItem.Descendants<Paragraph>().ToList();
                     NewQuestion.CorrectAnswers = new List<OpenXmlElement>();
                     foreach (Paragraph questiontext in NewQuestion.QuestionTextElements)
                     { 
