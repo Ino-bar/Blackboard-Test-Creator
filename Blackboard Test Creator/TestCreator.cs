@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Diagnostics;
 using DocumentFormat.OpenXml.Wordprocessing;
 using DocumentFormat.OpenXml;
+using Color = DocumentFormat.OpenXml.Wordprocessing.Color;
 
 namespace Blackboard_Test_Creator
 {
@@ -337,18 +338,118 @@ namespace Blackboard_Test_Creator
                     };
                     foreach (string line in responseBlockEnd)
                         res00001.WriteLine(line);
-                    string[] questionMarking =
+                    if (questionType == "Multiple Answer")
                     {
-
-                    };
+                        string[] questionEvaluationStart =
+                        {
+                        "<resprocessing scoremodel=\"SumOfScores\">",
+                        "<outcomes>",
+                        "<decvar varname=\"SCORE\" vartype=\"Decimal\" defaultval=\"0.0\" minvalue=\"0.0\" maxvalue=\"" + Form1.DefaultScore + "\"/>",
+                        "</outcomes>",
+                        "<respcondition title=\"correct\">",
+                        "<conditionvar>",
+                        "<and>"
+                        };
+                        foreach (string line in questionEvaluationStart)
+                            res00001.WriteLine(line);
+                        foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
+                        {
+                            List<string> respident = new List<string>();
+                            respident.Add("<not>");
+                            respident.Add("<varequal respident=\"response\" case=\"No\">answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "</varequal>");
+                            respident.Add("</not>");
+                            foreach (string line in respident)
+                                res00001.WriteLine(line);
+                        }
+                        string[] questionEvaluationMid =
+                        {
+                            "</conditionvar>",
+                            "<setvar variablename=\"SCORE\" action=\"Set\">SCORE.max</setvar>",
+                            "<displayfeedback linkrefid=\"correct\" feedbacktype=\"Response\"/>",
+                            "</respcondition>",
+                            "<respcondition title=\"incorrect\">",
+                            "<conditionvar>",
+                            "<other/>",
+                            "</conditionvar>",
+                            "<setvar variablename=\"SCORE\" action=\"Set\">0.0</setvar>",
+                            "<displayfeedback linkrefid=\"incorrect\" feedbacktype=\"Response\"/>",
+                            "</respcondition>"
+                        };
+                        foreach (string line in questionEvaluationMid)
+                            res00001.WriteLine(line);
+                        foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
+                        {
+                            res00001.WriteLine("<respcondition>");
+                            res00001.WriteLine("<conditionvar>");
+                            res00001.WriteLine("<varequal respident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\" case= \"No\" />)");
+                            res00001.WriteLine("</conditionvar>");
+                            foreach (OpenXmlElement answer in list)
+                            {
+                                if(Form1.AnswerNegativePointsEnabled == "true")
+                                {
+                                    if(question.CorrectAnswers.Count() >= 2)
+                                    { 
+                                        if (answer.Descendants<Color>().Any())
+                                        {
+                                            res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">" + 100 / question.CorrectAnswers.Count() + "</setvar>");
+                                        }
+                                        else
+                                        {
+                                            res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">-" + 100 / question.ListOfIndividualAnswerParagraphLists.Count() + "</setvar>");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (answer.Descendants<Color>().Any())
+                                        {
+                                            res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">100</setvar>");
+                                        }
+                                        else
+                                        {
+                                            res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">-" + 100 / question.ListOfIndividualAnswerParagraphLists.Count() + "</setvar>");
+                                        }
+                                    }
+                                }
+                                else if (Form1.AnswerNegativePointsEnabled == "false")
+                                {
+                                    if (question.CorrectAnswers.Count() >= 2)
+                                    {
+                                        if (answer.Descendants<Color>().Any())
+                                        {
+                                            res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">" + 100 / question.CorrectAnswers.Count() + "</setvar>");
+                                        }
+                                        else
+                                        {
+                                            res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">0</setvar>");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (answer.Descendants<Color>().Any())
+                                        {
+                                            res00001.WriteLine("<setvar variablename =\"SCORE\" action=\"Set\">100</setvar>");
+                                        }
+                                        else
+                                        {
+                                            res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">0</setvar>");
+                                        }
+                                    }
+                                }
+                            }
+                            res00001.WriteLine("<displayfeedback linkrefid = \"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\"feedbacktype=\"Response\"/>");
+                            res00001.WriteLine("</respcondition>");
+                        }
+                        res00001.WriteLine("</resprocessing>");
+                    }
                 }
                 foreach(string line in res0001assessdataend)
                     res00001.WriteLine(line);
+                
             }
         }
         public void Createres00002()
         {
-            String[] lines =
+            string[] lines =
             {
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
                 "<ASSESSMENTCREATIONSETTINGS>",
