@@ -82,7 +82,7 @@ namespace Blackboard_Test_Creator
         }
         void bw_DoWork(object sender, DoWorkEventArgs e)
         {
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
         }
         void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -92,6 +92,33 @@ namespace Blackboard_Test_Creator
         }
         private void startButton_Click(object sender, EventArgs e)
         {
+            TestName = TestNameTextBox.Text;
+            if (enableNegativeMarkingCheckBox.Checked == true)
+            {
+                AnswerNegativePointsEnabled = "true";
+            }
+            else if (enableNegativeMarkingCheckBox.Checked == false)
+            {
+                AnswerNegativePointsEnabled = "false";
+            }
+            if (!string.IsNullOrEmpty(questionScoreTextBox.Text))
+            {
+                QuestionScore = Int32.Parse(questionScoreTextBox.Text);
+                DefaultScore = "false";
+            }
+            else if (string.IsNullOrEmpty(questionScoreTextBox.Text))
+            {
+                QuestionScore = 1;
+                DefaultScore = "true";
+            }
+            if (AnswerRandomOrderEnabledCheckBox.Checked == true)
+            {
+                AnswerRandomOrderEnabled = "true";
+            }
+            else if (AnswerRandomOrderEnabledCheckBox.Checked == false)
+            {
+                AnswerRandomOrderEnabled = "false";
+            }
             TestCreator testCreator = new TestCreator();
             progressBar1.MarqueeAnimationSpeed = 50;
             BackgroundWorker bw = new BackgroundWorker();
@@ -102,33 +129,6 @@ namespace Blackboard_Test_Creator
             for(int i = 1; i < methods.Count(); i++)
             {
                 methods[i].Invoke(testCreator, null);
-                TestName = TestNameTextBox.Text;
-                if(enableNegativeMarkingCheckBox.Checked == true)
-                {
-                    AnswerNegativePointsEnabled = "true";
-                }
-                else if (enableNegativeMarkingCheckBox.Checked == false)
-                {
-                    AnswerNegativePointsEnabled = "false";
-                }
-                if (!string.IsNullOrEmpty(questionScoreTextBox.Text))
-                {
-                    QuestionScore = Int32.Parse(questionScoreTextBox.Text);
-                    DefaultScore = "false";
-                }
-                else if(string.IsNullOrEmpty(questionScoreTextBox.Text))
-                {
-                    QuestionScore = 1;
-                    DefaultScore = "true";
-                }
-                if(AnswerRandomOrderEnabledCheckBox.Checked == true)
-                {
-                    AnswerRandomOrderEnabled = "true";
-                }
-                else if (AnswerRandomOrderEnabledCheckBox.Checked == false)
-                {
-                    AnswerRandomOrderEnabled = "false";
-                }
             }
         }
 

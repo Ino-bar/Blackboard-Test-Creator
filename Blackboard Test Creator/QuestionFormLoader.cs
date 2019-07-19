@@ -41,7 +41,6 @@ namespace Blackboard_Test_Creator
         public string formPath = Form1.TestFormFilePath;
         //public static Word.Application wordApp = new Word.Application();
         public static Stream stream;
-        public static Word.Document Form;
         public static WordprocessingDocument wordprocessingDocument;
         public static XmlDocument XMLForm = new XmlDocument();
         public static List<Question> questionList = new List<Question>();
@@ -53,8 +52,6 @@ namespace Blackboard_Test_Creator
         {
             if (formPath != null)
             {
-                //Form = wordApp.Documents.Open(formPath);
-                //string content = GetWordDocumentContent(formPath);
                 stream = File.Open(formPath, FileMode.Open);
                 wordprocessingDocument = WordprocessingDocument.Open(stream, true);
                 List<OpenXmlElement> documentParts = new List<OpenXmlElement>();
@@ -63,7 +60,6 @@ namespace Blackboard_Test_Creator
                 imgPart = wordprocessingDocument.MainDocumentPart.ImageParts.ToList();
                 foreach (OpenXmlElement part in documentParts)
                 {
-                    //Debug.WriteLine(part);
                     if (part.HasAttributes)
                     {
                         foreach (OpenXmlAttribute xmlAttribute in part.GetAttributes())
@@ -95,7 +91,6 @@ namespace Blackboard_Test_Creator
                         {
                             NewQuestion.QuestionImages.Add("xid-000000" + imageNumber + "_1", questionList.IndexOf(NewQuestion));
                             imageNumber += 1;
-                            Debug.WriteLine(NewQuestion.QuestionImages.Count());
                         }
                     }
                     NewQuestion.AnswerParts = new List<OpenXmlElement>();
@@ -113,23 +108,16 @@ namespace Blackboard_Test_Creator
                             {
                                 NewQuestion.AnswerImages.Add("xid-000000" + imageNumber + "_1", NewQuestion.AnswerParts.IndexOf(answer));
                                 imageNumber += 1;
-                                Debug.WriteLine(NewQuestion.AnswerImages.Count());
                             }
                         }
                     }
                     NewQuestion.CorrectAnswers = new List<OpenXmlElement>();
-                    foreach (Paragraph questiontext in NewQuestion.QuestionTextElements)
-                    { 
-                        Debug.WriteLine(questiontext.InnerText);
-                    }
                     foreach (List<Paragraph> list in NewQuestion.ListOfIndividualAnswerParagraphLists)
                     {
                         foreach(OpenXmlElement answer in list)
                         {
-                            Debug.WriteLine(answer.InnerText);
                             if(answer.Descendants<Color>().Any())
                             {
-                                Debug.WriteLine("Answer " + (NewQuestion.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + " is correct");
                                 NewQuestion.CorrectAnswers.Add(answer);
                             }
                         }

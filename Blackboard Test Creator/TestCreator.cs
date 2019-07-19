@@ -20,6 +20,8 @@ namespace Blackboard_Test_Creator
         string questionType = string.Empty;
         string negativepointsind = string.Empty;
         string rcardinality = string.Empty;
+        string answerResult = string.Empty;
+        string correctAnswer = string.Empty;
         static int totalScore = QuestionFormLoader.questionList.Count() * Form1.QuestionScore;
         List<string> questionParagraphs = new List<string>();
         List<string> answerParagraphs = new List<string>();
@@ -53,7 +55,7 @@ namespace Blackboard_Test_Creator
             "<flow_mat class=\"Block\">",
             "<material>",
             "<mat_extension>",
-            "<mat_formattedtext type = \"HTML\"/>",
+            "<mat_formattedtext type=\"HTML\"/>",
             "</mat_extension>",
             "</material>",
             "</flow_mat>",
@@ -62,18 +64,18 @@ namespace Blackboard_Test_Creator
             "<flow_mat class=\"Block\">",
             "<material>",
             "<mat_extension>",
-            "<mat_formattedtext type = \"HTML\"/>",
+            "<mat_formattedtext type=\"HTML\"/>",
             "</mat_extension>",
             "</material>",
             "</flow_mat>",
             "</presentation_material>",
             "<section>",
             "<sectionmetadata>",
-            "<bbmd_asi_object_id> section_0 </bbmd_asi_object_id>",
-            "<bbmd_asitype> Section </bbmd_asitype>",
-            "<bbmd_assessmenttype> Test </bbmd_assessmenttype>",
-            "<bbmd_sectiontype> Subsection </bbmd_sectiontype>",
-            "<bbmd_questiontype > Multiple Choice</bbmd_questiontype>",
+            "<bbmd_asi_object_id>section_0</bbmd_asi_object_id>",
+            "<bbmd_asitype>Section</bbmd_asitype>",
+            "<bbmd_assessmenttype>Test</bbmd_assessmenttype>",
+            "<bbmd_sectiontype>Subsection</bbmd_sectiontype>",
+            "<bbmd_questiontype>Multiple Choice</bbmd_questiontype>",
             "<bbmd_is_from_cartridge>false</bbmd_is_from_cartridge>",
             "<bbmd_is_disabled>false</bbmd_is_disabled>",
             "<bbmd_negative_points_ind>N</bbmd_negative_points_ind>",
@@ -147,43 +149,43 @@ namespace Blackboard_Test_Creator
             {
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
                 "<manifest identifier=\"man00001\"",
-                "xmlns:bb = \"http://www.blackboard.com/content-packaging/\">",
-                "<organizations default = \"toc00001\">",
-                "<organization identifier = \"toc00001\"/>",
-                "</organizations >",
-                "<resources >",
+                "xmlns:bb=\"http://www.blackboard.com/content-packaging/\">",
+                "<organizations default=\"toc00001\">",
+                "<organization identifier=\"toc00001\"/>",
+                "</organizations>",
+                "<resources>",
                 "<resource",
-                    "bb: file = \"res00001.dat\"",
-                    "bb: title = \"" + Form1.TestName + "\"",
-                    "xml: base = \"res00001\"",
-                    "identifier = \"res00001\"",
-                    "type = \"assessment/x-bb-qti-test\"/>",
+                    "bb:file=\"res00001.dat\"",
+                    "bb:title=\"" + Form1.TestName + "\"",
+                    "xml:base=\"res00001\"",
+                    "identifier=\"res00001\"",
+                    "type=\"assessment/x-bb-qti-test\"/>",
                 "<resource",
-                    "bb: file = \"res00002.dat\"",
-                    "bb: title = \"Assessment Creation Settings\"",
-                    "xml: base = \"res00002\"",
-                    "identifier = \"res00002\"",
-                    "type = \"course/x-bb-courseassessmentcreationsettings\"/>",
+                    "bb:file=\"res00002.dat\"",
+                    "bb:title=\"Assessment Creation Settings\"",
+                    "xml:base=\"res00002\"",
+                    "identifier=\"res00002\"",
+                    "type=\"course/x-bb-courseassessmentcreationsettings\"/>",
                 "<resource",
-                    "bb: file = \"res00003.dat\"",
-                    "bb: title = \"LearnRubrics\"",
-                    "xml: base = \"res00003\"",
-                    "identifier = \"res00003\"",
-                    "type = \"course/x-bb-rubrics\"/>",
+                    "bb:file=\"res00003.dat\"",
+                    "bb:title=\"LearnRubrics\"",
+                    "xml:base=\"res00003\"",
+                    "identifier=\"res00003\"",
+                    "type=\"course/x-bb-rubrics\"/>",
                 "<resource",
-                    "bb: file = \"res00004.dat\"",
-                    "bb: title = \"CSResourceLinks\"",
-                    "xml: base = \"res00004\"",
-                    "identifier = \"res00004\"",
-                    "type = \"course/x-bb-csresourcelinks\"/>",
+                    "bb:file=\"res00004.dat\"",
+                    "bb:title=\"CSResourceLinks\"",
+                    "xml:base=\"res00004\"",
+                    "identifier=\"res00004\"",
+                    "type=\"course/x-bb-csresourcelinks\"/>",
                 "<resource",
-                    "bb: file = \"res00005.dat\"",
-                    "bb: title = \"CourseRubricAssociation\"",
-                    "xml: base = \"res00005\"",
-                    "identifier = \"res00005\"",
-                    "type = \"course/x-bb-crsrubricassocation\"/>",
+                    "bb:file=\"res00005.dat\"",
+                    "bb:title=\"CourseRubricAssociation\"",
+                    "xml:base=\"res00005\"",
+                    "identifier=\"res00005\"",
+                    "type=\"course/x-bb-crsrubricassocation\"/>",
                 "</resources>",
-                "</manifest> "
+                "</manifest>"
             };
             //FileStream imsmanifestpath = CreateFile(savePath, "imsmanifest.xml");
             string path = savePath + "\\imsmanifest.xml";
@@ -258,7 +260,7 @@ namespace Blackboard_Test_Creator
                     "<flow class=\"FORMATTED_TEXT_BLOCK\">",
                     "<material>",
                     "<mat_extension>",
-                    "<mat_formattedtext type = \"HTML\" >"
+                    "<mat_formattedtext type=\"HTML\" >"
                     };
                     foreach (string line in res0001itemmetadata)
                         res00001.WriteLine(line);
@@ -266,7 +268,7 @@ namespace Blackboard_Test_Creator
                     {
                         if (paragraph.InnerXml.Contains("Drawing"))
                         {
-                            res00001.WriteLine("&lt;p&gt; &lt;img src=\"@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1\" /&gt;&lt;/p&gt;");
+                            res00001.WriteLine("&lt;p&gt;&lt;img src=\"@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1\"/&gt;&lt;/p&gt;");
                             imagenumber += 1;
                         }
                         else
@@ -286,8 +288,8 @@ namespace Blackboard_Test_Creator
                     string[] responseBlockStart =
                     {
                     "<flow class=\"RESPONSE_BLOCK\">",
-                    "<response_lid ident = \"response\" rcardinality=\"Multiple\" rtiming=\"No\">",
-                    "<render_choice shuffle = \"No\" minnumber=\"0\" maxnumber=\"0\">"
+                    "<response_lid ident=\"response\" rcardinality=\"Multiple\" rtiming=\"No\">",
+                    "<render_choice shuffle=\"No\" minnumber=\"0\" maxnumber=\"0\">"
                     };
                     foreach (string line in responseBlockStart)
                         res00001.WriteLine(line);
@@ -300,7 +302,7 @@ namespace Blackboard_Test_Creator
                         "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
                         "<material>",
                         "<mat_extension>",
-                        "<mat_formattedtext type = \"HTML\">"
+                        "<mat_formattedtext type=\"HTML\">"
                         };
                         foreach (string line in answerStart)
                             res00001.WriteLine(line);
@@ -308,7 +310,7 @@ namespace Blackboard_Test_Creator
                         {
                             if (answer.InnerXml.Contains("Drawing"))
                             {
-                                res00001.WriteLine("&lt;p&gt; &lt;img src=\"@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1\" /&gt;&lt;/p&gt;");
+                                res00001.WriteLine("&lt;p&gt;&lt;img src=\"@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1\" /&gt;&lt;/p&gt;");
                                 imagenumber += 1;
                             }
                             else
@@ -381,59 +383,101 @@ namespace Blackboard_Test_Creator
                         {
                             res00001.WriteLine("<respcondition>");
                             res00001.WriteLine("<conditionvar>");
-                            res00001.WriteLine("<varequal respident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\" case= \"No\" />)");
+                            res00001.WriteLine("<varequal respident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\"case=\"No\"/>)");
                             res00001.WriteLine("</conditionvar>");
+                            if(Form1.AnswerNegativePointsEnabled == "true")
+                            {
+                                if (list.Any(or => or.Descendants<Color>().Any()))
+                                {
+                                    res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">" + 100 / question.CorrectAnswers.Count() + "</setvar>");
+                                }
+                                else
+                                {
+                                    res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">-" + 100 / question.ListOfIndividualAnswerParagraphLists.Count() + "</setvar>");
+                                }
+                            }
+                            else if (Form1.AnswerNegativePointsEnabled == "false")
+                            {
+                                if (list.Any(or => or.Descendants<Color>().Any()))
+                                {
+                                    res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">" + 100 / question.CorrectAnswers.Count() + "</setvar>");
+                                }
+                                else
+                                {
+                                    res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">0</setvar>");
+                                }
+                            }
+                            res00001.WriteLine("<displayfeedback linkrefid=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\"feedbacktype=\"Response\"/>");
+                            res00001.WriteLine("</respcondition>");
+                        }
+                        res00001.WriteLine("</resprocessing>");
+                    }
+                    if (questionType == "Multiple Choice")
+                    {
+                        string[] questionEvaluationStart =
+                        {
+                        "<resprocessing scoremodel=\"SumOfScores\">",
+                        "<outcomes>",
+                        "<decvar varname=\"SCORE\" vartype=\"Decimal\" defaultval=\"0.0\" minvalue=\"0.0\" maxvalue=\"" + Form1.DefaultScore + "\"/>",
+                        "</outcomes>",
+                        "<respcondition title=\"correct\">",
+                        "<conditionvar>"
+                        };
+                        foreach (string line in questionEvaluationStart)
+                            res00001.WriteLine(line);
+                        foreach(List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
+                        {
                             foreach (OpenXmlElement answer in list)
                             {
-                                if(Form1.AnswerNegativePointsEnabled == "true")
+                                if (answer.Descendants<Color>().Any())
                                 {
-                                    if(question.CorrectAnswers.Count() >= 2)
-                                    { 
-                                        if (answer.Descendants<Color>().Any())
-                                        {
-                                            res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">" + 100 / question.CorrectAnswers.Count() + "</setvar>");
-                                        }
-                                        else
-                                        {
-                                            res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">-" + 100 / question.ListOfIndividualAnswerParagraphLists.Count() + "</setvar>");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (answer.Descendants<Color>().Any())
-                                        {
-                                            res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">100</setvar>");
-                                        }
-                                        else
-                                        {
-                                            res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">-" + 100 / question.ListOfIndividualAnswerParagraphLists.Count() + "</setvar>");
-                                        }
-                                    }
+                                    correctAnswer = "answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1);
+                                }   
+                            }
+                        }
+                        res00001.WriteLine("<varequal respident=\"response\" case=\"No\">" + correctAnswer + "</varequal>");
+                        string[] questionEvaluationMid =
+                        {
+                            "</conditionvar>",
+                            "<setvar variablename=\"SCORE\" action=\"Set\">SCORE.max</setvar>",
+                            "<displayfeedback linkrefid=\"correct\" feedbacktype=\"Response\"/>",
+                            "</respcondition>",
+                            "<respcondition title=\"incorrect\">",
+                            "<conditionvar>",
+                            "<other/>",
+                            "</conditionvar>",
+                            "<setvar variablename=\"SCORE\" action=\"Set\">0.0</setvar>",
+                            "<displayfeedback linkrefid=\"incorrect\" feedbacktype=\"Response\"/>",
+                            "</respcondition>"
+                        };
+                        foreach (string line in questionEvaluationMid)
+                            res00001.WriteLine(line);
+                        foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
+                        {
+                            res00001.WriteLine("<respcondition>");
+                            res00001.WriteLine("<conditionvar>");
+                            res00001.WriteLine("<varequal respident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\"case=\"No\"/>)");
+                            res00001.WriteLine("</conditionvar>");
+                            if (Form1.AnswerNegativePointsEnabled == "true")
+                            {
+                                if (list.Any(or => or.Descendants<Color>().Any()))
+                                {
+                                    res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">100</setvar>");
                                 }
-                                else if (Form1.AnswerNegativePointsEnabled == "false")
+                                else
                                 {
-                                    if (question.CorrectAnswers.Count() >= 2)
-                                    {
-                                        if (answer.Descendants<Color>().Any())
-                                        {
-                                            res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">" + 100 / question.CorrectAnswers.Count() + "</setvar>");
-                                        }
-                                        else
-                                        {
-                                            res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">0</setvar>");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (answer.Descendants<Color>().Any())
-                                        {
-                                            res00001.WriteLine("<setvar variablename =\"SCORE\" action=\"Set\">100</setvar>");
-                                        }
-                                        else
-                                        {
-                                            res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">0</setvar>");
-                                        }
-                                    }
+                                    res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">-" + 100 / question.ListOfIndividualAnswerParagraphLists.Count() + "</setvar>");
+                                }
+                            }
+                            else if (Form1.AnswerNegativePointsEnabled == "false")
+                            {
+                                if (list.Any(or => or.Descendants<Color>().Any()))
+                                {
+                                    res00001.WriteLine("<setvar variablename =\"SCORE\" action=\"Set\">100</setvar>");
+                                }
+                                else
+                                {
+                                    res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">0</setvar>");
                                 }
                             }
                             res00001.WriteLine("<displayfeedback linkrefid = \"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\"feedbacktype=\"Response\"/>");
@@ -441,10 +485,76 @@ namespace Blackboard_Test_Creator
                         }
                         res00001.WriteLine("</resprocessing>");
                     }
+                    string[] itemFeedback =
+                    {
+                        "<itemfeedback ident=\"correct\" view=\"All\">",
+                        "<flow_mat class=\"Block\">",
+                        "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
+                        "<material>",
+                        "<mat_extension>",
+                        "<mat_formattedtext type=\"HTML\"> &lt; p&gt;Correct&lt;/p&gt;</mat_formattedtext>",
+                        "</mat_extension>",
+                        "</material>",
+                        "</flow_mat>",
+                        "</flow_mat>",
+                        "</itemfeedback>",
+                        "<itemfeedback ident =\"incorrect\" view=\"All\">",
+                        "<flow_mat class=\"Block\">",
+                        "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
+                        "<material>",
+                        "<mat_extension>",
+                        "<mat_formattedtext type=\"HTML\">&lt; p&gt;Incorrect&lt;/p&gt;</mat_formattedtext>",
+                        "</mat_extension>",
+                        "</material>",
+                        "</flow_mat>",
+                        "</flow_mat>",
+                        "</itemfeedback>"
+                    };
+                    foreach (string line in itemFeedback)
+                        res00001.WriteLine(line);
+                    foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
+                    {
+                        string[] individualAnswerFeedbackpt1 =
+                        {
+                            "<itemfeedback ident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\" view=\"All\">",
+                            "<solution view=\"All\" feedbackstyle=\"Complete\">",
+                            "<solutionmaterial>",
+                            "<flow_mat class=\"Block\">",
+                            "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
+                            "<material>",
+                            "<mat_extension>"
+                        };
+                        foreach(string line in individualAnswerFeedbackpt1)
+                            res00001.WriteLine(line);
+                        foreach (OpenXmlElement answer in list)
+                        {
+                            if (answer.Descendants<Color>().Any())
+                            {
+                                answerResult = "correct";
+                            }
+                            else
+                            {
+                                answerResult = "incorrect";
+                            }
+                        }
+                        string[] individualAnswerFeedbackpt2 =
+                        {
+                            "<mat_formattedtext type=\"HTML\">&lt; p&gt;" + answerResult + "&lt;/p&gt;</mat_formattedtext>",
+                            "</mat_extension>",
+                            "</material>",
+                            "</flow_mat>",
+                            "</flow_mat>",
+                            "</solutionmaterial>",
+                            "</solution>",
+                            "</itemfeedback>"
+                        };
+                        foreach (string line in individualAnswerFeedbackpt2)
+                            res00001.WriteLine(line);
+                    }
                 }
+                res00001.WriteLine("</item>");
                 foreach(string line in res0001assessdataend)
                     res00001.WriteLine(line);
-                
             }
         }
         public void Createres00002()
