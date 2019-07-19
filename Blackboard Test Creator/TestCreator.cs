@@ -55,7 +55,7 @@ namespace Blackboard_Test_Creator
             "<flow_mat class=\"Block\">",
             "<material>",
             "<mat_extension>",
-            "<mat_formattedtext type=\"HTML\"/>",
+            "<mat_formattedtext type=\"HTML\" />",
             "</mat_extension>",
             "</material>",
             "</flow_mat>",
@@ -64,7 +64,7 @@ namespace Blackboard_Test_Creator
             "<flow_mat class=\"Block\">",
             "<material>",
             "<mat_extension>",
-            "<mat_formattedtext type=\"HTML\"/>",
+            "<mat_formattedtext type=\"HTML\" />",
             "</mat_extension>",
             "</material>",
             "</flow_mat>",
@@ -151,7 +151,7 @@ namespace Blackboard_Test_Creator
                 "<manifest identifier=\"man00001\"",
                 "xmlns:bb=\"http://www.blackboard.com/content-packaging/\">",
                 "<organizations default=\"toc00001\">",
-                "<organization identifier=\"toc00001\"/>",
+                "<organization identifier=\"toc00001\" />",
                 "</organizations>",
                 "<resources>",
                 "<resource",
@@ -159,31 +159,31 @@ namespace Blackboard_Test_Creator
                     "bb:title=\"" + Form1.TestName + "\"",
                     "xml:base=\"res00001\"",
                     "identifier=\"res00001\"",
-                    "type=\"assessment/x-bb-qti-test\"/>",
+                    "type=\"assessment/x-bb-qti-test\" />",
                 "<resource",
                     "bb:file=\"res00002.dat\"",
                     "bb:title=\"Assessment Creation Settings\"",
                     "xml:base=\"res00002\"",
                     "identifier=\"res00002\"",
-                    "type=\"course/x-bb-courseassessmentcreationsettings\"/>",
+                    "type=\"course/x-bb-courseassessmentcreationsettings\" />",
                 "<resource",
                     "bb:file=\"res00003.dat\"",
                     "bb:title=\"LearnRubrics\"",
                     "xml:base=\"res00003\"",
                     "identifier=\"res00003\"",
-                    "type=\"course/x-bb-rubrics\"/>",
+                    "type=\"course/x-bb-rubrics\" />",
                 "<resource",
                     "bb:file=\"res00004.dat\"",
                     "bb:title=\"CSResourceLinks\"",
                     "xml:base=\"res00004\"",
                     "identifier=\"res00004\"",
-                    "type=\"course/x-bb-csresourcelinks\"/>",
+                    "type=\"course/x-bb-csresourcelinks\" />",
                 "<resource",
                     "bb:file=\"res00005.dat\"",
                     "bb:title=\"CourseRubricAssociation\"",
                     "xml:base=\"res00005\"",
                     "identifier=\"res00005\"",
-                    "type=\"course/x-bb-crsrubricassocation\"/>",
+                    "type=\"course/x-bb-crsrubricassocation\" />",
                 "</resources>",
                 "</manifest>"
             };
@@ -233,9 +233,9 @@ namespace Blackboard_Test_Creator
                     }
                     string[] res0001itemmetadata =
                     {
-                    "<item title=\"" + Form1.TestName + question.QuestionNumber + "\" maxattempts=\"0\">",
+                    "<item title=\"" + Form1.TestName + "_" + question.QuestionNumber + "\" maxattempts=\"0\">",
                     "<itemmetadata>",
-                    "<bbmd_asi_object_id>question" + question.QuestionNumber + "</bbmd_asi_object_id>",
+                    "<bbmd_asi_object_id>question_" + question.QuestionNumber + "</bbmd_asi_object_id>",
                     "<bbmd_asitype>Item</bbmd_asitype>",
                     "<bbmd_assessmenttype>Test</bbmd_assessmenttype>",
                     "<bbmd_sectiontype>Subsection</bbmd_sectiontype>",
@@ -260,7 +260,7 @@ namespace Blackboard_Test_Creator
                     "<flow class=\"FORMATTED_TEXT_BLOCK\">",
                     "<material>",
                     "<mat_extension>",
-                    "<mat_formattedtext type=\"HTML\" >"
+                    "<mat_formattedtext type=\"HTML\">"
                     };
                     foreach (string line in res0001itemmetadata)
                         res00001.WriteLine(line);
@@ -268,7 +268,7 @@ namespace Blackboard_Test_Creator
                     {
                         if (paragraph.InnerXml.Contains("Drawing"))
                         {
-                            res00001.WriteLine("&lt;p&gt;&lt;img src=\"@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1\"/&gt;&lt;/p&gt;");
+                            res00001.WriteLine("&lt;p&gt;&lt;img style=&quot;border: 0px solid rgb(0, 0, 0);&quot; alt=&quot;image00" + imagenumber + "&quot; title=&quot;image00" + imagenumber + "&quot; src=&quot;@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1&quot;  /&gt;&lt;/p&gt;");
                             imagenumber += 1;
                         }
                         else
@@ -278,17 +278,18 @@ namespace Blackboard_Test_Creator
                     }
                     string[] endQuestionTextBlock =
                     {
-                    "</mat_extension>",
-                    "</material>",
-                    "</flow>",
-                    "</flow>"
+                        "</mat_formattedtext>",
+                        "</mat_extension>",
+                        "</material>",
+                        "</flow>",
+                        "</flow>"
                     };
                     foreach (string line in endQuestionTextBlock)
                         res00001.WriteLine(line);
                     string[] responseBlockStart =
                     {
                     "<flow class=\"RESPONSE_BLOCK\">",
-                    "<response_lid ident=\"response\" rcardinality=\"Multiple\" rtiming=\"No\">",
+                    "<response_lid ident=\"response\" rcardinality=\"" + rcardinality + "\" rtiming=\"No\">",
                     "<render_choice shuffle=\"No\" minnumber=\"0\" maxnumber=\"0\">"
                     };
                     foreach (string line in responseBlockStart)
@@ -310,7 +311,7 @@ namespace Blackboard_Test_Creator
                         {
                             if (answer.InnerXml.Contains("Drawing"))
                             {
-                                res00001.WriteLine("&lt;p&gt;&lt;img src=\"@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1\" /&gt;&lt;/p&gt;");
+                                res00001.WriteLine("&lt;p&gt;&lt;img style=&quot;border: 0px solid rgb(0, 0, 0);&quot; alt=&quot;image00" + imagenumber + "&quot; title=&quot;image00" + imagenumber + "&quot; src=&quot;@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1&quot;  /&gt;&lt;/p&gt;");
                                 imagenumber += 1;
                             }
                             else
@@ -346,7 +347,7 @@ namespace Blackboard_Test_Creator
                         {
                         "<resprocessing scoremodel=\"SumOfScores\">",
                         "<outcomes>",
-                        "<decvar varname=\"SCORE\" vartype=\"Decimal\" defaultval=\"0.0\" minvalue=\"0.0\" maxvalue=\"" + Form1.DefaultScore + "\"/>",
+                        "<decvar varname=\"SCORE\" vartype=\"Decimal\" defaultval=\"0.0\" minvalue=\"0.0\" maxvalue=\"" + Form1.QuestionScore + "\" />",
                         "</outcomes>",
                         "<respcondition title=\"correct\">",
                         "<conditionvar>",
@@ -367,14 +368,14 @@ namespace Blackboard_Test_Creator
                         {
                             "</conditionvar>",
                             "<setvar variablename=\"SCORE\" action=\"Set\">SCORE.max</setvar>",
-                            "<displayfeedback linkrefid=\"correct\" feedbacktype=\"Response\"/>",
+                            "<displayfeedback linkrefid=\"correct\" feedbacktype=\"Response\" />",
                             "</respcondition>",
                             "<respcondition title=\"incorrect\">",
                             "<conditionvar>",
-                            "<other/>",
+                            "<other />",
                             "</conditionvar>",
                             "<setvar variablename=\"SCORE\" action=\"Set\">0.0</setvar>",
-                            "<displayfeedback linkrefid=\"incorrect\" feedbacktype=\"Response\"/>",
+                            "<displayfeedback linkrefid=\"incorrect\" feedbacktype=\"Response\" />",
                             "</respcondition>"
                         };
                         foreach (string line in questionEvaluationMid)
@@ -383,7 +384,7 @@ namespace Blackboard_Test_Creator
                         {
                             res00001.WriteLine("<respcondition>");
                             res00001.WriteLine("<conditionvar>");
-                            res00001.WriteLine("<varequal respident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\"case=\"No\"/>)");
+                            res00001.WriteLine("<varequal respident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\"case=\"No\" />)");
                             res00001.WriteLine("</conditionvar>");
                             if(Form1.AnswerNegativePointsEnabled == "true")
                             {
@@ -418,7 +419,7 @@ namespace Blackboard_Test_Creator
                         {
                         "<resprocessing scoremodel=\"SumOfScores\">",
                         "<outcomes>",
-                        "<decvar varname=\"SCORE\" vartype=\"Decimal\" defaultval=\"0.0\" minvalue=\"0.0\" maxvalue=\"" + Form1.DefaultScore + "\"/>",
+                        "<decvar varname=\"SCORE\" vartype=\"Decimal\" defaultval=\"0.0\" minvalue=\"0.0\" maxvalue=\"" + Form1.QuestionScore + "\" />",
                         "</outcomes>",
                         "<respcondition title=\"correct\">",
                         "<conditionvar>"
@@ -440,14 +441,14 @@ namespace Blackboard_Test_Creator
                         {
                             "</conditionvar>",
                             "<setvar variablename=\"SCORE\" action=\"Set\">SCORE.max</setvar>",
-                            "<displayfeedback linkrefid=\"correct\" feedbacktype=\"Response\"/>",
+                            "<displayfeedback linkrefid=\"correct\" feedbacktype=\"Response\" />",
                             "</respcondition>",
                             "<respcondition title=\"incorrect\">",
                             "<conditionvar>",
-                            "<other/>",
+                            "<other />",
                             "</conditionvar>",
                             "<setvar variablename=\"SCORE\" action=\"Set\">0.0</setvar>",
-                            "<displayfeedback linkrefid=\"incorrect\" feedbacktype=\"Response\"/>",
+                            "<displayfeedback linkrefid=\"incorrect\" feedbacktype=\"Response\" />",
                             "</respcondition>"
                         };
                         foreach (string line in questionEvaluationMid)
@@ -456,7 +457,7 @@ namespace Blackboard_Test_Creator
                         {
                             res00001.WriteLine("<respcondition>");
                             res00001.WriteLine("<conditionvar>");
-                            res00001.WriteLine("<varequal respident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\"case=\"No\"/>)");
+                            res00001.WriteLine("<varequal respident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\"case=\"No\" />)");
                             res00001.WriteLine("</conditionvar>");
                             if (Form1.AnswerNegativePointsEnabled == "true")
                             {
@@ -473,14 +474,14 @@ namespace Blackboard_Test_Creator
                             {
                                 if (list.Any(or => or.Descendants<Color>().Any()))
                                 {
-                                    res00001.WriteLine("<setvar variablename =\"SCORE\" action=\"Set\">100</setvar>");
+                                    res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">100</setvar>");
                                 }
                                 else
                                 {
                                     res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">0</setvar>");
                                 }
                             }
-                            res00001.WriteLine("<displayfeedback linkrefid = \"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\"feedbacktype=\"Response\"/>");
+                            res00001.WriteLine("<displayfeedback linkrefid=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\"feedbacktype=\"Response\" />");
                             res00001.WriteLine("</respcondition>");
                         }
                         res00001.WriteLine("</resprocessing>");
@@ -492,7 +493,7 @@ namespace Blackboard_Test_Creator
                         "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
                         "<material>",
                         "<mat_extension>",
-                        "<mat_formattedtext type=\"HTML\"> &lt; p&gt;Correct&lt;/p&gt;</mat_formattedtext>",
+                        "<mat_formattedtext type=\"HTML\">Correct</mat_formattedtext>",
                         "</mat_extension>",
                         "</material>",
                         "</flow_mat>",
@@ -503,7 +504,7 @@ namespace Blackboard_Test_Creator
                         "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
                         "<material>",
                         "<mat_extension>",
-                        "<mat_formattedtext type=\"HTML\">&lt; p&gt;Incorrect&lt;/p&gt;</mat_formattedtext>",
+                        "<mat_formattedtext type=\"HTML\">Incorrect</mat_formattedtext>",
                         "</mat_extension>",
                         "</material>",
                         "</flow_mat>",
@@ -551,8 +552,8 @@ namespace Blackboard_Test_Creator
                         foreach (string line in individualAnswerFeedbackpt2)
                             res00001.WriteLine(line);
                     }
+                    res00001.WriteLine("</item>");
                 }
-                res00001.WriteLine("</item>");
                 foreach(string line in res0001assessdataend)
                     res00001.WriteLine(line);
             }
