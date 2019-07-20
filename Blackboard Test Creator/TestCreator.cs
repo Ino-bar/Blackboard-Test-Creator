@@ -116,10 +116,10 @@ namespace Blackboard_Test_Creator
                 string[] lines =
                 {
                     "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
-                    "<lom xmlns=\"http://www.imsglobal.org/xsd/imsmd_rootv1p2p1\" xmlns:xsi =\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd\">",
+                    "<lom xmlns=\"http://www.imsglobal.org/xsd/imsmd_rootv1p2p1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd\">",
                     "<relation>",
                     "<resource>",
-                    "<identifier>0000001_1#/courses/FAKE-COURSE/" + Form1.TestName + "/image00" + i + ".png</identifier>",
+                    "<identifier>000000" + i + "_1#/courses/FAKE-COURSE/" + Form1.TestName + "/image00" + i + ".png</identifier>",
                     "</resource>",
                     "</relation>",
                     "</lom>"
