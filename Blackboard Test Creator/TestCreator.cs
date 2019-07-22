@@ -470,7 +470,7 @@ namespace Blackboard_Test_Creator
                         {
                             res00001.WriteLine("<respcondition>");
                             res00001.WriteLine("<conditionvar>");
-                            res00001.WriteLine("<varequal respident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\" case=\"No\" />)");
+                            res00001.WriteLine("<varequal respident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\" case=\"No\" />");
                             res00001.WriteLine("</conditionvar>");
                             if (Form1.AnswerNegativePointsEnabled == "true")
                             {
