@@ -21,6 +21,7 @@ namespace Blackboard_Test_Creator
         public static string DefaultScore;
         public static string AnswerNegativePointsEnabled;
         public static string AnswerRandomOrderEnabled;
+        public static string AnswerPartialCreditEnabled;
         public Form1()
         {
             InitializeComponent();
@@ -101,6 +102,15 @@ namespace Blackboard_Test_Creator
             {
                 AnswerNegativePointsEnabled = "false";
             }
+            if (allowPartialCreditCheckBox.Checked == true)
+            {
+                AnswerPartialCreditEnabled = "true";
+            }
+            else if (allowPartialCreditCheckBox.Checked == false)
+            {
+                AnswerPartialCreditEnabled = "false";
+            }
+            
             if (!string.IsNullOrEmpty(questionScoreTextBox.Text))
             {
                 QuestionScore = Int32.Parse(questionScoreTextBox.Text);

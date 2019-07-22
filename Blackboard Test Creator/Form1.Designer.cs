@@ -44,6 +44,7 @@
             this.enableNegativeMarkingCheckBox = new System.Windows.Forms.CheckBox();
             this.chosenFormFilenameLabel = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.allowPartialCreditCheckBox = new System.Windows.Forms.CheckBox();
             this.testSettingsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -106,6 +107,7 @@
             // 
             // testSettingsPanel
             // 
+            this.testSettingsPanel.Controls.Add(this.allowPartialCreditCheckBox);
             this.testSettingsPanel.Controls.Add(this.AnswerRandomOrderEnabledCheckBox);
             this.testSettingsPanel.Controls.Add(this.TestNameLabel);
             this.testSettingsPanel.Controls.Add(this.TestNameTextBox);
@@ -121,7 +123,7 @@
             // AnswerRandomOrderEnabledCheckBox
             // 
             this.AnswerRandomOrderEnabledCheckBox.AutoSize = true;
-            this.AnswerRandomOrderEnabledCheckBox.Location = new System.Drawing.Point(12, 60);
+            this.AnswerRandomOrderEnabledCheckBox.Location = new System.Drawing.Point(12, 82);
             this.AnswerRandomOrderEnabledCheckBox.Name = "AnswerRandomOrderEnabledCheckBox";
             this.AnswerRandomOrderEnabledCheckBox.Size = new System.Drawing.Size(169, 17);
             this.AnswerRandomOrderEnabledCheckBox.TabIndex = 6;
@@ -166,7 +168,7 @@
             // allowOverallNegativeScoreCheckBox
             // 
             this.allowOverallNegativeScoreCheckBox.AutoSize = true;
-            this.allowOverallNegativeScoreCheckBox.Location = new System.Drawing.Point(12, 37);
+            this.allowOverallNegativeScoreCheckBox.Location = new System.Drawing.Point(12, 59);
             this.allowOverallNegativeScoreCheckBox.Name = "allowOverallNegativeScoreCheckBox";
             this.allowOverallNegativeScoreCheckBox.Size = new System.Drawing.Size(164, 17);
             this.allowOverallNegativeScoreCheckBox.TabIndex = 1;
@@ -199,6 +201,16 @@
             this.progressBar1.Size = new System.Drawing.Size(156, 23);
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.progressBar1.TabIndex = 8;
+            // 
+            // allowPartialCreditCheckBox
+            // 
+            this.allowPartialCreditCheckBox.AutoSize = true;
+            this.allowPartialCreditCheckBox.Location = new System.Drawing.Point(12, 36);
+            this.allowPartialCreditCheckBox.Name = "allowPartialCreditCheckBox";
+            this.allowPartialCreditCheckBox.Size = new System.Drawing.Size(113, 17);
+            this.allowPartialCreditCheckBox.TabIndex = 7;
+            this.allowPartialCreditCheckBox.Text = "Allow Partial Credit";
+            this.allowPartialCreditCheckBox.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -242,6 +254,7 @@
         private System.Windows.Forms.TextBox TestNameTextBox;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.CheckBox AnswerRandomOrderEnabledCheckBox;
+        private System.Windows.Forms.CheckBox allowPartialCreditCheckBox;
     }
 }
 

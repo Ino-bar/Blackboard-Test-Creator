@@ -247,7 +247,7 @@ namespace Blackboard_Test_Creator
                     "<bbmd_canvas_fullcrdt_ind>false</bbmd_canvas_fullcrdt_ind>",
                     "<bbmd_all_fullcredit_ind>false</bbmd_all_fullcredit_ind>",
                     "<bbmd_numbertype>letter_lower</bbmd_numbertype>",
-                    "<bbmd_partialcredit>" + Form1.AnswerNegativePointsEnabled + "</bbmd_partialcredit>",
+                    "<bbmd_partialcredit>" + Form1.AnswerPartialCreditEnabled + "</bbmd_partialcredit>",
                     "<bbmd_orientationtype>vertical</bbmd_orientationtype>",
                     "<bbmd_is_extracredit>false</bbmd_is_extracredit>",
                     "<qmd_absolutescore_max>" + Form1.QuestionScore + "</qmd_absolutescore_max>",
@@ -358,15 +358,27 @@ namespace Blackboard_Test_Creator
                             res00001.WriteLine(line);
                         foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
                         {
-                            List<string> respident = new List<string>();
-                            respident.Add("<not>");
-                            respident.Add("<varequal respident=\"response\" case=\"No\">answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "</varequal>");
-                            respident.Add("</not>");
-                            foreach (string line in respident)
-                                res00001.WriteLine(line);
+                            if (list.Any(or => or.Descendants<Color>().Any()))
+                            { 
+                                List<string> respident = new List<string>();
+                                respident.Add("<varequal respident=\"response\" case=\"No\">answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "</varequal>");
+                                foreach (string line in respident)
+                                    res00001.WriteLine(line);
+                            }
+                            else
+                            {
+                                List<string> respident = new List<string>();
+                                respident.Add("<not>");
+                                respident.Add("<varequal respident=\"response\" case=\"No\">answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "</varequal>");
+                                respident.Add("</not>");
+                                foreach (string line in respident)
+                                    res00001.WriteLine(line);
+                            }
+
                         }
                         string[] questionEvaluationMid =
                         {
+                            "</and>",
                             "</conditionvar>",
                             "<setvar variablename=\"SCORE\" action=\"Set\">SCORE.max</setvar>",
                             "<displayfeedback linkrefid=\"correct\" feedbacktype=\"Response\" />",
@@ -385,7 +397,7 @@ namespace Blackboard_Test_Creator
                         {
                             res00001.WriteLine("<respcondition>");
                             res00001.WriteLine("<conditionvar>");
-                            res00001.WriteLine("<varequal respident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\"case=\"No\" />)");
+                            res00001.WriteLine("<varequal respident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\" case=\"No\" />");
                             res00001.WriteLine("</conditionvar>");
                             if(Form1.AnswerNegativePointsEnabled == "true")
                             {
@@ -409,7 +421,7 @@ namespace Blackboard_Test_Creator
                                     res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">0</setvar>");
                                 }
                             }
-                            res00001.WriteLine("<displayfeedback linkrefid=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\"feedbacktype=\"Response\"/>");
+                            res00001.WriteLine("<displayfeedback linkrefid=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\" feedbacktype=\"Response\"/>");
                             res00001.WriteLine("</respcondition>");
                         }
                         res00001.WriteLine("</resprocessing>");
@@ -458,7 +470,7 @@ namespace Blackboard_Test_Creator
                         {
                             res00001.WriteLine("<respcondition>");
                             res00001.WriteLine("<conditionvar>");
-                            res00001.WriteLine("<varequal respident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\"case=\"No\" />)");
+                            res00001.WriteLine("<varequal respident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\" case=\"No\" />)");
                             res00001.WriteLine("</conditionvar>");
                             if (Form1.AnswerNegativePointsEnabled == "true")
                             {
@@ -482,7 +494,7 @@ namespace Blackboard_Test_Creator
                                     res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">0</setvar>");
                                 }
                             }
-                            res00001.WriteLine("<displayfeedback linkrefid=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\"feedbacktype=\"Response\" />");
+                            res00001.WriteLine("<displayfeedback linkrefid=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\" feedbacktype=\"Response\" />");
                             res00001.WriteLine("</respcondition>");
                         }
                         res00001.WriteLine("</resprocessing>");
@@ -500,7 +512,7 @@ namespace Blackboard_Test_Creator
                         "</flow_mat>",
                         "</flow_mat>",
                         "</itemfeedback>",
-                        "<itemfeedback ident =\"incorrect\" view=\"All\">",
+                        "<itemfeedback ident=\"incorrect\" view=\"All\">",
                         "<flow_mat class=\"Block\">",
                         "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
                         "<material>",
