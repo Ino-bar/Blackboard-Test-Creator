@@ -35,6 +35,7 @@
             this.chooseSavePathButton = new System.Windows.Forms.Button();
             this.savePathTextBox = new System.Windows.Forms.TextBox();
             this.testSettingsPanel = new System.Windows.Forms.Panel();
+            this.allowPartialCreditCheckBox = new System.Windows.Forms.CheckBox();
             this.AnswerRandomOrderEnabledCheckBox = new System.Windows.Forms.CheckBox();
             this.TestNameLabel = new System.Windows.Forms.Label();
             this.TestNameTextBox = new System.Windows.Forms.TextBox();
@@ -44,7 +45,7 @@
             this.enableNegativeMarkingCheckBox = new System.Windows.Forms.CheckBox();
             this.chosenFormFilenameLabel = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.allowPartialCreditCheckBox = new System.Windows.Forms.CheckBox();
+            this.completionIndicatorLabel = new System.Windows.Forms.Label();
             this.testSettingsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,6 +80,7 @@
             // 
             // startButton
             // 
+            this.startButton.Enabled = false;
             this.startButton.Location = new System.Drawing.Point(309, 285);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(75, 23);
@@ -120,6 +122,16 @@
             this.testSettingsPanel.Size = new System.Drawing.Size(231, 208);
             this.testSettingsPanel.TabIndex = 6;
             // 
+            // allowPartialCreditCheckBox
+            // 
+            this.allowPartialCreditCheckBox.AutoSize = true;
+            this.allowPartialCreditCheckBox.Location = new System.Drawing.Point(12, 36);
+            this.allowPartialCreditCheckBox.Name = "allowPartialCreditCheckBox";
+            this.allowPartialCreditCheckBox.Size = new System.Drawing.Size(113, 17);
+            this.allowPartialCreditCheckBox.TabIndex = 7;
+            this.allowPartialCreditCheckBox.Text = "Allow Partial Credit";
+            this.allowPartialCreditCheckBox.UseVisualStyleBackColor = true;
+            // 
             // AnswerRandomOrderEnabledCheckBox
             // 
             this.AnswerRandomOrderEnabledCheckBox.AutoSize = true;
@@ -145,6 +157,7 @@
             this.TestNameTextBox.Name = "TestNameTextBox";
             this.TestNameTextBox.Size = new System.Drawing.Size(213, 20);
             this.TestNameTextBox.TabIndex = 4;
+            this.TestNameTextBox.TextChanged += new System.EventHandler(this.TestNameTextBox_TextChanged);
             // 
             // questionScoreLabel
             // 
@@ -202,21 +215,24 @@
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.progressBar1.TabIndex = 8;
             // 
-            // allowPartialCreditCheckBox
+            // completionIndicatorLabel
             // 
-            this.allowPartialCreditCheckBox.AutoSize = true;
-            this.allowPartialCreditCheckBox.Location = new System.Drawing.Point(12, 36);
-            this.allowPartialCreditCheckBox.Name = "allowPartialCreditCheckBox";
-            this.allowPartialCreditCheckBox.Size = new System.Drawing.Size(113, 17);
-            this.allowPartialCreditCheckBox.TabIndex = 7;
-            this.allowPartialCreditCheckBox.Text = "Allow Partial Credit";
-            this.allowPartialCreditCheckBox.UseVisualStyleBackColor = true;
+            this.completionIndicatorLabel.AutoSize = true;
+            this.completionIndicatorLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.completionIndicatorLabel.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.completionIndicatorLabel.Location = new System.Drawing.Point(366, 240);
+            this.completionIndicatorLabel.Name = "completionIndicatorLabel";
+            this.completionIndicatorLabel.Size = new System.Drawing.Size(51, 13);
+            this.completionIndicatorLabel.TabIndex = 9;
+            this.completionIndicatorLabel.Text = "Complete";
+            this.completionIndicatorLabel.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(477, 320);
+            this.Controls.Add(this.completionIndicatorLabel);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.chosenFormFilenameLabel);
             this.Controls.Add(this.testSettingsPanel);
@@ -255,6 +271,7 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.CheckBox AnswerRandomOrderEnabledCheckBox;
         private System.Windows.Forms.CheckBox allowPartialCreditCheckBox;
+        private System.Windows.Forms.Label completionIndicatorLabel;
     }
 }
 

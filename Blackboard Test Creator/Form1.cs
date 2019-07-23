@@ -26,7 +26,6 @@ namespace Blackboard_Test_Creator
         {
             InitializeComponent();
         }
-
         private void chooseFormButton_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog getTestForm= new OpenFileDialog())
@@ -42,6 +41,10 @@ namespace Blackboard_Test_Creator
                 }
                 QuestionFormLoader questionFormLoader = new QuestionFormLoader();
                 questionFormLoader.FormLoader();
+            }
+            if(!string.IsNullOrEmpty(TestFilePath) && !string.IsNullOrEmpty(TestName))
+            {
+                startButton.Enabled = true;
             }
         }
 
@@ -67,6 +70,10 @@ namespace Blackboard_Test_Creator
                     savePathTextBox.Text = TestFilePath;
                 }
             }
+            if (!string.IsNullOrEmpty(TestFormFilePath) && !string.IsNullOrEmpty(TestName))
+            {
+                startButton.Enabled = true;
+            }
         }
 
         private void questionScoreTextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -90,6 +97,7 @@ namespace Blackboard_Test_Creator
             progressBar1.MarqueeAnimationSpeed = 0;
             progressBar1.Style = ProgressBarStyle.Blocks;
             progressBar1.Value = progressBar1.Minimum;
+            completionIndicatorLabel.Visible = true;
         }
         private void startButton_Click(object sender, EventArgs e)
         {
@@ -149,6 +157,15 @@ namespace Blackboard_Test_Creator
                 //QuestionFormLoader.wordprocessingDocument.Close();
                 //QuestionFormLoader.stream.Close();
                 //QuestionFormLoader.wordprocessingDocument.Dispose();
+            }
+        }
+
+        private void TestNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            TestName = TestNameTextBox.Text;
+            if (!string.IsNullOrEmpty(TestFormFilePath) && !string.IsNullOrEmpty(TestFilePath))
+            {
+                startButton.Enabled = true;
             }
         }
     }

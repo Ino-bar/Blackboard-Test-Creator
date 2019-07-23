@@ -10,6 +10,8 @@ using System.Diagnostics;
 using DocumentFormat.OpenXml.Wordprocessing;
 using DocumentFormat.OpenXml;
 using Color = DocumentFormat.OpenXml.Wordprocessing.Color;
+using System.IO.Compression;
+
 
 namespace Blackboard_Test_Creator
 {
@@ -25,6 +27,7 @@ namespace Blackboard_Test_Creator
         static int totalScore = QuestionFormLoader.questionList.Count() * Form1.QuestionScore;
         List<string> questionParagraphs = new List<string>();
         List<string> answerParagraphs = new List<string>();
+        Dictionary<string, string> fileList = new Dictionary<string, string>();
         string[] res0001assessdata =
         {
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
@@ -143,6 +146,7 @@ namespace Blackboard_Test_Creator
             {
                 BBPackage.WriteLine("cx.package.info.version=6.0");
             }
+            fileList.Add(path, ".bb-package-info");
         }
         public void Createimsmanifest()
         {
@@ -195,10 +199,12 @@ namespace Blackboard_Test_Creator
                 foreach (string line in lines)
                     imsmanifest.WriteLine(line);
             }
+            fileList.Add(path, "imsmanifest.xml");
         }
         public void Createres00001()
         {
             string path = savePath + "\\res00001.dat";
+            fileList.Add(path, "res00001.dat");
             using (StreamWriter res00001 = new StreamWriter(path))
             {
                 //FileStream res00001 = CreateFile(savePath, "res00001.dat");
@@ -596,6 +602,7 @@ namespace Blackboard_Test_Creator
             };
             //FileStream res00002 = CreateFile(savePath, "res00002.dat");
             string path = savePath + "\\res00002.dat";
+            fileList.Add(path, "res00002.dat");
             using (StreamWriter res00002 = new StreamWriter(path))
             {
                 foreach (string line in lines)
@@ -615,27 +622,50 @@ namespace Blackboard_Test_Creator
                 "<cms_resource_link_list/>"
             };
             String[] res00005lines =
-    {
+            {
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
                 "<COURSERUBRICASSOCIATIONS/>"
             };
             string res00003path = savePath + "\\res00003.dat";
+            fileList.Add(res00003path, "res00003.dat");
             using (StreamWriter res00003 = new StreamWriter(res00003path))
             {
                 foreach (string line in res00003lines)
                     res00003.WriteLine(line);
             }
             string res00004path = savePath + "\\res00004.dat";
+            fileList.Add(res00004path, "res00004.dat");
             using (StreamWriter res00004 = new StreamWriter(res00004path))
             {
                 foreach (string line in res00004lines)
-                    res00004.WriteLine(line);
+                    res00004.WriteLine(line, "res00004.dat");
             }
             string res00005path = savePath + "\\res00005.dat";
+            fileList.Add(res00005path, "res00005.dat");
             using (StreamWriter res00005 = new StreamWriter(res00005path))
             {
                 foreach (string line in res00005lines)
                     res00005.WriteLine(line);
+            }
+        }
+        public void Createzip()
+        {
+            using (FileStream testzip = new FileStream(savePath + "\\" + Form1.TestName + ".zip", FileMode.OpenOrCreate))
+            {
+                using (ZipArchive archive = new ZipArchive(testzip, ZipArchiveMode.Update))
+                { 
+                    foreach(KeyValuePair<string, string> file in fileList)
+                    {
+                        archive.CreateEntryFromFile(file.Key, file.Value);
+                        //archive.ExtractToDirectory(savePath);
+                    }
+                    DirectoryInfo Images = new DirectoryInfo(savePath + "\\csfiles\\home_dir");
+                    FileInfo[] files = Images.GetFiles("*");
+                    foreach(FileInfo file in files)
+                    {
+                        archive.CreateEntryFromFile(savePath + "\\csfiles\\home_dir" + "\\" + file.Name, "csfiles\\home_dir" + "/" + file.Name);
+                    }
+                }
             }
         }
     }
