@@ -210,25 +210,23 @@ namespace Blackboard_Test_Creator
                 //FileStream res00001 = CreateFile(savePath, "res00001.dat");
                 foreach (string line in res0001assessdata)
                     res00001.WriteLine(line);
+
                 foreach (var question in QuestionFormLoader.questionList)
                 {
-                    if (question.AnswerParts.Count() <= 2)
+                    switch(question.QuestionType.InnerText)
                     {
-                        questionType = "True or False";
-                        rcardinality = "Single";
-                    }
-                    else if (question.AnswerParts.Count() > 2)
-                    {
-                        if (question.CorrectAnswers.Count() >= 2)
-                        {
+                        case "True or False Question":
+                            questionType = "True or False";
+                            rcardinality = "Single";
+                            break;
+                        case "Multiple Answer Question":
                             questionType = "Multiple Answer";
                             rcardinality = "Multiple";
-                        }
-                        else if (question.CorrectAnswers.Count < 2)
-                        {
+                            break;
+                        case "Multiple Choice Question":
                             questionType = "Multiple Choice";
                             rcardinality = "Single";
-                        }
+                            break;
                     }
                     if (Form1.AnswerNegativePointsEnabled == "true")
                     {
@@ -579,6 +577,21 @@ namespace Blackboard_Test_Creator
         }
         public void Createres00002()
         {
+            string path = savePath + "\\res00002.dat";
+            fileList.Add(path, "res00002.dat");
+            using (StreamWriter res00002 = new StreamWriter(path))
+            {
+                res00002.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+                foreach(var question in QuestionFormLoader.questionList)
+                {
+
+                }
+            }
+        }
+        public void Createres00003()
+        { }
+        public void Createres00004()
+        {
             string[] lines =
             {
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
@@ -601,51 +614,51 @@ namespace Blackboard_Test_Creator
                 "</ASSESSMENTCREATIONSETTINGS>"
             };
             //FileStream res00002 = CreateFile(savePath, "res00002.dat");
-            string path = savePath + "\\res00002.dat";
-            fileList.Add(path, "res00002.dat");
-            using (StreamWriter res00002 = new StreamWriter(path))
+            string path = savePath + "\\res00004.dat";
+            fileList.Add(path, "res00004.dat");
+            using (StreamWriter res00004 = new StreamWriter(path))
             {
                 foreach (string line in lines)
-                    res00002.WriteLine(line);
+                    res00004.WriteLine(line);
             }
         }
-        public void Createres00003to5()
+        public void Createres00005to7()
         {
-            String[] res00003lines =
+            String[] res00005lines =
             {
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
                 "<LEARNRUBRICS/>"
             };
-            String[] res00004lines =
+            String[] res00006lines =
                 {
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
                 "<cms_resource_link_list/>"
             };
-            String[] res00005lines =
+            String[] res00007lines =
             {
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
                 "<COURSERUBRICASSOCIATIONS/>"
             };
-            string res00003path = savePath + "\\res00003.dat";
-            fileList.Add(res00003path, "res00003.dat");
-            using (StreamWriter res00003 = new StreamWriter(res00003path))
-            {
-                foreach (string line in res00003lines)
-                    res00003.WriteLine(line);
-            }
-            string res00004path = savePath + "\\res00004.dat";
-            fileList.Add(res00004path, "res00004.dat");
-            using (StreamWriter res00004 = new StreamWriter(res00004path))
-            {
-                foreach (string line in res00004lines)
-                    res00004.WriteLine(line, "res00004.dat");
-            }
             string res00005path = savePath + "\\res00005.dat";
             fileList.Add(res00005path, "res00005.dat");
             using (StreamWriter res00005 = new StreamWriter(res00005path))
             {
                 foreach (string line in res00005lines)
                     res00005.WriteLine(line);
+            }
+            string res00006path = savePath + "\\res00006.dat";
+            fileList.Add(res00006path, "res00006.dat");
+            using (StreamWriter res00006 = new StreamWriter(res00006path))
+            {
+                foreach (string line in res00006lines)
+                    res00006.WriteLine(line, "res00006.dat");
+            }
+            string res00007path = savePath + "\\res00007.dat";
+            fileList.Add(res00007path, "res00007.dat");
+            using (StreamWriter res00007 = new StreamWriter(res00007path))
+            {
+                foreach (string line in res00007lines)
+                    res00007.WriteLine(line);
             }
         }
         public void Createzip()

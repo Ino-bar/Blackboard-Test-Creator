@@ -27,6 +27,7 @@ namespace Blackboard_Test_Creator
     public class Question
     {
         public OpenXmlElement QuestionItem { get; set; }
+        public OpenXmlElement QuestionType { get; set; }
         public int QuestionNumber { get; set; }
         public List<Paragraph> QuestionTextElements { get; set; }
         public List<OpenXmlElement> AnswerParts { get; set; }
@@ -35,6 +36,7 @@ namespace Blackboard_Test_Creator
         public List<OpenXmlElement> CorrectAnswers { get; set; }
         public Dictionary<string, int> QuestionImages { get; set; }
         public Dictionary<string, int> AnswerImages { get; set; }
+        public List<string> QuestionTopics { get; set; }
     }
     class QuestionFormLoader
     {
@@ -81,6 +83,14 @@ namespace Blackboard_Test_Creator
                     Question NewQuestion = new Question();
                     questionList.Add(NewQuestion);
                     NewQuestion.QuestionItem = questionPart[i];
+                    foreach(Tag part in containerpart.Descendants<Tag>())
+                    { 
+                        if(part.OuterXml.Contains("Type"))
+                        {
+                            NewQuestion.QuestionType = part.Parent.Parent;
+                                Debug.WriteLine(NewQuestion.QuestionType.InnerText);
+                        }
+                    }
                     NewQuestion.QuestionNumber = i + 1;
                     NewQuestion.QuestionTextElements = new List<Paragraph>();
                     NewQuestion.QuestionTextElements = NewQuestion.QuestionItem.Descendants<Paragraph>().ToList();
