@@ -167,27 +167,39 @@ namespace Blackboard_Test_Creator
                     "type=\"assessment/x-bb-qti-test\" />",
                 "<resource",
                     "bb:file=\"res00002.dat\"",
-                    "bb:title=\"Assessment Creation Settings\"",
+                    "bb:title=\"Categories\"",
                     "xml:base=\"res00002\"",
                     "identifier=\"res00002\"",
-                    "type=\"course/x-bb-courseassessmentcreationsettings\" />",
+                    "type=\"course/x-bb-category\" />",
                 "<resource",
                     "bb:file=\"res00003.dat\"",
-                    "bb:title=\"LearnRubrics\"",
+                    "bb:title=\"Item Categories\"",
                     "xml:base=\"res00003\"",
                     "identifier=\"res00003\"",
-                    "type=\"course/x-bb-rubrics\" />",
+                    "type=\"course/x-bb-itemcategory\" />",
                 "<resource",
                     "bb:file=\"res00004.dat\"",
-                    "bb:title=\"CSResourceLinks\"",
+                    "bb:title=\"Assessment Creation Settings\"",
                     "xml:base=\"res00004\"",
                     "identifier=\"res00004\"",
-                    "type=\"course/x-bb-csresourcelinks\" />",
+                    "type=\"course/x-bb-courseassessmentcreationsettings\" />",
                 "<resource",
                     "bb:file=\"res00005.dat\"",
-                    "bb:title=\"CourseRubricAssociation\"",
+                    "bb:title=\"LearnRubrics\"",
                     "xml:base=\"res00005\"",
                     "identifier=\"res00005\"",
+                    "type=\"course/x-bb-rubrics\" />",
+                "<resource",
+                    "bb:file=\"res00006.dat\"",
+                    "bb:title=\"CSResourceLinks\"",
+                    "xml:base=\"res00006\"",
+                    "identifier=\"res00006\"",
+                    "type=\"course/x-bb-csresourcelinks\" />",
+                "<resource",
+                    "bb:file=\"res00007.dat\"",
+                    "bb:title=\"CourseRubricAssociation\"",
+                    "xml:base=\"res00007\"",
+                    "identifier=\"res00007\"",
                     "type=\"course/x-bb-crsrubricassocation\" />",
                 "</resources>",
                 "</manifest>"
@@ -582,14 +594,81 @@ namespace Blackboard_Test_Creator
             using (StreamWriter res00002 = new StreamWriter(path))
             {
                 res00002.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-                foreach(var question in QuestionFormLoader.questionList)
-                {
-
+                res00002.WriteLine("<CATEGORIES>");
+                foreach(Text value in QuestionFormLoader.QuestionTopics)
+                { 
+                    string[] lines =
+                    {
+                        "<CATEGORY id=\"" + value.InnerText + "\">",
+                        "<TITLE>" + value.InnerText + "</TITLE>",
+                        "<TYPE>learning_objective</TYPE>",
+                        "<COURSEID",
+                        "value =\"FAKE-COURSE\"/>",
+                        "</CATEGORY>"
+                    };
+                    foreach (string line in lines)
+                        res00002.WriteLine(line);
                 }
+                foreach (Text value in QuestionFormLoader.QuestionDifficulty)
+                {
+                    string[] lines =
+                    {
+                        "<CATEGORY id=\"" + value.InnerText + "\">",
+                        "<TITLE>" + value.InnerText + "</TITLE>",
+                        "<TYPE>level_of_difficulty</TYPE>",
+                        "<COURSEID",
+                        "value =\"FAKE-COURSE\"/>",
+                        "</CATEGORY>"
+                    };
+                    foreach (string line in lines)
+                        res00002.WriteLine(line);
+                }
+                res00002.WriteLine("</CATEGORIES>");
             }
         }
         public void Createres00003()
-        { }
+        {
+            string path = savePath + "\\res00003.dat";
+            fileList.Add(path, "res00003.dat");
+            using (StreamWriter res00003 = new StreamWriter(path))
+            {
+                int i = 1;
+                res00003.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+                res00003.WriteLine("<ITEMCATEGORIES>");
+                foreach(var question in QuestionFormLoader.questionList)
+                { 
+                    foreach (var topic in question.Topics)
+                    {
+                        
+                        string[] lines =
+                        {
+                            "<ITEMCATEGORY id=\"_000000" + i +"_1\">",
+                            "<CATEGORYID value=\"" + topic.Key.InnerText + "\"/>",
+                            "<QUESTIONID value=\"question_" + topic.Value + "\"/>",
+                            "</ITEMCATEGORY>"
+                        };
+                        foreach (string line in lines)
+                            res00003.WriteLine(line);
+                        i++;
+                    }
+                    foreach (var topic in question.Difficulty)
+                    {
+
+                        string[] lines =
+                        {
+                            "<ITEMCATEGORY id=\"_000000" + i +"_1\">",
+                            "<CATEGORYID value=\"" + topic.Key.InnerText + "\"/>",
+                            "<QUESTIONID value=\"question_" + topic.Value + "\"/>",
+                            "</ITEMCATEGORY>"
+                        };
+                        foreach (string line in lines)
+                            res00003.WriteLine(line);
+                        i++;
+                    }
+                }
+                res00003.WriteLine("</ITEMCATEGORIES>");
+            }
+        }
         public void Createres00004()
         {
             string[] lines =

@@ -36,7 +36,8 @@ namespace Blackboard_Test_Creator
         public List<OpenXmlElement> CorrectAnswers { get; set; }
         public Dictionary<string, int> QuestionImages { get; set; }
         public Dictionary<string, int> AnswerImages { get; set; }
-        public List<string> QuestionTopics { get; set; }
+        public Dictionary<Text, int> Topics { get; set; }
+        public Dictionary<Text, int> Difficulty { get; set; }
     }
     class QuestionFormLoader
     {
@@ -49,6 +50,8 @@ namespace Blackboard_Test_Creator
         public static List<OpenXmlElement> questionPart = new List<OpenXmlElement>();
         List<OpenXmlElement> containerPart = new List<OpenXmlElement>();
         public static List<ImagePart> imgPart;
+        public static List<Text> QuestionTopics = new List<Text>();
+        public static List<Text> QuestionDifficulty = new List<Text>();
         int imageNumber = 1;
         public void FormLoader()
         {
@@ -83,15 +86,40 @@ namespace Blackboard_Test_Creator
                     Question NewQuestion = new Question();
                     questionList.Add(NewQuestion);
                     NewQuestion.QuestionItem = questionPart[i];
-                    foreach(Tag part in containerpart.Descendants<Tag>())
+                    NewQuestion.QuestionNumber = i + 1;
+                    NewQuestion.Topics = new Dictionary<Text, int>();
+                    NewQuestion.Difficulty = new Dictionary<Text, int>();
+                    foreach (Tag part in containerpart.Descendants<Tag>())
                     { 
                         if(part.OuterXml.Contains("Type"))
                         {
                             NewQuestion.QuestionType = part.Parent.Parent;
-                                Debug.WriteLine(NewQuestion.QuestionType.InnerText);
+                        }
+                        else if(part.OuterXml.Contains("Topics"))
+                        {
+                            var sdtparent = part.Parent.Parent;
+                            foreach(Text text in sdtparent.Descendants<Text>().ToList())
+                            {
+                                if (!QuestionTopics.Contains(text))
+                                { 
+                                    QuestionTopics.Add(text);
+                                }
+                                NewQuestion.Topics.Add(text, NewQuestion.QuestionNumber);
+                            }
+                        }
+                        else if(part.OuterXml.Contains("Level of Difficulty"))
+                        {
+                            var sdtparent = part.Parent.Parent;
+                            foreach (Text text in sdtparent.Descendants<Text>().ToList())
+                            {
+                                if(!QuestionDifficulty.Contains(text))
+                                {
+                                    QuestionDifficulty.Add(text);
+                                }
+                                NewQuestion.Difficulty.Add(text, NewQuestion.QuestionNumber);
+                            }
                         }
                     }
-                    NewQuestion.QuestionNumber = i + 1;
                     NewQuestion.QuestionTextElements = new List<Paragraph>();
                     NewQuestion.QuestionTextElements = NewQuestion.QuestionItem.Descendants<Paragraph>().ToList();
                     NewQuestion.QuestionImages = new Dictionary<string, int>();
@@ -135,14 +163,6 @@ namespace Blackboard_Test_Creator
                     i++;
                 }
             }
-        }
-        private static string GetWordDocumentContent(string strDoc)
-        {
-            Stream stream = File.Open(strDoc, FileMode.Open);
-            WordprocessingDocument wordprocessingDocument = WordprocessingDocument.Open(stream, true);
-            Body body = wordprocessingDocument.MainDocumentPart.Document.Body;
-            string content = body.InnerText;
-            return content;
         }
     }
 }
