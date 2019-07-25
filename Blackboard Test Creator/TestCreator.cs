@@ -589,84 +589,98 @@ namespace Blackboard_Test_Creator
         }
         public void Createres00002()
         {
-            string path = savePath + "\\res00002.dat";
-            fileList.Add(path, "res00002.dat");
-            using (StreamWriter res00002 = new StreamWriter(path))
-            {
-                res00002.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-                res00002.WriteLine("<CATEGORIES>");
-                foreach(Text value in QuestionFormLoader.QuestionTopics)
-                { 
-                    string[] lines =
-                    {
-                        "<CATEGORY id=\"" + value.InnerText + "\">",
-                        "<TITLE>" + value.InnerText + "</TITLE>",
-                        "<TYPE>learning_objective</TYPE>",
-                        "<COURSEID",
-                        "value =\"FAKE-COURSE\"/>",
-                        "</CATEGORY>"
-                    };
-                    foreach (string line in lines)
-                        res00002.WriteLine(line);
-                }
-                foreach (Text value in QuestionFormLoader.QuestionDifficulty)
+            if(QuestionFormLoader.QuestionTopics.Count() != 0 || QuestionFormLoader.QuestionDifficulty.Count() != 0)
+            { 
+                string path = savePath + "\\res00002.dat";
+                fileList.Add(path, "res00002.dat");
+                using (StreamWriter res00002 = new StreamWriter(path))
                 {
-                    string[] lines =
+                    res00002.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+                    res00002.WriteLine("<CATEGORIES>");
+                    foreach(Text value in QuestionFormLoader.QuestionTopics)
+                    { 
+                        string[] lines =
+                        {
+                            "<CATEGORY id=\"" + value.InnerText + "\">",
+                            "<TITLE>" + value.InnerText + "</TITLE>",
+                            "<TYPE>learning_objective</TYPE>",
+                            "<COURSEID",
+                            "value =\"FAKE-COURSE\"/>",
+                            "</CATEGORY>"
+                        };
+                        foreach (string line in lines)
+                            res00002.WriteLine(line);
+                    }
+                    foreach (Text value in QuestionFormLoader.QuestionDifficulty)
                     {
-                        "<CATEGORY id=\"" + value.InnerText + "\">",
-                        "<TITLE>" + value.InnerText + "</TITLE>",
-                        "<TYPE>level_of_difficulty</TYPE>",
-                        "<COURSEID",
-                        "value =\"FAKE-COURSE\"/>",
-                        "</CATEGORY>"
-                    };
-                    foreach (string line in lines)
-                        res00002.WriteLine(line);
+                        string[] lines =
+                        {
+                            "<CATEGORY id=\"" + value.InnerText + "\">",
+                            "<TITLE>" + value.InnerText + "</TITLE>",
+                            "<TYPE>level_of_difficulty</TYPE>",
+                            "<COURSEID",
+                            "value =\"FAKE-COURSE\"/>",
+                            "</CATEGORY>"
+                        };
+                        foreach (string line in lines)
+                            res00002.WriteLine(line);
+                    }
+                    res00002.WriteLine("</CATEGORIES>");
                 }
-                res00002.WriteLine("</CATEGORIES>");
+            }
+            else
+            {
+                return;
             }
         }
         public void Createres00003()
         {
-            string path = savePath + "\\res00003.dat";
-            fileList.Add(path, "res00003.dat");
-            using (StreamWriter res00003 = new StreamWriter(path))
-            {
-                int i = 1;
-                res00003.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-                res00003.WriteLine("<ITEMCATEGORIES>");
-                foreach(var question in QuestionFormLoader.questionList)
-                { 
-                    foreach (var topic in question.Topics)
-                    {
-                        
-                        string[] lines =
+            if (QuestionFormLoader.QuestionTopics.Count() != 0 || QuestionFormLoader.QuestionDifficulty.Count() != 0)
+            { 
+                string path = savePath + "\\res00003.dat";
+                fileList.Add(path, "res00003.dat");
+                using (StreamWriter res00003 = new StreamWriter(path))
+                {
+                    int i = 1;
+                    res00003.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+                    res00003.WriteLine("<ITEMCATEGORIES>");
+                    foreach(var question in QuestionFormLoader.questionList)
+                    { 
+                        foreach (var topic in question.Topics)
                         {
-                            "<ITEMCATEGORY id=\"_000000" + i +"_1\">",
-                            "<CATEGORYID value=\"" + topic.Key.InnerText + "\"/>",
-                            "<QUESTIONID value=\"question_" + topic.Value + "\"/>",
-                            "</ITEMCATEGORY>"
-                        };
-                        foreach (string line in lines)
-                            res00003.WriteLine(line);
-                        i++;
-                    }
-                    foreach (var topic in question.Difficulty)
-                    {
+                            
+                            string[] lines =
+                            {
+                                "<ITEMCATEGORY id=\"_000000" + i +"_1\">",
+                                "<CATEGORYID value=\"" + topic.Key.InnerText + "\"/>",
+                                "<QUESTIONID value=\"question_" + topic.Value + "\"/>",
+                                "</ITEMCATEGORY>"
+                            };
+                            foreach (string line in lines)
+                                res00003.WriteLine(line);
+                            i++;
+                        }
+                        foreach (var topic in question.Difficulty)
+                        {
 
-                        string[] lines =
-                        {
-                            "<ITEMCATEGORY id=\"_000000" + i +"_1\">",
-                            "<CATEGORYID value=\"" + topic.Key.InnerText + "\"/>",
-                            "<QUESTIONID value=\"question_" + topic.Value + "\"/>",
-                            "</ITEMCATEGORY>"
-                        };
-                        foreach (string line in lines)
-                            res00003.WriteLine(line);
-                        i++;
+                            string[] lines =
+                            {
+                                "<ITEMCATEGORY id=\"_000000" + i +"_1\">",
+                                "<CATEGORYID value=\"" + topic.Key.InnerText + "\"/>",
+                                "<QUESTIONID value=\"question_" + topic.Value + "\"/>",
+                                "</ITEMCATEGORY>"
+                            };
+                            foreach (string line in lines)
+                                res00003.WriteLine(line);
+                            i++;
+                        }
                     }
+                    res00003.WriteLine("</ITEMCATEGORIES>");
                 }
-                res00003.WriteLine("</ITEMCATEGORIES>");
+            }
+            else
+            {
+                return;
             }
         }
         public void Createres00004()
@@ -693,8 +707,17 @@ namespace Blackboard_Test_Creator
                 "</ASSESSMENTCREATIONSETTINGS>"
             };
             //FileStream res00002 = CreateFile(savePath, "res00002.dat");
-            string path = savePath + "\\res00004.dat";
-            fileList.Add(path, "res00004.dat");
+            string path = string.Empty;
+            if (QuestionFormLoader.QuestionTopics.Count() == 0 && QuestionFormLoader.QuestionDifficulty.Count() == 0)
+            { 
+                path = savePath + "\\res00002.dat";
+                fileList.Add(path, "res00002.dat");
+            }
+            else
+            {
+                path = savePath + "\\res00004.dat";
+                fileList.Add(path, "res00004.dat");
+            }
             using (StreamWriter res00004 = new StreamWriter(path))
             {
                 foreach (string line in lines)
@@ -718,22 +741,49 @@ namespace Blackboard_Test_Creator
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
                 "<COURSERUBRICASSOCIATIONS/>"
             };
-            string res00005path = savePath + "\\res00005.dat";
-            fileList.Add(res00005path, "res00005.dat");
+            string res00005path = string.Empty;
+            if (QuestionFormLoader.QuestionTopics.Count() == 0 && QuestionFormLoader.QuestionDifficulty.Count() == 0)
+            { 
+                res00005path = savePath + "\\res00003.dat";
+                fileList.Add(res00005path, "res00003.dat");
+            }
+            else
+            {
+                res00005path = savePath + "\\res00005.dat";
+                fileList.Add(res00005path, "res00005.dat");
+            }
             using (StreamWriter res00005 = new StreamWriter(res00005path))
             {
                 foreach (string line in res00005lines)
                     res00005.WriteLine(line);
             }
-            string res00006path = savePath + "\\res00006.dat";
-            fileList.Add(res00006path, "res00006.dat");
+            string res00006path = string.Empty;
+            if (QuestionFormLoader.QuestionTopics.Count() == 0 && QuestionFormLoader.QuestionDifficulty.Count() == 0)
+            {
+                res00006path = savePath + "\\res00004.dat";
+                fileList.Add(res00006path, "res00004.dat");
+            }
+            else
+            {
+                res00006path = savePath + "\\res00006.dat";
+                fileList.Add(res00006path, "res00006.dat");
+            }
             using (StreamWriter res00006 = new StreamWriter(res00006path))
             {
                 foreach (string line in res00006lines)
-                    res00006.WriteLine(line, "res00006.dat");
+                    res00006.WriteLine(line);
             }
-            string res00007path = savePath + "\\res00007.dat";
-            fileList.Add(res00007path, "res00007.dat");
+            string res00007path = string.Empty;
+            if (QuestionFormLoader.QuestionTopics.Count() == 0 && QuestionFormLoader.QuestionDifficulty.Count() == 0)
+            {
+                res00007path = savePath + "\\res00005.dat";
+                fileList.Add(res00007path, "res00005.dat");
+            }
+            else
+            {
+                res00007path = savePath + "\\res00007.dat";
+                fileList.Add(res00007path, "res00007.dat");
+            }
             using (StreamWriter res00007 = new StreamWriter(res00007path))
             {
                 foreach (string line in res00007lines)
