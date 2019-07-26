@@ -150,68 +150,122 @@ namespace Blackboard_Test_Creator
         }
         public void Createimsmanifest()
         {
-            string[] lines =
-            {
-                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
-                "<manifest identifier=\"man00001\"",
-                "xmlns:bb=\"http://www.blackboard.com/content-packaging/\">",
-                "<organizations default=\"toc00001\">",
-                "<organization identifier=\"toc00001\" />",
-                "</organizations>",
-                "<resources>",
-                "<resource",
-                    "bb:file=\"res00001.dat\"",
-                    "bb:title=\"" + Form1.TestName + "\"",
-                    "xml:base=\"res00001\"",
-                    "identifier=\"res00001\"",
-                    "type=\"assessment/x-bb-qti-test\" />",
-                "<resource",
-                    "bb:file=\"res00002.dat\"",
-                    "bb:title=\"Categories\"",
-                    "xml:base=\"res00002\"",
-                    "identifier=\"res00002\"",
-                    "type=\"course/x-bb-category\" />",
-                "<resource",
-                    "bb:file=\"res00003.dat\"",
-                    "bb:title=\"Item Categories\"",
-                    "xml:base=\"res00003\"",
-                    "identifier=\"res00003\"",
-                    "type=\"course/x-bb-itemcategory\" />",
-                "<resource",
-                    "bb:file=\"res00004.dat\"",
-                    "bb:title=\"Assessment Creation Settings\"",
-                    "xml:base=\"res00004\"",
-                    "identifier=\"res00004\"",
-                    "type=\"course/x-bb-courseassessmentcreationsettings\" />",
-                "<resource",
-                    "bb:file=\"res00005.dat\"",
-                    "bb:title=\"LearnRubrics\"",
-                    "xml:base=\"res00005\"",
-                    "identifier=\"res00005\"",
-                    "type=\"course/x-bb-rubrics\" />",
-                "<resource",
-                    "bb:file=\"res00006.dat\"",
-                    "bb:title=\"CSResourceLinks\"",
-                    "xml:base=\"res00006\"",
-                    "identifier=\"res00006\"",
-                    "type=\"course/x-bb-csresourcelinks\" />",
-                "<resource",
-                    "bb:file=\"res00007.dat\"",
-                    "bb:title=\"CourseRubricAssociation\"",
-                    "xml:base=\"res00007\"",
-                    "identifier=\"res00007\"",
-                    "type=\"course/x-bb-crsrubricassocation\" />",
-                "</resources>",
-                "</manifest>"
-            };
-            //FileStream imsmanifestpath = CreateFile(savePath, "imsmanifest.xml");
-            string path = savePath + "\\imsmanifest.xml";
-            using (StreamWriter imsmanifest = new StreamWriter(path))
-            {
-                foreach (string line in lines)
-                    imsmanifest.WriteLine(line);
+            if (QuestionFormLoader.QuestionTopics.Count() == 0 && QuestionFormLoader.QuestionDifficulty.Count() == 0)
+            { 
+                string[] manifestwithouttopics =
+                {
+                    "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+                    "<manifest identifier=\"man00001\"",
+                    "xmlns:bb=\"http://www.blackboard.com/content-packaging/\">",
+                    "<organizations default=\"toc00001\">",
+                    "<organization identifier=\"toc00001\" />",
+                    "</organizations>",
+                    "<resources>",
+                    "<resource",
+                        "bb:file=\"res00001.dat\"",
+                        "bb:title=\"" + Form1.TestName + "\"",
+                        "xml:base=\"res00001\"",
+                        "identifier=\"res00001\"",
+                        "type=\"assessment/x-bb-qti-test\" />",
+                    "<resource",
+                        "bb:file=\"res00002.dat\"",
+                        "bb:title=\"Assessment Creation Settings\"",
+                        "xml:base=\"res00002\"",
+                        "identifier=\"res00002\"",
+                        "type=\"course/x-bb-courseassessmentcreationsettings\" />",
+                    "<resource",
+                        "bb:file=\"res00003.dat\"",
+                        "bb:title=\"LearnRubrics\"",
+                        "xml:base=\"res00003\"",
+                        "identifier=\"res00003\"",
+                        "type=\"course/x-bb-rubrics\" />",
+                    "<resource",
+                        "bb:file=\"res00004.dat\"",
+                        "bb:title=\"CSResourceLinks\"",
+                        "xml:base=\"res00004\"",
+                        "identifier=\"res00004\"",
+                        "type=\"course/x-bb-csresourcelinks\" />",
+                    "<resource",
+                        "bb:file=\"res00005.dat\"",
+                        "bb:title=\"CourseRubricAssociation\"",
+                        "xml:base=\"res00005\"",
+                        "identifier=\"res00005\"",
+                        "type=\"course/x-bb-crsrubricassocation\" />",
+                    "</resources>",
+                    "</manifest>"
+                };
+                string path = savePath + "\\imsmanifest.xml";
+                using (StreamWriter imsmanifest = new StreamWriter(path))
+                {
+                    foreach (string line in manifestwithouttopics)
+                        imsmanifest.WriteLine(line);
+                }
+                fileList.Add(path, "imsmanifest.xml");
             }
-            fileList.Add(path, "imsmanifest.xml");
+            else { 
+                string[] manifestwithtopics =
+                {
+                    "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+                    "<manifest identifier=\"man00001\"",
+                    "xmlns:bb=\"http://www.blackboard.com/content-packaging/\">",
+                    "<organizations default=\"toc00001\">",
+                    "<organization identifier=\"toc00001\" />",
+                    "</organizations>",
+                    "<resources>",
+                    "<resource",
+                        "bb:file=\"res00001.dat\"",
+                        "bb:title=\"" + Form1.TestName + "\"",
+                        "xml:base=\"res00001\"",
+                        "identifier=\"res00001\"",
+                        "type=\"assessment/x-bb-qti-test\" />",
+                    "<resource",
+                        "bb:file=\"res00002.dat\"",
+                        "bb:title=\"Categories\"",
+                        "xml:base=\"res00002\"",
+                        "identifier=\"res00002\"",
+                        "type=\"course/x-bb-category\" />",
+                    "<resource",
+                        "bb:file=\"res00003.dat\"",
+                        "bb:title=\"Item Categories\"",
+                        "xml:base=\"res00003\"",
+                        "identifier=\"res00003\"",
+                        "type=\"course/x-bb-itemcategory\" />",
+                    "<resource",
+                        "bb:file=\"res00004.dat\"",
+                        "bb:title=\"Assessment Creation Settings\"",
+                        "xml:base=\"res00004\"",
+                        "identifier=\"res00004\"",
+                        "type=\"course/x-bb-courseassessmentcreationsettings\" />",
+                    "<resource",
+                        "bb:file=\"res00005.dat\"",
+                        "bb:title=\"LearnRubrics\"",
+                        "xml:base=\"res00005\"",
+                        "identifier=\"res00005\"",
+                        "type=\"course/x-bb-rubrics\" />",
+                    "<resource",
+                        "bb:file=\"res00006.dat\"",
+                        "bb:title=\"CSResourceLinks\"",
+                        "xml:base=\"res00006\"",
+                        "identifier=\"res00006\"",
+                        "type=\"course/x-bb-csresourcelinks\" />",
+                    "<resource",
+                        "bb:file=\"res00007.dat\"",
+                        "bb:title=\"CourseRubricAssociation\"",
+                        "xml:base=\"res00007\"",
+                        "identifier=\"res00007\"",
+                        "type=\"course/x-bb-crsrubricassocation\" />",
+                    "</resources>",
+                    "</manifest>"
+                };
+                string path = savePath + "\\imsmanifest.xml";
+                using (StreamWriter imsmanifest = new StreamWriter(path))
+                {
+                    foreach (string line in manifestwithtopics)
+                        imsmanifest.WriteLine(line);
+                }
+                fileList.Add(path, "imsmanifest.xml");
+            }
+            //FileStream imsmanifestpath = CreateFile(savePath, "imsmanifest.xml");
         }
         public void Createres00001()
         {

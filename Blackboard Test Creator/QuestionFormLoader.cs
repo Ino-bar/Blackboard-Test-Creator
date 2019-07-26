@@ -90,33 +90,53 @@ namespace Blackboard_Test_Creator
                     NewQuestion.Topics = new Dictionary<Text, int>();
                     NewQuestion.Difficulty = new Dictionary<Text, int>();
                     foreach (Tag part in containerpart.Descendants<Tag>())
-                    { 
-                        if(part.OuterXml.Contains("Type"))
+                    {
+                        if (part.OuterXml.Contains("Type"))
                         {
                             NewQuestion.QuestionType = part.Parent.Parent;
                         }
-                        else if(part.OuterXml.Contains("Topics"))
+                        else if (part.OuterXml.Contains("Topics"))
                         {
                             var sdtparent = part.Parent.Parent;
-                            foreach(Text text in sdtparent.Descendants<Text>().ToList())
+                            foreach (Run run in sdtparent.Descendants<Run>().ToList())
                             {
-                                if (!QuestionTopics.Contains(text))
-                                { 
-                                    QuestionTopics.Add(text);
+                                if (run.OuterXml.Contains("PlaceholderText"))
+                                {
+                                    ;
                                 }
-                                NewQuestion.Topics.Add(text, NewQuestion.QuestionNumber);
+                                else
+                                {
+                                    foreach (Text text in sdtparent.Descendants<Text>().ToList())
+                                    {
+                                        if (!QuestionTopics.Contains(text))
+                                        {
+                                            QuestionTopics.Add(text);
+                                        }
+                                        NewQuestion.Topics.Add(text, NewQuestion.QuestionNumber);
+                                    }
+                                }
                             }
                         }
-                        else if(part.OuterXml.Contains("Level of Difficulty"))
+                        else if (part.OuterXml.Contains("Level of Difficulty"))
                         {
                             var sdtparent = part.Parent.Parent;
-                            foreach (Text text in sdtparent.Descendants<Text>().ToList())
+                            foreach (Run run in sdtparent.Descendants<Run>().ToList())
                             {
-                                if(!QuestionDifficulty.Contains(text))
+                                if (run.OuterXml.Contains("PlaceholderText"))
                                 {
-                                    QuestionDifficulty.Add(text);
+                                    ;
                                 }
-                                NewQuestion.Difficulty.Add(text, NewQuestion.QuestionNumber);
+                                else
+                                {
+                                    foreach (Text text in sdtparent.Descendants<Text>().ToList())
+                                    {
+                                        if (!QuestionDifficulty.Contains(text))
+                                        {
+                                            QuestionDifficulty.Add(text);
+                                        }
+                                        NewQuestion.Difficulty.Add(text, NewQuestion.QuestionNumber);
+                                    }
+                                }
                             }
                         }
                     }
