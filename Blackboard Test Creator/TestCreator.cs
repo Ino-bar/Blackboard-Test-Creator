@@ -282,7 +282,7 @@ namespace Blackboard_Test_Creator
                     switch(question.QuestionType.InnerText)
                     {
                         case "True or False Question":
-                            questionType = "True or False";
+                            questionType = "True/False";
                             rcardinality = "Single";
                             break;
                         case "Multiple Answer Question":
@@ -365,42 +365,69 @@ namespace Blackboard_Test_Creator
                     };
                     foreach (string line in responseBlockStart)
                         res00001.WriteLine(line);
-                    foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
+                    if (questionType == "True/False")
                     {
-                        string[] answerStart =
+                        string[] TFanswerStart =
                         {
-                        "<flow_label class=\"Block\">",
-                        "<response_label ident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\" shuffle=\"Yes\" rarea=\"Ellipse\" rrange=\"Exact\">",
-                        "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
-                        "<material>",
-                        "<mat_extension>",
-                        "<mat_formattedtext type=\"HTML\">"
+                            "<flow_label class=\"Block\">",
+                            "<response_label ident=\"true\" shuffle=\"Yes\" rarea=\"Ellipse\" rrange=\"Exact\">",
+                            "<flow_mat class=\"Block\">",
+                            "<material>",
+                            "<mattext charset=\"us-ascii\" texttype=\"text/plain\" xml:space=\"default\">true</mattext>",
+                            "</material>",
+                            "</flow_mat>",
+                            "</response_label>",
+                            "<response_label ident=\"false\" shuffle=\"Yes\" rarea=\"Ellipse\" rrange=\"Exact\">",
+                            "<flow_mat class=\"Block\">",
+                            "<material>",
+                            "<mattext charset=\"us-ascii\" texttype=\"text/plain\" xml:space=\"default\">false</mattext>",
+                            "</material>",
+                            "</flow_mat>",
+                            "</response_label>",
+                            "</flow_label>"
                         };
-                        foreach (string line in answerStart)
+                        foreach (string line in TFanswerStart)
                             res00001.WriteLine(line);
-                        foreach (OpenXmlElement answer in list)
+                    }
+                    else
+                    { 
+                        foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
                         {
-                            if (answer.InnerXml.Contains("Drawing"))
+                            string[] answerStart =
                             {
-                                res00001.WriteLine("&lt;p&gt;&lt;img style=&quot;border: 0px solid rgb(0, 0, 0);&quot; alt=&quot;image00" + imagenumber + "&quot; title=&quot;image00" + imagenumber + "&quot; src=&quot;@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1&quot;  /&gt;&lt;/p&gt;");
-                                imagenumber += 1;
-                            }
-                            else
+                            "<flow_label class=\"Block\">",
+                            "<response_label ident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\" shuffle=\"Yes\" rarea=\"Ellipse\" rrange=\"Exact\">",
+                            "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
+                            "<material>",
+                            "<mat_extension>",
+                            "<mat_formattedtext type=\"HTML\">"
+                            };
+                            foreach (string line in answerStart)
+                                res00001.WriteLine(line);
+                            foreach (OpenXmlElement answer in list)
                             {
-                                res00001.WriteLine("&lt;p&gt;" + answer.InnerText + "&lt;/p&gt;");
+                                if (answer.InnerXml.Contains("Drawing"))
+                                {
+                                    res00001.WriteLine("&lt;p&gt;&lt;img style=&quot;border: 0px solid rgb(0, 0, 0);&quot; alt=&quot;image00" + imagenumber + "&quot; title=&quot;image00" + imagenumber + "&quot; src=&quot;@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1&quot;  /&gt;&lt;/p&gt;");
+                                    imagenumber += 1;
+                                }
+                                else
+                                {
+                                    res00001.WriteLine("&lt;p&gt;" + answer.InnerText + "&lt;/p&gt;");
+                                }
                             }
+                            string[] answerEnd =
+                            {
+                            "</mat_formattedtext>",
+                            "</mat_extension>",
+                            "</material>",
+                            "</flow_mat>",
+                            "</response_label>",
+                            "</flow_label>"
+                            };
+                            foreach (string line in answerEnd)
+                                res00001.WriteLine(line);
                         }
-                        string[] answerEnd =
-                        {
-                        "</mat_formattedtext>",
-                        "</mat_extension>",
-                        "</material>",
-                        "</flow_mat>",
-                        "</response_label>",
-                        "</flow_label>"
-                        };
-                        foreach (string line in answerEnd)
-                            res00001.WriteLine(line);
                     }
                     string[] responseBlockEnd =
                     {
@@ -569,6 +596,33 @@ namespace Blackboard_Test_Creator
                         }
                         res00001.WriteLine("</resprocessing>");
                     }
+                    if (questionType == "True/False")
+                    {
+                        string[] TFResponseBlock =
+                        {
+                            "<resprocessing scoremodel=\"SumOfScores\">",
+                            "<outcomes>",
+                            "<decvar varname=\"SCORE\" vartype=\"Decimal\" defaultval=\"0\" minvalue=\"0\" maxvalue=\"" + Form1.QuestionScore + "\"/>",
+                            "</outcomes>",
+                            "<respcondition title=\"correct\">",
+                            "<conditionvar>",
+                            "<varequal respident=\"response\" case=\"No\">" + question.IndividualAnswerParagraphs[0].InnerText + "</varequal>",
+                            "</conditionvar>",
+                            "<setvar variablename=\"SCORE\" action=\"Set\">SCORE.max</setvar>",
+                            "<displayfeedback linkrefid=\"correct\" feedbacktype=\"Response\"/>",
+                            "</respcondition>",
+                            "<respcondition title=\"incorrect\">",
+                            "<conditionvar>",
+                            "<other/>",
+                            "</conditionvar>",
+                            "<setvar variablename=\"SCORE\" action=\"Set\">0</setvar>",
+                            "<displayfeedback linkrefid=\"incorrect\" feedbacktype=\"Response\"/>",
+                            "</respcondition>",
+                            "</resprocessing>"
+                        };
+                        foreach (string line in TFResponseBlock)
+                            res00001.WriteLine(line);
+                    }
                     string[] itemFeedback =
                     {
                         "<itemfeedback ident=\"correct\" view=\"All\">",
@@ -596,44 +650,47 @@ namespace Blackboard_Test_Creator
                     };
                     foreach (string line in itemFeedback)
                         res00001.WriteLine(line);
-                    foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
-                    {
-                        string[] individualAnswerFeedbackpt1 =
+                    if(questionType != "True/False")
+                    { 
+                        foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
                         {
-                            "<itemfeedback ident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\" view=\"All\">",
-                            "<solution view=\"All\" feedbackstyle=\"Complete\">",
-                            "<solutionmaterial>",
-                            "<flow_mat class=\"Block\">",
-                            "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
-                            "<material>",
-                            "<mat_extension>"
-                        };
-                        foreach(string line in individualAnswerFeedbackpt1)
-                            res00001.WriteLine(line);
-                        foreach (OpenXmlElement answer in list)
-                        {
-                            if (answer.Descendants<Color>().Any())
+                            string[] individualAnswerFeedbackpt1 =
                             {
-                                answerResult = "correct";
-                            }
-                            else
+                                "<itemfeedback ident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\" view=\"All\">",
+                                "<solution view=\"All\" feedbackstyle=\"Complete\">",
+                                "<solutionmaterial>",
+                                "<flow_mat class=\"Block\">",
+                                "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
+                                "<material>",
+                                "<mat_extension>"
+                            };
+                            foreach(string line in individualAnswerFeedbackpt1)
+                                res00001.WriteLine(line);
+                            foreach (OpenXmlElement answer in list)
                             {
-                                answerResult = "incorrect";
+                                if (answer.Descendants<Color>().Any())
+                                {
+                                    answerResult = "correct";
+                                }
+                                else
+                                {
+                                    answerResult = "incorrect";
+                                }
                             }
+                            string[] individualAnswerFeedbackpt2 =
+                            {
+                                "<mat_formattedtext type=\"HTML\">&lt; p&gt;" + answerResult + "&lt;/p&gt;</mat_formattedtext>",
+                                "</mat_extension>",
+                                "</material>",
+                                "</flow_mat>",
+                                "</flow_mat>",
+                                "</solutionmaterial>",
+                                "</solution>",
+                                "</itemfeedback>"
+                            };
+                            foreach (string line in individualAnswerFeedbackpt2)
+                                res00001.WriteLine(line);
                         }
-                        string[] individualAnswerFeedbackpt2 =
-                        {
-                            "<mat_formattedtext type=\"HTML\">&lt; p&gt;" + answerResult + "&lt;/p&gt;</mat_formattedtext>",
-                            "</mat_extension>",
-                            "</material>",
-                            "</flow_mat>",
-                            "</flow_mat>",
-                            "</solutionmaterial>",
-                            "</solution>",
-                            "</itemfeedback>"
-                        };
-                        foreach (string line in individualAnswerFeedbackpt2)
-                            res00001.WriteLine(line);
                     }
                     res00001.WriteLine("</item>");
                 }
