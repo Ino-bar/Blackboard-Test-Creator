@@ -504,7 +504,7 @@ namespace Blackboard_Test_Creator
                                 }
                                 else
                                 {
-                                    res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">-" + 100 / question.ListOfIndividualAnswerParagraphLists.Count() + "</setvar>");
+                                    res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">-" + 100 / (question.ListOfIndividualAnswerParagraphLists.Count() - question.CorrectAnswers.Count()) + "</setvar>");
                                 }
                             }
                             else if (Form1.AnswerNegativePointsEnabled == "false")
@@ -577,7 +577,7 @@ namespace Blackboard_Test_Creator
                                 }
                                 else
                                 {
-                                    res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">-" + 100 / question.ListOfIndividualAnswerParagraphLists.Count() + "</setvar>");
+                                    res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">-" + 100 / (question.ListOfIndividualAnswerParagraphLists.Count() - question.CorrectAnswers.Count()) + "</setvar>");
                                 }
                             }
                             else if (Form1.AnswerNegativePointsEnabled == "false")
