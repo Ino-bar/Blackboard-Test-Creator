@@ -168,6 +168,10 @@ namespace Blackboard_Test_Creator
                                 imageNumber += 1;
                             }
                         }
+                        if (NewQuestion.IndividualAnswerParagraphs.Count() == 0)
+                        {
+                            NewQuestion.ListOfIndividualAnswerParagraphLists.Remove(NewQuestion.IndividualAnswerParagraphs);
+                        }
                     }
                     NewQuestion.CorrectAnswers = new List<OpenXmlElement>();
                     foreach (List<Paragraph> list in NewQuestion.ListOfIndividualAnswerParagraphLists)
