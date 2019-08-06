@@ -1,0 +1,14 @@
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Release\Blackboard Test Creator.exe.config
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Release\Blackboard Test Creator.exe
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Release\Blackboard Test Creator.pdb
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Release\DocumentFormat.OpenXml.dll
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Release\WindowsBase.dll
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Release\DocumentFormat.OpenXml.xml
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard Test Creator.csprojAssemblyReference.cache
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard_Test_Creator.Form1.resources
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard_Test_Creator.Properties.Resources.resources
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard Test Creator.csproj.GenerateResource.cache
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard Test Creator.csproj.CoreCompileInputs.cache
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard Test Creator.csproj.CopyComplete
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard Test Creator.exe
+D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard Test Creator.pdb
