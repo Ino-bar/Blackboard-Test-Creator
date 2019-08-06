@@ -294,9 +294,13 @@ namespace Blackboard_Test_Creator
                             rcardinality = "Single";
                             break;
                     }
-                    if (Form1.AnswerNegativePointsEnabled == "true")
+                    if (Form1.AnswerNegativePointsEnabled == "true" && Form1.OverallNegativeScore == "true")
                     {
                         negativepointsind = "Y";
+                    }
+                    else if (Form1.AnswerNegativePointsEnabled == "true" && Form1.OverallNegativeScore == "false")
+                    {
+                        negativepointsind = "Q";
                     }
                     else
                     {
@@ -361,7 +365,7 @@ namespace Blackboard_Test_Creator
                     {
                     "<flow class=\"RESPONSE_BLOCK\">",
                     "<response_lid ident=\"response\" rcardinality=\"" + rcardinality + "\" rtiming=\"No\">",
-                    "<render_choice shuffle=\"No\" minnumber=\"0\" maxnumber=\"0\">"
+                    "<render_choice shuffle=\"" + Form1.AnswerRandomOrderEnabled + "\" minnumber=\"0\" maxnumber=\"0\">"
                     };
                     foreach (string line in responseBlockStart)
                         res00001.WriteLine(line);

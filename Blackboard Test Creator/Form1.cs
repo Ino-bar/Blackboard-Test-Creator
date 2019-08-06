@@ -20,6 +20,7 @@ namespace Blackboard_Test_Creator
         public static int QuestionScore;
         public static string DefaultScore;
         public static string AnswerNegativePointsEnabled;
+        public static string OverallNegativeScore;
         public static string AnswerRandomOrderEnabled;
         public static string AnswerPartialCreditEnabled;
         public Form1()
@@ -118,7 +119,14 @@ namespace Blackboard_Test_Creator
             {
                 AnswerPartialCreditEnabled = "false";
             }
-            
+            if(allowOverallNegativeScoreCheckBox.Checked == true)
+            {
+                OverallNegativeScore = "true";
+            }
+            else
+            {
+                OverallNegativeScore = "false";
+            }
             if (!string.IsNullOrEmpty(questionScoreTextBox.Text))
             {
                 QuestionScore = Int32.Parse(questionScoreTextBox.Text);
@@ -131,11 +139,11 @@ namespace Blackboard_Test_Creator
             }
             if (AnswerRandomOrderEnabledCheckBox.Checked == true)
             {
-                AnswerRandomOrderEnabled = "true";
+                AnswerRandomOrderEnabled = "Yes";
             }
             else if (AnswerRandomOrderEnabledCheckBox.Checked == false)
             {
-                AnswerRandomOrderEnabled = "false";
+                AnswerRandomOrderEnabled = "No";
             }
             TestCreator testCreator = new TestCreator();
             progressBar1.MarqueeAnimationSpeed = 50;
