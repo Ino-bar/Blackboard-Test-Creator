@@ -75,7 +75,8 @@ namespace Blackboard_Test_Creator
                             }
                             else if(xmlAttribute.Value == "question")
                             {
-                                questionPart.Add(part.Ancestors<DocumentFormat.OpenXml.Wordprocessing.SdtBlock>().First());
+                                questionPart.Add(part.Parent.Parent);
+                                //questionPart.Add(part.Ancestors<DocumentFormat.OpenXml.Wordprocessing.SdtBlock>().First());
                             }
                         }
                     }
@@ -141,7 +142,19 @@ namespace Blackboard_Test_Creator
                         }
                     }
                     NewQuestion.QuestionTextElements = new List<Paragraph>();
-                    NewQuestion.QuestionTextElements = NewQuestion.QuestionItem.Descendants<Paragraph>().ToList();
+                    if (NewQuestion.QuestionItem.Descendants<Paragraph>().Any())
+                    {
+                       NewQuestion.QuestionTextElements = NewQuestion.QuestionItem.Descendants<Paragraph>().ToList();
+                    }
+                    else
+                    {
+                        Paragraph para = new Paragraph();
+                        Run run = para.AppendChild(new Run());
+                        Text text = new Text();
+                        text.Text = NewQuestion.QuestionItem.Descendants<Text>().First().InnerText;
+                        run.AppendChild(text);
+                        NewQuestion.QuestionTextElements.Add(para);
+                    }
                     NewQuestion.QuestionImages = new Dictionary<string, int>();
                     if(NewQuestion.QuestionItem.Descendants<Drawing>().Any())
                     {

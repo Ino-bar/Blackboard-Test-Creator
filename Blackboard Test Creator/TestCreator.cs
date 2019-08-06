@@ -496,7 +496,7 @@ namespace Blackboard_Test_Creator
                             res00001.WriteLine("<conditionvar>");
                             res00001.WriteLine("<varequal respident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\" case=\"No\" />");
                             res00001.WriteLine("</conditionvar>");
-                            if(Form1.AnswerNegativePointsEnabled == "true")
+                            if (Form1.AnswerNegativePointsEnabled == "true")
                             {
                                 if (list.Any(or => or.Descendants<Color>().Any()))
                                 {
@@ -507,7 +507,7 @@ namespace Blackboard_Test_Creator
                                     res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">-" + 100 / (question.ListOfIndividualAnswerParagraphLists.Count() - question.CorrectAnswers.Count()) + "</setvar>");
                                 }
                             }
-                            else if (Form1.AnswerNegativePointsEnabled == "false")
+                            if (Form1.AnswerPartialCreditEnabled == "true")
                             {
                                 if (list.Any(or => or.Descendants<Color>().Any()))
                                 {
@@ -517,6 +517,21 @@ namespace Blackboard_Test_Creator
                                 {
                                     res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">0</setvar>");
                                 }
+                            }
+                            if (Form1.AnswerNegativePointsEnabled == "true" && Form1.AnswerPartialCreditEnabled == "true")
+                            {
+                                if (list.Any(or => or.Descendants<Color>().Any()))
+                                {
+                                    res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">" + 100 / question.CorrectAnswers.Count() + "</setvar>");
+                                }
+                                else
+                                {
+                                    res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">-" + 100 / (question.ListOfIndividualAnswerParagraphLists.Count() - question.CorrectAnswers.Count()) + "</setvar>");
+                                }
+                            }
+                            else if (Form1.AnswerNegativePointsEnabled == "false" && Form1.AnswerPartialCreditEnabled == "false")
+                            {
+                                res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">0</setvar>");
                             }
                             res00001.WriteLine("<displayfeedback linkrefid=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\" feedbacktype=\"Response\"/>");
                             res00001.WriteLine("</respcondition>");
@@ -679,7 +694,7 @@ namespace Blackboard_Test_Creator
                             }
                             string[] individualAnswerFeedbackpt2 =
                             {
-                                "<mat_formattedtext type=\"HTML\">&lt; p&gt;" + answerResult + "&lt;/p&gt;</mat_formattedtext>",
+                                "<mat_formattedtext type=\"HTML\">" + answerResult + "</mat_formattedtext>",
                                 "</mat_extension>",
                                 "</material>",
                                 "</flow_mat>",

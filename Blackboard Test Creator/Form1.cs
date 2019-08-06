@@ -110,11 +110,11 @@ namespace Blackboard_Test_Creator
             {
                 AnswerNegativePointsEnabled = "false";
             }
-            if (allowPartialCreditCheckBox.Checked == true)
+            if (allowPartialCreditCheckBox.Checked == true || enableNegativeMarkingCheckBox.Checked == true)
             {
                 AnswerPartialCreditEnabled = "true";
             }
-            else if (allowPartialCreditCheckBox.Checked == false)
+            else if (allowPartialCreditCheckBox.Checked == false || enableNegativeMarkingCheckBox.Checked == false)
             {
                 AnswerPartialCreditEnabled = "false";
             }
