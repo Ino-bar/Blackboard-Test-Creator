@@ -71,7 +71,7 @@ namespace Blackboard_Test_Creator
                         {
                             if(xmlAttribute.Value == "Container")
                             {
-                                containerPart.Add(part.Ancestors<DocumentFormat.OpenXml.Wordprocessing.SdtContentBlock>().First());
+                                containerPart.Add(part.Ancestors<DocumentFormat.OpenXml.Wordprocessing.SdtBlock>().First());
                             }
                             else if(xmlAttribute.Value == "question")
                             {
