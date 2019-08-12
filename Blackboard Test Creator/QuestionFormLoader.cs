@@ -140,6 +140,11 @@ namespace Blackboard_Test_Creator
                                 }
                             }
                         }
+                        else if (part.OuterXml.Contains("distractor"))
+                        {
+                            NewQuestion.AnswerParts = new List<OpenXmlElement>();
+                            NewQuestion.AnswerParts = part.Parent.Parent.Descendants<OpenXmlElement>().Last(or => or.Descendants<SdtBlock>().Any()).ToList();
+                        }
                     }
                     NewQuestion.QuestionTextElements = new List<Paragraph>();
                     if (NewQuestion.QuestionItem.Descendants<Paragraph>().Any())
@@ -164,8 +169,8 @@ namespace Blackboard_Test_Creator
                             imageNumber += 1;
                         }
                     }
-                    NewQuestion.AnswerParts = new List<OpenXmlElement>();
-                    NewQuestion.AnswerParts = containerpart.Descendants<OpenXmlElement>().Last(or => or.Descendants<SdtBlock>().Any()).ToList();
+                    //NewQuestion.AnswerParts = new List<OpenXmlElement>();
+                    //NewQuestion.AnswerParts = containerpart.Descendants<OpenXmlElement>().Last(or => or.Descendants<SdtBlock>().Any()).ToList();
                     NewQuestion.AnswerImages = new Dictionary<string, int>();
                     NewQuestion.ListOfIndividualAnswerParagraphLists = new List<List<Paragraph>>();
                     foreach(OpenXmlElement answer in NewQuestion.AnswerParts)
