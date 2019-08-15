@@ -279,7 +279,7 @@ namespace Blackboard_Test_Creator
 
                 foreach (var question in QuestionFormLoader.questionList)
                 {
-                    switch(question.QuestionType.InnerText)
+                    switch (question.QuestionType.InnerText)
                     {
                         case "True or False Question":
                             questionType = "True/False";
@@ -291,6 +291,10 @@ namespace Blackboard_Test_Creator
                             break;
                         case "Multiple Choice Question":
                             questionType = "Multiple Choice";
+                            rcardinality = "Single";
+                            break;
+                        case "Essay Question":
+                            questionType = "Essay";
                             rcardinality = "Single";
                             break;
                     }
@@ -361,14 +365,28 @@ namespace Blackboard_Test_Creator
                     };
                     foreach (string line in endQuestionTextBlock)
                         res00001.WriteLine(line);
-                    string[] responseBlockStart =
+                    if (questionType == "Essay")
                     {
-                    "<flow class=\"RESPONSE_BLOCK\">",
-                    "<response_lid ident=\"response\" rcardinality=\"" + rcardinality + "\" rtiming=\"No\">",
-                    "<render_choice shuffle=\"" + Form1.AnswerRandomOrderEnabled + "\" minnumber=\"0\" maxnumber=\"0\">"
-                    };
-                    foreach (string line in responseBlockStart)
-                        res00001.WriteLine(line);
+                        string[] responseBlockStart =
+{
+                            "<flow class=\"RESPONSE_BLOCK\">",
+                            "<response_str ident=\"response\" rcardinality=\"" + rcardinality + "\" rtiming=\"No\">",
+                            "<render_fib charset=\"us-ascii\" encoding=\"UTF_8\" rows=\"8\" columns=\"127\" maxchars=\"0\" prompt=\"Box\" fibtype=\"String\" minnumber=\"0\" maxnumber=\"0\"/>"
+                        };
+                        foreach (string line in responseBlockStart)
+                            res00001.WriteLine(line);
+                    }
+                    else
+                    {
+                        string[] responseBlockStart =
+                        {
+                            "<flow class=\"RESPONSE_BLOCK\">",
+                            "<response_lid ident=\"response\" rcardinality=\"" + rcardinality + "\" rtiming=\"No\">",
+                            "<render_choice shuffle=\"" + Form1.AnswerRandomOrderEnabled + "\" minnumber=\"0\" maxnumber=\"0\">"
+                        };
+                        foreach (string line in responseBlockStart)
+                            res00001.WriteLine(line);
+                    }
                     if (questionType == "True/False")
                     {
                         string[] TFanswerStart =
@@ -393,8 +411,8 @@ namespace Blackboard_Test_Creator
                         foreach (string line in TFanswerStart)
                             res00001.WriteLine(line);
                     }
-                    else
-                    { 
+                    if (questionType != "Essay")
+                    {
                         foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
                         {
                             string[] answerStart =
@@ -433,16 +451,31 @@ namespace Blackboard_Test_Creator
                                 res00001.WriteLine(line);
                         }
                     }
-                    string[] responseBlockEnd =
+                    if (questionType == "Essay")
                     {
-                    "</render_choice>",
-                    "</response_lid>",
-                    "</flow>",
-                    "</flow>",
-                    "</presentation>"
-                    };
-                    foreach (string line in responseBlockEnd)
-                        res00001.WriteLine(line);
+                        string[] responseBlockEnd =
+                        {
+                            "</response_str>",
+                            "</flow>",
+                            "</flow>",
+                            "</presentation>"
+                        };
+                        foreach (string line in responseBlockEnd)
+                            res00001.WriteLine(line);
+                    }
+                    else
+                    {
+                        string[] responseBlockEnd =
+                        {
+                            "</render_choice>",
+                            "</response_lid>",
+                            "</flow>",
+                            "</flow>",
+                            "</presentation>"
+                        };
+                        foreach (string line in responseBlockEnd)
+                            res00001.WriteLine(line);
+                    }
                     if (questionType == "Multiple Answer")
                     {
                         string[] questionEvaluationStart =
@@ -460,7 +493,7 @@ namespace Blackboard_Test_Creator
                         foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
                         {
                             if (list.Any(or => or.Descendants<Color>().Any()))
-                            { 
+                            {
                                 List<string> respident = new List<string>();
                                 respident.Add("<varequal respident=\"response\" case=\"No\">answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "</varequal>");
                                 foreach (string line in respident)
@@ -555,14 +588,14 @@ namespace Blackboard_Test_Creator
                         };
                         foreach (string line in questionEvaluationStart)
                             res00001.WriteLine(line);
-                        foreach(List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
+                        foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
                         {
                             foreach (OpenXmlElement answer in list)
                             {
                                 if (answer.Descendants<Color>().Any())
                                 {
                                     correctAnswer = "answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1);
-                                }   
+                                }
                             }
                         }
                         res00001.WriteLine("<varequal respident=\"response\" case=\"No\">" + correctAnswer + "</varequal>");
@@ -642,6 +675,31 @@ namespace Blackboard_Test_Creator
                         foreach (string line in TFResponseBlock)
                             res00001.WriteLine(line);
                     }
+                    if (questionType == "Essay")
+                    {
+                        string[] responseBlock =
+                        {
+                            "<resprocessing scoremodel=\"SumOfScores\">",
+                            "<outcomes>",
+                            "<decvar varname=\"SCORE\" vartype=\"Decimal\" defaultval=\"0\" minvalue=\"0\" maxvalue=\"" + Form1.QuestionScore + "\" />",
+                            "</outcomes>",
+                            "<respcondition title=\"correct\">",
+                            "<conditionvar/>",
+                            "<setvar variablename=\"SCORE\" action=\"Set\">" + Form1.QuestionScore + "</setvar>",
+                            "<displayfeedback linkrefid=\"correct\" feedbacktype=\"Response\"/>",
+                            "</respcondition>",
+                            "<respcondition title=\"incorrect\">",
+                            "<conditionvar>",
+                            "<other/>",
+                            "</conditionvar>",
+                            "<setvar variablename=\"SCORE\" action=\"Set\">0</setvar>",
+                            "<displayfeedback linkrefid=\"incorrect\" feedbacktype=\"Response\"/>",
+                            "</respcondition>",
+                            "</resprocessing>"
+                        };
+                        foreach (string line in responseBlock)
+                            res00001.WriteLine(line);
+                    };
                     string[] itemFeedback =
                     {
                         "<itemfeedback ident=\"correct\" view=\"All\">",
@@ -669,8 +727,8 @@ namespace Blackboard_Test_Creator
                     };
                     foreach (string line in itemFeedback)
                         res00001.WriteLine(line);
-                    if(questionType != "True/False")
-                    { 
+                    if (questionType == "Multiple Choice" || questionType == "Multiple Answer")
+                    {
                         foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
                         {
                             string[] individualAnswerFeedbackpt1 =
@@ -683,7 +741,7 @@ namespace Blackboard_Test_Creator
                                 "<material>",
                                 "<mat_extension>"
                             };
-                            foreach(string line in individualAnswerFeedbackpt1)
+                            foreach (string line in individualAnswerFeedbackpt1)
                                 res00001.WriteLine(line);
                             foreach (OpenXmlElement answer in list)
                             {
@@ -710,6 +768,27 @@ namespace Blackboard_Test_Creator
                             foreach (string line in individualAnswerFeedbackpt2)
                                 res00001.WriteLine(line);
                         }
+                    }
+                    if (questionType == "Essay")
+                    {
+                        string[] answerFeedback =
+                        {
+                            "<itemfeedback ident=\"solution\" view=\"All\">",
+                            "<solution view=\"All\" feedbackstyle=\"Complete\">",
+                            "<solutionmaterial>",
+                            "<flow_mat class=\"Block\">",
+                            "<material>",
+                            "<mat_extension>",
+                            "<mat_formattedtext type=\"HTML\"/>",
+                            "</mat_extension>",
+                            "</material>",
+                            "</flow_mat>",
+                            "</solutionmaterial>",
+                            "</solution>",
+                            "</itemfeedback>"
+                        };
+                        foreach (string line in answerFeedback)
+                            res00001.WriteLine(line);
                     }
                     res00001.WriteLine("</item>");
                 }

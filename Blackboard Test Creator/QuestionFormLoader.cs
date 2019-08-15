@@ -48,6 +48,7 @@ namespace Blackboard_Test_Creator
         public static XmlDocument XMLForm = new XmlDocument();
         public static List<Question> questionList = new List<Question>();
         public static List<OpenXmlElement> questionPart = new List<OpenXmlElement>();
+        public static List<OpenXmlElement> answerPart = new List<OpenXmlElement>();
         List<OpenXmlElement> containerPart = new List<OpenXmlElement>();
         public static List<ImagePart> imgPart;
         public static List<Text> QuestionTopics = new List<Text>();
@@ -71,13 +72,30 @@ namespace Blackboard_Test_Creator
                         {
                             if(xmlAttribute.Value == "Container")
                             {
-                                containerPart.Add(part.Ancestors<DocumentFormat.OpenXml.Wordprocessing.SdtContentBlock>().First());
+                                if (part.Ancestors<SdtContentBlock>().Any())
+                                { 
+                                    containerPart.Add(part.Ancestors<DocumentFormat.OpenXml.Wordprocessing.SdtContentBlock>().First());
+                                }
+                                else
+                                {
+                                    containerPart.Add(part.Parent.Parent.Descendants<DocumentFormat.OpenXml.Wordprocessing.SdtContentBlock>().First());
+                                }
                             }
                             else if(xmlAttribute.Value == "question")
                             {
                                 questionPart.Add(part.Parent.Parent);
                                 //questionPart.Add(part.Ancestors<DocumentFormat.OpenXml.Wordprocessing.SdtBlock>().First());
                             }
+                            else if(xmlAttribute.Value == "distractor")
+                            {
+                                answerPart.Add(part.Parent.Parent);
+                            }
+                            /*
+                            if(containerPart.Count() == 0)
+                            {
+                                containerPart.Add(part.Parent.Parent.Descendants<DocumentFormat.OpenXml.Wordprocessing.SdtContentBlock>().First());
+                            }
+                            */
                         }
                     }
                 }
@@ -165,7 +183,18 @@ namespace Blackboard_Test_Creator
                         }
                     }
                     NewQuestion.AnswerParts = new List<OpenXmlElement>();
-                    NewQuestion.AnswerParts = containerpart.Descendants<OpenXmlElement>().Last(or => or.Descendants<SdtBlock>().Any()).ToList();
+                    if(NewQuestion.QuestionType.InnerText == "True or False Question")
+                    {
+                        NewQuestion.AnswerParts.Add(answerPart[0]);
+                    }
+                    else if(NewQuestion.QuestionType.InnerText == "Essay Question")
+                    {
+                        ;
+                    }
+                    else
+                    {
+                        NewQuestion.AnswerParts = containerpart.Descendants<OpenXmlElement>().Last(or => or.Descendants<SdtBlock>().Any()).ToList();
+                    }
                     NewQuestion.AnswerImages = new Dictionary<string, int>();
                     NewQuestion.ListOfIndividualAnswerParagraphLists = new List<List<Paragraph>>();
                     foreach(OpenXmlElement answer in NewQuestion.AnswerParts)
