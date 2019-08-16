@@ -24,6 +24,7 @@ namespace Blackboard_Test_Creator
         string rcardinality = string.Empty;
         string answerResult = string.Empty;
         string correctAnswer = string.Empty;
+        string matchType = string.Empty;
         static int totalScore = QuestionFormLoader.questionList.Count() * Form1.QuestionScore;
         List<string> questionParagraphs = new List<string>();
         List<string> answerParagraphs = new List<string>();
@@ -297,6 +298,14 @@ namespace Blackboard_Test_Creator
                             questionType = "Essay";
                             rcardinality = "Single";
                             break;
+                        case "Short Answer Question":
+                            questionType = "Short Response";
+                            rcardinality = "Single";
+                            break;
+                        case "Fill in the Blank Question":
+                            questionType = "Fill in the Blank";
+                            rcardinality = "Single";
+                            break;
                     }
                     if (Form1.AnswerNegativePointsEnabled == "true" && Form1.OverallNegativeScore == "true")
                     {
@@ -309,6 +318,17 @@ namespace Blackboard_Test_Creator
                     else
                     {
                         negativepointsind = "N";
+                    }
+                    if(!string.IsNullOrEmpty(QuestionFormLoader.matchType))
+                    {
+                        if(QuestionFormLoader.matchType == "Exact Match")
+                        {
+                            matchType = "EXACT";
+                        }
+                        else
+                        {
+                            matchType = "CONTAINS";
+                        }
                     }
                     string[] res0001itemmetadata =
                     {
@@ -365,13 +385,24 @@ namespace Blackboard_Test_Creator
                     };
                     foreach (string line in endQuestionTextBlock)
                         res00001.WriteLine(line);
-                    if (questionType == "Essay")
+                    if (questionType == "Essay" || questionType == "Fill in the Blank")
                     {
                         string[] responseBlockStart =
 {
                             "<flow class=\"RESPONSE_BLOCK\">",
                             "<response_str ident=\"response\" rcardinality=\"" + rcardinality + "\" rtiming=\"No\">",
                             "<render_fib charset=\"us-ascii\" encoding=\"UTF_8\" rows=\"8\" columns=\"127\" maxchars=\"0\" prompt=\"Box\" fibtype=\"String\" minnumber=\"0\" maxnumber=\"0\"/>"
+                        };
+                        foreach (string line in responseBlockStart)
+                            res00001.WriteLine(line);
+                    }
+                    else if (questionType == "Short Response")
+                    {
+                        string[] responseBlockStart =
+{
+                            "<flow class=\"RESPONSE_BLOCK\">",
+                            "<response_str ident=\"response\" rcardinality=\"" + rcardinality + "\" rtiming=\"No\">",
+                            "<render_fib charset=\"us-ascii\" encoding=\"UTF_8\" rows=\"3\" columns=\"127\" maxchars=\"0\" prompt=\"Box\" fibtype=\"String\" minnumber=\"0\" maxnumber=\"0\"/>"
                         };
                         foreach (string line in responseBlockStart)
                             res00001.WriteLine(line);
@@ -411,7 +442,7 @@ namespace Blackboard_Test_Creator
                         foreach (string line in TFanswerStart)
                             res00001.WriteLine(line);
                     }
-                    if (questionType != "Essay")
+                    if (questionType == "Multiple Choice" || questionType == "Multiple Answer")
                     {
                         foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
                         {
@@ -451,7 +482,7 @@ namespace Blackboard_Test_Creator
                                 res00001.WriteLine(line);
                         }
                     }
-                    if (questionType == "Essay")
+                    if (questionType == "Essay" || questionType == "Short Response" || questionType == "Fill in the Blank")
                     {
                         string[] responseBlockEnd =
                         {
@@ -675,7 +706,7 @@ namespace Blackboard_Test_Creator
                         foreach (string line in TFResponseBlock)
                             res00001.WriteLine(line);
                     }
-                    if (questionType == "Essay")
+                    if (questionType == "Essay" || questionType == "Short Response")
                     {
                         string[] responseBlock =
                         {
@@ -700,6 +731,50 @@ namespace Blackboard_Test_Creator
                         foreach (string line in responseBlock)
                             res00001.WriteLine(line);
                     };
+                    if(questionType == "Fill in the Blank")
+                    {
+                        string[] responseBlockStart =
+                        {
+                            "<resprocessing scoremodel=\"SumOfScores\">",
+                            "<outcomes>",
+                            "<decvar varname=\"SCORE\" vartype=\"Decimal\" defaultval=\"0\" minvalue=\"0\" maxvalue=\"" + Form1.QuestionScore + "\" />",
+                            "</outcomes>"
+                        };
+                        foreach (string line in responseBlockStart)
+                            res00001.WriteLine(line);
+                        foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
+                        {
+                            res00001.WriteLine("<respcondition title=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\">");
+                            res00001.WriteLine("<conditionvar>");
+                            foreach (OpenXmlElement answer in list)
+                            {
+                                res00001.WriteLine("<varequal respident=\"response\" case=\"No\">" + answer.InnerText + "</varequal>");
+                            }
+                            string[] fillBlankResponse =
+                            {
+                                "</conditionvar>",
+                                "<setvar variablename=\"EvaluationType\" action=\"Set\">" + matchType + "</setvar>",
+                                "<displayfeedback linkrefid=\"correct\" feedbacktype=\"Response\"/>",
+                                "<displayfeedback linkrefid=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\" feedbacktype=\"Response\"/>",
+                                "</respcondition>"
+                            };
+                            foreach (string line in fillBlankResponse)
+                                res00001.WriteLine(line);
+                        }
+                        string[] fillBlankResponseBlockEnd =
+                        {
+                            "<respcondition title=\"incorrect\">",
+                            "<conditionvar>",
+                            "<other/>",
+                            "</conditionvar>",
+                            "<setvar variablename=\"SCORE\" action=\"Set\">0</setvar>",
+                            "<displayfeedback linkrefid=\"incorrect\" feedbacktype=\"Response\"/>",
+                            "</respcondition>",
+                            "</resprocessing>"
+                        };
+                        foreach (string line in fillBlankResponseBlockEnd)
+                            res00001.WriteLine(line);
+                    }
                     string[] itemFeedback =
                     {
                         "<itemfeedback ident=\"correct\" view=\"All\">",
@@ -769,7 +844,33 @@ namespace Blackboard_Test_Creator
                                 res00001.WriteLine(line);
                         }
                     }
-                    if (questionType == "Essay")
+                    if(questionType == "Fill in the Blank")
+                    {
+                        foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
+                        {
+                            string[] individualAnswerFeedbackpt1 =
+                            {
+                                "<itemfeedback ident=\"answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1) + "\" view=\"All\">",
+                                "<solution view=\"All\" feedbackstyle=\"Complete\">",
+                                "<solutionmaterial>",
+                                "<flow_mat class=\"Block\">",
+                                "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
+                                "<material>",
+                                "<mat_extension>",
+                                "<mat_formattedtext type=\"HTML\"/>",
+                                "</mat_extension>",
+                                "</material>",
+                                "</flow_mat>",
+                                "</flow_mat>",
+                                "</solutionmaterial>",
+                                "</solution>",
+                                "</itemfeedback>"
+                            };
+                            foreach (string line in individualAnswerFeedbackpt1)
+                                res00001.WriteLine(line);
+                        }
+                    }
+                    if (questionType == "Essay" || questionType == "Short Response")
                     {
                         string[] answerFeedback =
                         {

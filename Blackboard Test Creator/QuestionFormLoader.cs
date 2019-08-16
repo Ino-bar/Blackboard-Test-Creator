@@ -53,6 +53,7 @@ namespace Blackboard_Test_Creator
         public static List<ImagePart> imgPart;
         public static List<Text> QuestionTopics = new List<Text>();
         public static List<Text> QuestionDifficulty = new List<Text>();
+        public static string matchType = string.Empty;
         int imageNumber = 1;
         public void FormLoader()
         {
@@ -158,6 +159,10 @@ namespace Blackboard_Test_Creator
                                 }
                             }
                         }
+                        else if(part.OuterXml.Contains("Match"))
+                        {
+                            matchType = part.Parent.Parent.InnerText;
+                        }
                     }
                     NewQuestion.QuestionTextElements = new List<Paragraph>();
                     if (NewQuestion.QuestionItem.Descendants<Paragraph>().Any())
@@ -187,7 +192,7 @@ namespace Blackboard_Test_Creator
                     {
                         NewQuestion.AnswerParts.Add(answerPart[0]);
                     }
-                    else if(NewQuestion.QuestionType.InnerText == "Essay Question")
+                    else if(NewQuestion.QuestionType.InnerText == "Essay Question" || NewQuestion.QuestionType.InnerText == "Short Answer Question")
                     {
                         ;
                     }
