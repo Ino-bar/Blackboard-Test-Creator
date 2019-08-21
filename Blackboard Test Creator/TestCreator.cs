@@ -365,7 +365,7 @@ namespace Blackboard_Test_Creator
                         res00001.WriteLine(line);
                     foreach (Paragraph paragraph in question.QuestionTextElements)
                     {
-                        if (paragraph.InnerXml.Contains("Drawing"))
+                        if (paragraph.InnerXml.Contains("Drawing") || paragraph.InnerXml.Contains("object"))
                         {
                             res00001.WriteLine("&lt;p&gt;&lt;img style=&quot;border: 0px solid rgb(0, 0, 0);&quot; alt=&quot;image00" + imagenumber + "&quot; title=&quot;image00" + imagenumber + "&quot; src=&quot;@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1&quot;  /&gt;&lt;/p&gt;");
                             imagenumber += 1;
@@ -459,7 +459,7 @@ namespace Blackboard_Test_Creator
                                 res00001.WriteLine(line);
                             foreach (OpenXmlElement answer in list)
                             {
-                                if (answer.InnerXml.Contains("Drawing"))
+                                if (answer.InnerXml.Contains("Drawing") || answer.InnerXml.Contains("object"))
                                 {
                                     res00001.WriteLine("&lt;p&gt;&lt;img style=&quot;border: 0px solid rgb(0, 0, 0);&quot; alt=&quot;image00" + imagenumber + "&quot; title=&quot;image00" + imagenumber + "&quot; src=&quot;@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1&quot;  /&gt;&lt;/p&gt;");
                                     imagenumber += 1;

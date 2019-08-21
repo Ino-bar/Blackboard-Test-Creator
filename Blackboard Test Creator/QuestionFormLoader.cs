@@ -50,7 +50,9 @@ namespace Blackboard_Test_Creator
         public static List<OpenXmlElement> questionPart = new List<OpenXmlElement>();
         public static List<OpenXmlElement> answerPart = new List<OpenXmlElement>();
         List<OpenXmlElement> containerPart = new List<OpenXmlElement>();
-        public static List<ImagePart> imgPart;
+        public static List<ImagePart> imgPart1;
+        //public static List<ImagePart> imgPart = new List<ImagePart>();
+        public static ImagePart[] imgPart;
         public static List<Text> QuestionTopics = new List<Text>();
         public static List<Text> QuestionDifficulty = new List<Text>();
         public static string matchType = string.Empty;
@@ -64,7 +66,14 @@ namespace Blackboard_Test_Creator
                 List<OpenXmlElement> documentParts = new List<OpenXmlElement>();
                 List<DocumentFormat.OpenXml.OpenXmlAttribute> partAttributes = new List<OpenXmlAttribute>();
                 documentParts = wordprocessingDocument.MainDocumentPart.Document.Body.Descendants().ToList();
-                imgPart = wordprocessingDocument.MainDocumentPart.ImageParts.ToList();
+                imgPart1 = wordprocessingDocument.MainDocumentPart.ImageParts.ToList();
+                imgPart = new ImagePart[imgPart1.Count()];
+                foreach (ImagePart part in imgPart1)
+                {
+                    var resultString = Regex.Match(part.Uri.ToString(), @"\d+").Value;
+                    imgPart[Int32.Parse(resultString) - 1] = part;
+                }
+                Debug.WriteLine(imgPart);
                 foreach (OpenXmlElement part in documentParts)
                 {
                     if (part.HasAttributes)
@@ -187,6 +196,14 @@ namespace Blackboard_Test_Creator
                             imageNumber += 1;
                         }
                     }
+                    if (NewQuestion.QuestionItem.Descendants<EmbeddedObject>().Any())
+                    {
+                        foreach (EmbeddedObject embObject in NewQuestion.QuestionItem.Descendants<EmbeddedObject>().AsParallel().ToList())
+                        {
+                            NewQuestion.QuestionImages.Add("xid-000000" + imageNumber + "_1", questionList.IndexOf(NewQuestion));
+                            imageNumber += 1;
+                        }
+                    }
                     NewQuestion.AnswerParts = new List<OpenXmlElement>();
                     if(NewQuestion.QuestionType.InnerText == "True or False Question")
                     {
@@ -210,6 +227,14 @@ namespace Blackboard_Test_Creator
                         if(answer.Descendants<Drawing>().Any())
                         {
                             foreach(Drawing drawing in answer.Descendants<Drawing>().AsParallel().ToList())
+                            {
+                                NewQuestion.AnswerImages.Add("xid-000000" + imageNumber + "_1", NewQuestion.AnswerParts.IndexOf(answer));
+                                imageNumber += 1;
+                            }
+                        }
+                        if (answer.Descendants<EmbeddedObject>().Any())
+                        {
+                            foreach (EmbeddedObject embObject in answer.Descendants<EmbeddedObject>().AsParallel().ToList())
                             {
                                 NewQuestion.AnswerImages.Add("xid-000000" + imageNumber + "_1", NewQuestion.AnswerParts.IndexOf(answer));
                                 imageNumber += 1;
