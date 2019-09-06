@@ -38,6 +38,8 @@ namespace Blackboard_Test_Creator
         public Dictionary<string, int> AnswerImages { get; set; }
         public Dictionary<Text, int> Topics { get; set; }
         public Dictionary<Text, int> Difficulty { get; set; }
+        public List<Paragraph> QuestionCorrectFeedback { get; set; }
+        public List<Paragraph> QuestionIncorrectFeedback { get; set; }
     }
     class QuestionFormLoader
     {
@@ -90,6 +92,7 @@ namespace Blackboard_Test_Creator
                     NewQuestion.QuestionNumber = i + 1;
                     NewQuestion.Topics = new Dictionary<Text, int>();
                     NewQuestion.Difficulty = new Dictionary<Text, int>();
+                    
                     foreach (Tag part in containerpart.Descendants<Tag>())
                     {
                         if (part.OuterXml.Contains("Type"))
@@ -144,6 +147,48 @@ namespace Blackboard_Test_Creator
                         {
                             NewQuestion.AnswerParts = new List<OpenXmlElement>();
                             NewQuestion.AnswerParts = part.Parent.Parent.Descendants<OpenXmlElement>().Last(or => or.Descendants<SdtBlock>().Any()).ToList();
+                        }
+                        else if(part.OuterXml.Contains("question feedback correct"))
+                        {
+                            NewQuestion.QuestionCorrectFeedback = new List<Paragraph>();
+                            var sdtparent = part.Parent.Parent;
+                            if (sdtparent.Descendants<Paragraph>().Any())
+                            {
+                                foreach (Paragraph paragraph in sdtparent.Descendants<Paragraph>().ToList())
+                                {
+                                    NewQuestion.QuestionCorrectFeedback.Add(paragraph);
+                                }
+                            }
+                            else
+                            {
+                                Paragraph para = new Paragraph();
+                                Run run = para.AppendChild(new Run());
+                                Text text = new Text();
+                                text.Text = sdtparent.Descendants<Text>().First().InnerText;
+                                run.AppendChild(text);
+                                NewQuestion.QuestionCorrectFeedback.Add(para);
+                            }
+                        }
+                        else if (part.OuterXml.Contains("question feedback incorrect"))
+                        {
+                            NewQuestion.QuestionIncorrectFeedback = new List<Paragraph>();
+                            var sdtparent = part.Parent.Parent;
+                            if (sdtparent.Descendants<Paragraph>().Any())
+                            {
+                                foreach (Paragraph paragraph in sdtparent.Descendants<Paragraph>().ToList())
+                                {
+                                    NewQuestion.QuestionIncorrectFeedback.Add(paragraph);
+                                }
+                            }
+                            else
+                            {
+                                Paragraph para = new Paragraph();
+                                Run run = para.AppendChild(new Run());
+                                Text text = new Text();
+                                text.Text = sdtparent.Descendants<Text>().First().InnerText;
+                                run.AppendChild(text);
+                                NewQuestion.QuestionIncorrectFeedback.Add(para);
+                            }
                         }
                     }
                     NewQuestion.QuestionTextElements = new List<Paragraph>();

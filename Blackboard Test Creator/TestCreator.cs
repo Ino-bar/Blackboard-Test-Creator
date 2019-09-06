@@ -642,14 +642,24 @@ namespace Blackboard_Test_Creator
                         foreach (string line in TFResponseBlock)
                             res00001.WriteLine(line);
                     }
-                    string[] itemFeedback =
+                    string[] itemFeedbackpt1 =
                     {
                         "<itemfeedback ident=\"correct\" view=\"All\">",
                         "<flow_mat class=\"Block\">",
                         "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
                         "<material>",
                         "<mat_extension>",
-                        "<mat_formattedtext type=\"HTML\">Correct</mat_formattedtext>",
+                        "<mat_formattedtext type=\"HTML\">"
+                    };
+                    foreach (string line in itemFeedbackpt1)
+                        res00001.WriteLine(line);
+                    foreach(Paragraph paragraph in question.QuestionCorrectFeedback)
+                    {
+                        res00001.WriteLine("&lt;p&gt;" + paragraph.InnerText + "&lt;/p&gt;");
+                    }
+                    string[] itemFeedbackpt2 =
+                    {
+                        "</mat_formattedtext>",
                         "</mat_extension>",
                         "</material>",
                         "</flow_mat>",
@@ -660,16 +670,26 @@ namespace Blackboard_Test_Creator
                         "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
                         "<material>",
                         "<mat_extension>",
-                        "<mat_formattedtext type=\"HTML\">Incorrect</mat_formattedtext>",
+                        "<mat_formattedtext type=\"HTML\">"
+                    };
+                    foreach (string line in itemFeedbackpt2)
+                        res00001.WriteLine(line);
+                    foreach (Paragraph paragraph in question.QuestionIncorrectFeedback)
+                    {
+                        res00001.WriteLine("&lt;p&gt;" + paragraph.InnerText + "&lt;/p&gt;");
+                    }
+                    string[] itemFeedbackpt3 =
+                    {
+                        "</mat_formattedtext>",
                         "</mat_extension>",
                         "</material>",
                         "</flow_mat>",
                         "</flow_mat>",
                         "</itemfeedback>"
                     };
-                    foreach (string line in itemFeedback)
+                    foreach (string line in itemFeedbackpt3)
                         res00001.WriteLine(line);
-                    if(questionType != "True/False")
+                    if (questionType != "True/False")
                     { 
                         foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
                         {
