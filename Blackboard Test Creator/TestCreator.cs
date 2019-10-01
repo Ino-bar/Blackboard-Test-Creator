@@ -796,6 +796,8 @@ namespace Blackboard_Test_Creator
                     };
                     foreach (string line in itemFeedbackpt1)
                         res00001.WriteLine(line);
+                    if(question.QuestionCorrectFeedback != null)
+                    { 
                     foreach(Paragraph paragraph in question.QuestionCorrectFeedback)
                     {
                         res00001.WriteLine("&lt;p&gt;" + paragraph.InnerText + "&lt;/p&gt;");
@@ -832,6 +834,41 @@ namespace Blackboard_Test_Creator
                     };
                     foreach (string line in itemFeedbackpt3)
                         res00001.WriteLine(line);
+                    }
+                    else
+                    {
+                        string[] nofeedbackprovided =
+                        {
+                            "<itemfeedback ident=\"correct\" view=\"All\">",
+                            "<flow_mat class=\"Block\">",
+                            "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
+                            "<material>",
+                            "<mat_extension>",
+                            "<mat_formattedtext type=\"HTML\">",
+                            "&lt; p&gt;Correct.&lt;/p&gt;</mat_formattedtext>",
+                            "</mat_extension>",
+                            "</material>",
+                            "</flow_mat>",
+                            "</flow_mat>",
+                            "</itemfeedback>",
+                            "<itemfeedback ident=\"incorrect\" view=\"All\">",
+                            "<flow_mat class=\"Block\">",
+                            "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
+                            "<material>",
+                            "<mat_extension>",
+                            "<mat_formattedtext type=\"HTML\">",
+                            "&lt; p&gt;Incorrect.&lt;/p&gt;</mat_formattedtext>",
+                            "</mat_extension>",
+                            "</material>",
+                            "</flow_mat>",
+                            "</flow_mat>",
+                            "</itemfeedback>"
+                        };
+                        foreach(string line in nofeedbackprovided)
+                        {
+                            res00001.WriteLine(line);
+                        }
+                    }
                     if (questionType == "Multiple Choice" || questionType == "Multiple Answer")
                     {
                         foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
