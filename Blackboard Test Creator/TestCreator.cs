@@ -785,20 +785,20 @@ namespace Blackboard_Test_Creator
                         foreach (string line in fillBlankResponseBlockEnd)
                             res00001.WriteLine(line);
                     }
-                    string[] itemFeedbackpt1 =
-                    {
-                        "<itemfeedback ident=\"correct\" view=\"All\">",
-                        "<flow_mat class=\"Block\">",
-                        "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
-                        "<material>",
-                        "<mat_extension>",
-                        "<mat_formattedtext type=\"HTML\">"
-                    };
-                    foreach (string line in itemFeedbackpt1)
-                        res00001.WriteLine(line);
                     if(question.QuestionCorrectFeedback != null)
-                    { 
-                        foreach(OpenXmlElement paragraph in question.QuestionCorrectFeedback)
+                    {
+                        string[] itemFeedbackpt1 =
+                        {
+                            "<itemfeedback ident=\"correct\" view=\"All\">",
+                            "<flow_mat class=\"Block\">",
+                            "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
+                            "<material>",
+                            "<mat_extension>",
+                            "<mat_formattedtext type=\"HTML\">"
+                        };
+                        foreach (string line in itemFeedbackpt1)
+                            res00001.WriteLine(line);
+                        foreach (OpenXmlElement paragraph in question.QuestionCorrectFeedback)
                         {
                             res00001.WriteLine("&lt;p&gt;" + paragraph.InnerText + "&lt;/p&gt;");
                         }
@@ -844,8 +844,7 @@ namespace Blackboard_Test_Creator
                             "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
                             "<material>",
                             "<mat_extension>",
-                            "<mat_formattedtext type=\"HTML\">",
-                            "&lt; p&gt;Correct.&lt;/p&gt;</mat_formattedtext>",
+                            "<mat_formattedtext type=\"HTML\">Correct</mat_formattedtext>",
                             "</mat_extension>",
                             "</material>",
                             "</flow_mat>",
@@ -856,8 +855,7 @@ namespace Blackboard_Test_Creator
                             "<flow_mat class=\"FORMATTED_TEXT_BLOCK\">",
                             "<material>",
                             "<mat_extension>",
-                            "<mat_formattedtext type=\"HTML\">",
-                            "&lt; p&gt;Incorrect.&lt;/p&gt;</mat_formattedtext>",
+                            "<mat_formattedtext type=\"HTML\">Incorrect</mat_formattedtext>",
                             "</mat_extension>",
                             "</material>",
                             "</flow_mat>",

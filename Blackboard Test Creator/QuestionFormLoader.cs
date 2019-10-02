@@ -184,8 +184,15 @@ namespace Blackboard_Test_Creator
                         {
                             NewQuestion.QuestionCorrectFeedback = new List<OpenXmlElement>();
                             var sdtparent = part.Parent.Parent;
-                            NewQuestion.QuestionCorrectFeedback.Add(sdtparent);
-                            /*
+                            if (sdtparent.InnerText.Contains("(Optional"))
+                            {
+                                ;
+                            }
+                            else
+                            {
+                                NewQuestion.QuestionCorrectFeedback.Add(sdtparent);
+                            }
+                                /*
                             if (sdtparent.Descendants<SdtContentRun>().Any())
                             {
                                 foreach (SdtContentRun paragraph in sdtparent.Descendants<SdtContentRun>().ToList())
@@ -209,7 +216,14 @@ namespace Blackboard_Test_Creator
                         {
                             NewQuestion.QuestionIncorrectFeedback = new List<OpenXmlElement>();
                             var sdtparent = part.Parent.Parent;
-                            NewQuestion.QuestionIncorrectFeedback.Add(sdtparent);
+                            if (sdtparent.InnerText.Contains("(Optional"))
+                            {
+                                ;
+                            }
+                            else
+                            {
+                                NewQuestion.QuestionIncorrectFeedback.Add(sdtparent);
+                            }
                             /*
                             if (sdtparent.Descendants<SdtContentRun>().Any())
                             {
