@@ -796,7 +796,7 @@ namespace Blackboard_Test_Creator
                     };
                     foreach (string line in itemFeedbackpt1)
                         res00001.WriteLine(line);
-                    foreach(Paragraph paragraph in question.QuestionCorrectFeedback)
+                    foreach(OpenXmlElement paragraph in question.QuestionCorrectFeedback)
                     {
                         res00001.WriteLine("&lt;p&gt;" + paragraph.InnerText + "&lt;/p&gt;");
                     }
@@ -817,7 +817,7 @@ namespace Blackboard_Test_Creator
                     };
                     foreach (string line in itemFeedbackpt2)
                         res00001.WriteLine(line);
-                    foreach (Paragraph paragraph in question.QuestionIncorrectFeedback)
+                    foreach (OpenXmlElement paragraph in question.QuestionIncorrectFeedback)
                     {
                         res00001.WriteLine("&lt;p&gt;" + paragraph.InnerText + "&lt;/p&gt;");
                     }
