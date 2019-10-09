@@ -363,11 +363,17 @@ namespace Blackboard_Test_Creator
                     };
                     foreach (string line in res0001itemmetadata)
                         res00001.WriteLine(line);
+                    int o = 0;
                     foreach (Paragraph paragraph in question.QuestionTextElements)
                     {
+                        string questionText = string.Empty;
+                        foreach(String line in question.ListOfConstructedQuestionParagraphs[o])
+                        {
+                            questionText = questionText + line;
+                        }
                         if ((paragraph.InnerXml.Contains("Drawing") || paragraph.InnerXml.Contains("object")) && !string.IsNullOrEmpty(paragraph.InnerText))
                         {
-                            res00001.WriteLine(paragraph.InnerText + "&lt;p&gt;&lt;img style=&quot;border: 0px solid rgb(0, 0, 0);&quot; alt=&quot;image00" + imagenumber + "&quot; title=&quot;image00" + imagenumber + "&quot; src=&quot;@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1&quot; /&gt; &lt;/p&gt;");
+                            res00001.WriteLine(questionText + "&lt;p&gt;&lt;img style=&quot;border: 0px solid rgb(0, 0, 0);&quot; alt=&quot;image00" + imagenumber + "&quot; title=&quot;image00" + imagenumber + "&quot; src=&quot;@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1&quot; /&gt; &lt;/p&gt;");
                             imagenumber += 1;
                         }
                         else if ((paragraph.InnerXml.Contains("Drawing") || paragraph.InnerXml.Contains("object")) && string.IsNullOrEmpty(paragraph.InnerText))
@@ -377,8 +383,9 @@ namespace Blackboard_Test_Creator
                         }
                         else
                         {
-                            res00001.WriteLine("&lt;p&gt;" + paragraph.InnerText + "&lt;/p&gt;");
+                            res00001.WriteLine("&lt;p&gt;" + questionText + "&lt;/p&gt;");
                         }
+                        o += 1;
                     }
                     string[] endQuestionTextBlock =
                     {

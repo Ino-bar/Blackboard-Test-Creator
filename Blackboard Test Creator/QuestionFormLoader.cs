@@ -40,6 +40,8 @@ namespace Blackboard_Test_Creator
         public Dictionary<Text, int> Difficulty { get; set; }
         public List<OpenXmlElement> QuestionCorrectFeedback { get; set; }
         public List<OpenXmlElement> QuestionIncorrectFeedback { get; set; }
+        public List<string> ConstructedQuestionParagraphs { get; set; }
+        public List<List<string>> ListOfConstructedQuestionParagraphs { get; set; }
     }
     class QuestionFormLoader
     {
@@ -253,11 +255,54 @@ namespace Blackboard_Test_Creator
                     else
                     {
                         Paragraph para = new Paragraph();
+                        foreach (Run lines in NewQuestion.QuestionItem.Descendants<Run>().ToList())
+                        {
+                            Run run = para.AppendChild(new Run());
+                            if (lines.Descendants<Italic>().Any())
+                            {
+                                Italic italic = new Italic();
+                                run.AppendChild(italic);
+                            }
+                            if (lines.Descendants<Bold>().Any())
+                            {
+                                Bold bold = new Bold();
+                                run.AppendChild(bold);
+                            }
+                            Text text = new Text();
+                            text.Text = lines.InnerText;
+                            run.AppendChild(text);
+                        }
+                        NewQuestion.QuestionTextElements.Add(para);
+                        /*
+                        Paragraph para = new Paragraph();
                         Run run = para.AppendChild(new Run());
                         Text text = new Text();
                         text.Text = NewQuestion.QuestionItem.Descendants<Text>().First().InnerText;
                         run.AppendChild(text);
                         NewQuestion.QuestionTextElements.Add(para);
+                        */                
+                    }
+                    NewQuestion.ListOfConstructedQuestionParagraphs = new List<List<string>>();
+                    foreach (Paragraph paragraph in NewQuestion.QuestionTextElements)
+                    {
+                        NewQuestion.ConstructedQuestionParagraphs = new List<string>();
+                        List<Run> runs = new List<Run>();
+                        runs = paragraph.Descendants<Run>().ToList();
+                        string runText = string.Empty;
+                        foreach (Run run in paragraph.Descendants<Run>().ToList())
+                        {
+                            runText = run.InnerText;
+                            if(run.Descendants<Italic>().Any())
+                            {
+                                runText = "&lt;i&gt;" + runText + "&lt;/i&gt;";
+                            }
+                            if (run.Descendants<Bold>().Any())
+                            {
+                                runText = "&lt;b&gt;" + runText + "&lt;/b&gt;";
+                            }
+                            NewQuestion.ConstructedQuestionParagraphs.Add(runText);
+                        }
+                        NewQuestion.ListOfConstructedQuestionParagraphs.Add(NewQuestion.ConstructedQuestionParagraphs);
                     }
                     NewQuestion.QuestionImages = new Dictionary<string, int>();
                     if(NewQuestion.QuestionItem.Descendants<Drawing>().Any())
