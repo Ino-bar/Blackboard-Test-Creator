@@ -42,6 +42,9 @@ namespace Blackboard_Test_Creator
         public List<OpenXmlElement> QuestionIncorrectFeedback { get; set; }
         public List<string> ConstructedQuestionParagraphs { get; set; }
         public List<List<string>> ListOfConstructedQuestionParagraphs { get; set; }
+        public List<string> ConstructedAnswerParagraph { get; set; }
+        public List<List<string>> ListOfConstructedAnswerParagraphs { get; set; }
+        public List<List<List<string>>> ListOfListOfConstructedAnswerParagraphs { get; set; }
     }
     class QuestionFormLoader
     {
@@ -194,25 +197,6 @@ namespace Blackboard_Test_Creator
                             {
                                 NewQuestion.QuestionCorrectFeedback.Add(sdtparent);
                             }
-                                /*
-                            if (sdtparent.Descendants<SdtContentRun>().Any())
-                            {
-                                foreach (SdtContentRun paragraph in sdtparent.Descendants<SdtContentRun>().ToList())
-                                {
-                                    NewQuestion.QuestionCorrectFeedback.Add(paragraph);
-                                }
-                            }
-                            
-                            else
-                            {
-                                Paragraph para = new Paragraph();
-                                Run run = para.AppendChild(new Run());
-                                Text text = new Text();
-                                text.Text = sdtparent.Descendants<Text>().First().InnerText;
-                                run.AppendChild(text);
-                                NewQuestion.QuestionCorrectFeedback.Add(para);
-                            }
-                            */
                         }
                         else if (part.OuterXml.Contains("question feedback incorrect"))
                         {
@@ -226,27 +210,9 @@ namespace Blackboard_Test_Creator
                             {
                                 NewQuestion.QuestionIncorrectFeedback.Add(sdtparent);
                             }
-                            /*
-                            if (sdtparent.Descendants<SdtContentRun>().Any())
-                            {
-                                foreach (SdtContentRun paragraph in sdtparent.Descendants<SdtContentRun>().ToList())
-                                {
-                                    NewQuestion.QuestionIncorrectFeedback.Add(paragraph);
-                                }
-                            }
-                            
-                            else
-                            {
-                                Paragraph para = new Paragraph();
-                                Run run = para.AppendChild(new Run());
-                                Text text = new Text();
-                                text.Text = sdtparent.Descendants<Text>().First().InnerText;
-                                run.AppendChild(text);
-                                NewQuestion.QuestionIncorrectFeedback.Add(para);
-                            }
-                            */
                         }
                     }
+                    #region question part
                     NewQuestion.QuestionTextElements = new List<Paragraph>();
                     if (NewQuestion.QuestionItem.Descendants<Paragraph>().Any())
                     {
@@ -272,15 +238,7 @@ namespace Blackboard_Test_Creator
                             text.Text = lines.InnerText;
                             run.AppendChild(text);
                         }
-                        NewQuestion.QuestionTextElements.Add(para);
-                        /*
-                        Paragraph para = new Paragraph();
-                        Run run = para.AppendChild(new Run());
-                        Text text = new Text();
-                        text.Text = NewQuestion.QuestionItem.Descendants<Text>().First().InnerText;
-                        run.AppendChild(text);
-                        NewQuestion.QuestionTextElements.Add(para);
-                        */                
+                        NewQuestion.QuestionTextElements.Add(para);          
                     }
                     NewQuestion.ListOfConstructedQuestionParagraphs = new List<List<string>>();
                     foreach (Paragraph paragraph in NewQuestion.QuestionTextElements)
@@ -299,6 +257,10 @@ namespace Blackboard_Test_Creator
                             if (run.Descendants<Bold>().Any())
                             {
                                 runText = "&lt;b&gt;" + runText + "&lt;/b&gt;";
+                            }
+                            if (run.Descendants<Underline>().Any())
+                            {
+                                runText = "&lt;u&gt;" + runText + "&lt;/u&gt;";
                             }
                             NewQuestion.ConstructedQuestionParagraphs.Add(runText);
                         }
@@ -321,6 +283,8 @@ namespace Blackboard_Test_Creator
                             imageNumber += 1;
                         }
                     }
+                    #endregion
+                    #region answer part
                     NewQuestion.AnswerParts = new List<OpenXmlElement>();
                     if(NewQuestion.QuestionType.InnerText == "True or False Question")
                     {
@@ -336,12 +300,40 @@ namespace Blackboard_Test_Creator
                     }
                     NewQuestion.AnswerImages = new Dictionary<string, int>();
                     NewQuestion.ListOfIndividualAnswerParagraphLists = new List<List<Paragraph>>();
+                    NewQuestion.ListOfListOfConstructedAnswerParagraphs = new List<List<List<string>>>();
                     foreach(OpenXmlElement answer in NewQuestion.AnswerParts)
                     {
+                        NewQuestion.ListOfConstructedAnswerParagraphs = new List<List<string>>();
                         NewQuestion.IndividualAnswerParagraphs = new List<Paragraph>();
                         NewQuestion.IndividualAnswerParagraphs = answer.Descendants<Paragraph>().AsParallel().ToList();
                         NewQuestion.ListOfIndividualAnswerParagraphLists.Add(NewQuestion.IndividualAnswerParagraphs);
-                        if(answer.Descendants<Drawing>().Any())
+                        foreach(Paragraph paragraph in NewQuestion.IndividualAnswerParagraphs)
+                        {
+                            NewQuestion.ConstructedAnswerParagraph = new List<string>();
+                            List<Run> runs = new List<Run>();
+                            runs = paragraph.Descendants<Run>().ToList();
+                            string runText = string.Empty;
+                            foreach(Run run in runs)
+                            {
+                                runText = run.InnerText;
+                                if (run.Descendants<Italic>().Any())
+                                {
+                                    runText = "&lt;i&gt;" + runText + "&lt;/i&gt;";
+                                }
+                                if (run.Descendants<Bold>().Any())
+                                {
+                                    runText = "&lt;b&gt;" + runText + "&lt;/b&gt;";
+                                }
+                                if (run.Descendants<Underline>().Any())
+                                {
+                                    runText = "&lt;u&gt;" + runText + "&lt;/u&gt;";
+                                }
+                                NewQuestion.ConstructedAnswerParagraph.Add(runText);
+                            }
+                            NewQuestion.ListOfConstructedAnswerParagraphs.Add(NewQuestion.ConstructedAnswerParagraph);
+                        }
+                        NewQuestion.ListOfListOfConstructedAnswerParagraphs.Add(NewQuestion.ListOfConstructedAnswerParagraphs);
+                        if (answer.Descendants<Drawing>().Any())
                         {
                             foreach(Drawing drawing in answer.Descendants<Drawing>().AsParallel().ToList())
                             {
@@ -362,6 +354,7 @@ namespace Blackboard_Test_Creator
                             NewQuestion.ListOfIndividualAnswerParagraphLists.Remove(NewQuestion.IndividualAnswerParagraphs);
                         }
                     }
+                    #endregion
                     NewQuestion.CorrectAnswers = new List<OpenXmlElement>();
                     foreach (List<Paragraph> list in NewQuestion.ListOfIndividualAnswerParagraphLists)
                     {

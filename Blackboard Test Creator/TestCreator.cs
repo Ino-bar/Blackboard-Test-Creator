@@ -456,6 +456,7 @@ namespace Blackboard_Test_Creator
                     }
                     if (questionType == "Multiple Choice" || questionType == "Multiple Answer")
                     {
+                        int p = 0;
                         foreach (List<Paragraph> list in question.ListOfIndividualAnswerParagraphLists)
                         {
                             string[] answerStart =
@@ -469,23 +470,33 @@ namespace Blackboard_Test_Creator
                             };
                             foreach (string line in answerStart)
                                 res00001.WriteLine(line);
-                            foreach (OpenXmlElement answer in list)
-                            {
-                                if ((answer.InnerXml.Contains("Drawing") || answer.InnerXml.Contains("object")) && !string.IsNullOrEmpty(answer.InnerText))
+                            //foreach (OpenXmlElement answer in list)
+                            //{
+                                int q = 0;
+                                foreach (List<string> plist in question.ListOfListOfConstructedAnswerParagraphs[p])
                                 {
-                                    res00001.WriteLine(answer.InnerText + "&lt;p&gt;&lt;img style=&quot;border: 0px solid rgb(0, 0, 0);&quot; alt=&quot;image00" + imagenumber + "&quot; title=&quot;image00" + imagenumber + "&quot; src=&quot;@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1&quot;  /&gt; &lt;/p&gt;");
-                                    imagenumber += 1;
+                                    string answerText = string.Empty;
+                                    foreach(String line in plist)
+                                    {
+                                        answerText = answerText + line;
+                                    }
+                                    if ((list[q].InnerXml.Contains("Drawing") || list[q].InnerXml.Contains("object")) && !string.IsNullOrEmpty(list[q].InnerText))
+                                    {
+                                        res00001.WriteLine(answerText + "&lt;p&gt;&lt;img style=&quot;border: 0px solid rgb(0, 0, 0);&quot; alt=&quot;image00" + imagenumber + "&quot; title=&quot;image00" + imagenumber + "&quot; src=&quot;@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1&quot;  /&gt; &lt;/p&gt;");
+                                        imagenumber += 1;
+                                    }
+                                    else if ((list[q].InnerXml.Contains("Drawing") || list[q].InnerXml.Contains("object")) && string.IsNullOrEmpty(list[q].InnerText))
+                                    {
+                                        res00001.WriteLine("&lt;p&gt;&lt;img style=&quot;border: 0px solid rgb(0, 0, 0);&quot; alt=&quot;image00" + imagenumber + "&quot; title=&quot;image00" + imagenumber + "&quot; src=&quot;@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1&quot;  /&gt;&lt;/p&gt;");
+                                        imagenumber += 1;
+                                    }
+                                    else
+                                    {
+                                        res00001.WriteLine("&lt;p&gt;" + answerText + "&lt;/p&gt;");
+                                    }
+                                    q += 1;
                                 }
-                                else if ((answer.InnerXml.Contains("Drawing") || answer.InnerXml.Contains("object")) && string.IsNullOrEmpty(answer.InnerText))
-                                {
-                                    res00001.WriteLine("&lt;p&gt;&lt;img style=&quot;border: 0px solid rgb(0, 0, 0);&quot; alt=&quot;image00" + imagenumber + "&quot; title=&quot;image00" + imagenumber + "&quot; src=&quot;@X@EmbeddedFile.requestUrlStub@X@bbcswebdav/xid-000000" + imagenumber + "_1&quot;  /&gt;&lt;/p&gt;");
-                                    imagenumber += 1;
-                                }
-                                else
-                                {
-                                    res00001.WriteLine("&lt;p&gt;" + answer.InnerText + "&lt;/p&gt;");
-                                }
-                            }
+                            //}
                             string[] answerEnd =
                             {
                             "</mat_formattedtext>",
@@ -497,6 +508,7 @@ namespace Blackboard_Test_Creator
                             };
                             foreach (string line in answerEnd)
                                 res00001.WriteLine(line);
+                            p += 1;
                         }
                     }
                     if (questionType == "Essay" || questionType == "Short Response" || questionType == "Fill in the Blank")
