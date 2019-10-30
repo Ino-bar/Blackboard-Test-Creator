@@ -9,6 +9,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
+using Microsoft.Office.Tools.Word;
+using Office = Microsoft.Office.Core;
+using Word = Microsoft.Office.Interop.Word;
+using DocumentFormat.OpenXml;
+using System.IO;
 
 namespace Blackboard_Test_Creator
 {
@@ -38,7 +44,27 @@ namespace Blackboard_Test_Creator
                 if (getTestForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     TestFormFilePath = getTestForm.FileName;
-                    chosenFormFilenameLabel.Text = getTestForm.FileName;
+                    bool Locked = false;
+                    try
+                    {
+                        System.IO.FileStream fs =
+                            File.Open(TestFormFilePath, FileMode.Open,
+                            FileAccess.ReadWrite, FileShare.None);
+                        fs.Close();
+                    }
+                    catch (IOException ex)
+                    {
+                        Locked = true;
+                    }
+                    if (Locked == true)
+                    {
+                        MessageBox.Show("The file is currently open in another application. Please close the file and then run the program");
+                        return;
+                    }
+                    else
+                    {
+                        chosenFormFilenameLabel.Text = getTestForm.FileName;
+                    }
                 }
                 QuestionFormLoader questionFormLoader = new QuestionFormLoader();
                 questionFormLoader.FormLoader();

@@ -595,7 +595,7 @@ namespace Blackboard_Test_Creator
                             res00001.WriteLine("</conditionvar>");
                             if (Form1.AnswerNegativePointsEnabled == "true")
                             {
-                                if (list.Any(or => or.Descendants<Color>().Any()))
+                                if (list.Any(or => or.Descendants<Color>().Any()) || list.Any(or => or.Descendants<Highlight>().Any()))
                                 {
                                     res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">" + 100 / question.CorrectAnswers.Count() + "</setvar>");
                                 }
@@ -606,7 +606,7 @@ namespace Blackboard_Test_Creator
                             }
                             if (Form1.AnswerPartialCreditEnabled == "true")
                             {
-                                if (list.Any(or => or.Descendants<Color>().Any()))
+                                if (list.Any(or => or.Descendants<Color>().Any()) || list.Any(or => or.Descendants<Highlight>().Any()))
                                 {
                                     res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">" + 100 / question.CorrectAnswers.Count() + "</setvar>");
                                 }
@@ -617,7 +617,7 @@ namespace Blackboard_Test_Creator
                             }
                             if (Form1.AnswerNegativePointsEnabled == "true" && Form1.AnswerPartialCreditEnabled == "true")
                             {
-                                if (list.Any(or => or.Descendants<Color>().Any()))
+                                if (list.Any(or => or.Descendants<Color>().Any()) || list.Any(or => or.Descendants<Highlight>().Any()))
                                 {
                                     res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">" + 100 / question.CorrectAnswers.Count() + "</setvar>");
                                 }
@@ -652,7 +652,7 @@ namespace Blackboard_Test_Creator
                         {
                             foreach (OpenXmlElement answer in list)
                             {
-                                if (answer.Descendants<Color>().Any())
+                                if (answer.Descendants<Color>().Any() || answer.Descendants<Highlight>().Any())
                                 {
                                     correctAnswer = "answer_" + (question.ListOfIndividualAnswerParagraphLists.IndexOf(list) + 1);
                                 }
@@ -683,7 +683,7 @@ namespace Blackboard_Test_Creator
                             res00001.WriteLine("</conditionvar>");
                             if (Form1.AnswerNegativePointsEnabled == "true")
                             {
-                                if (list.Any(or => or.Descendants<Color>().Any()))
+                                if (list.Any(or => or.Descendants<Color>().Any()) || list.Any(or => or.Descendants<Highlight>().Any()))
                                 {
                                     res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">100</setvar>");
                                 }
@@ -694,7 +694,7 @@ namespace Blackboard_Test_Creator
                             }
                             else if (Form1.AnswerNegativePointsEnabled == "false")
                             {
-                                if (list.Any(or => or.Descendants<Color>().Any()))
+                                if (list.Any(or => or.Descendants<Color>().Any()) || list.Any(or => or.Descendants<Highlight>().Any()))
                                 {
                                     res00001.WriteLine("<setvar variablename=\"SCORE\" action=\"Set\">100</setvar>");
                                 }

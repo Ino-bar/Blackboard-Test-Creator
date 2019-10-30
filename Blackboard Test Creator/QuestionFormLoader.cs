@@ -125,7 +125,7 @@ namespace Blackboard_Test_Creator
                     NewQuestion.QuestionNumber = i + 1;
                     NewQuestion.Topics = new Dictionary<Text, int>();
                     NewQuestion.Difficulty = new Dictionary<Text, int>();
-                    
+                
                     foreach (Tag part in containerpart.Descendants<Tag>())
                     {
                         if (part.OuterXml.Contains("Type"))
@@ -364,10 +364,15 @@ namespace Blackboard_Test_Creator
                             {
                                 NewQuestion.CorrectAnswers.Add(answer);
                             }
+                            else if(answer.Descendants<Highlight>().Any())
+                            {
+                                NewQuestion.CorrectAnswers.Add(answer);
+                            }
                         }
                     }
-                    i++;
+                   i++;
                 }
+                
             }
         }
     }
