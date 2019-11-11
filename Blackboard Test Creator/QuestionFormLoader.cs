@@ -63,6 +63,7 @@ namespace Blackboard_Test_Creator
         public static List<Text> QuestionTopics = new List<Text>();
         public static List<Text> QuestionDifficulty = new List<Text>();
         public static string matchType = string.Empty;
+        public static VerticalTextAlignment verticalTextAlignment;
         int imageNumber = 1;
         public void FormLoader()
         {
@@ -182,8 +183,11 @@ namespace Blackboard_Test_Creator
                         }
                         else if (part.OuterXml.Contains("distractor"))
                         {
+                            if(part.Parent.Parent.Descendants<SdtBlock>().Any())
+                            {
                             NewQuestion.AnswerParts = new List<OpenXmlElement>();
                             NewQuestion.AnswerParts = part.Parent.Parent.Descendants<OpenXmlElement>().Last(or => or.Descendants<SdtBlock>().Any()).ToList();
+                            }
                         }
                         else if (part.OuterXml.Contains("question feedback correct"))
                         {
@@ -234,6 +238,20 @@ namespace Blackboard_Test_Creator
                                 Bold bold = new Bold();
                                 run.AppendChild(bold);
                             }
+                            if (lines.Descendants<VerticalTextAlignment>().Any())
+                            {
+                                if (lines.Descendants<VerticalTextAlignment>().First().OuterXml.Contains("superscript"))
+                                {
+                                    VerticalTextAlignment vertalign = lines.Descendants<VerticalTextAlignment>().First();
+                                    verticalTextAlignment = new VerticalTextAlignment() { Val = VerticalPositionValues.Superscript };
+                                }
+                                else if (lines.Descendants<VerticalTextAlignment>().First().OuterXml.Contains("subscript"))
+                                {
+                                    VerticalTextAlignment vertalign = lines.Descendants<VerticalTextAlignment>().First();
+                                    verticalTextAlignment = new VerticalTextAlignment() { Val = VerticalPositionValues.Subscript };
+                                }
+                                run.AppendChild(verticalTextAlignment);
+                            }
                             Text text = new Text();
                             text.Text = lines.InnerText;
                             run.AppendChild(text);
@@ -261,6 +279,17 @@ namespace Blackboard_Test_Creator
                             if (run.Descendants<Underline>().Any())
                             {
                                 runText = "&lt;u&gt;" + runText + "&lt;/u&gt;";
+                            }
+                            if (run.Descendants<VerticalTextAlignment>().Any())
+                            {
+                                if (run.Descendants<VerticalTextAlignment>().First().OuterXml.Contains("superscript"))
+                                {
+                                    runText = "&lt;sup&gt;" + runText + "&lt;/sup&gt;";
+                                }
+                                else if (run.Descendants<VerticalTextAlignment>().First().OuterXml.Contains("subscript"))
+                                {
+                                    runText = "&lt;sub&gt;" + runText + "&lt;/sub&gt;";
+                                }
                             }
                             NewQuestion.ConstructedQuestionParagraphs.Add(runText);
                         }
@@ -327,6 +356,17 @@ namespace Blackboard_Test_Creator
                                 if (run.Descendants<Underline>().Any())
                                 {
                                     runText = "&lt;u&gt;" + runText + "&lt;/u&gt;";
+                                }
+                                if (run.Descendants<VerticalTextAlignment>().Any())
+                                {
+                                    if (run.Descendants<VerticalTextAlignment>().First().OuterXml.Contains("superscript"))
+                                    {
+                                        runText = "&lt;sup&gt;" + runText + "&lt;/sup&gt;";
+                                    }
+                                    else if (run.Descendants<VerticalTextAlignment>().First().OuterXml.Contains("subscript"))
+                                    {
+                                        runText = "&lt;sub&gt;" + runText + "&lt;/sub&gt;";
+                                    }
                                 }
                                 NewQuestion.ConstructedAnswerParagraph.Add(runText);
                             }
