@@ -1,0 +1,16 @@
+Instructions for using the Blackboard Test Maker
+
+The Blackboard Test Maker program is quite straightforward to use:
+
+1. Open the test form you received from the academic and delete the instruction text, question type drop down, and new question button from the top of the test.
+2. In the developer tab in Word, turn on Design Mode and check that there are no missing sections in the test or text that is outside of a section. If you do not have the developer tab enabled, go to Word Options > customise ribbon, then in the Choose Commands from drop down select Main Tabs, and in the list select Developer and press the Add button, then in the Customize the Ribbon area ensure that Developer is ticked.
+3. If you spot text that is outide a section or a required section is missing, copy a section from a different question and paste it in via right-click, then add the text into the section.
+4. Save the test form to a suitable location as a docx file (if it isn't already). If the document requires a password, you will need to either remove the password or copy the content into a new blank document and save that.
+5. Open the test maker program (you may be required to run it as an administrator).
+6. From the choose file button at the top, in the file navigation window that opens find and select the test form.
+7. Select any options for the test indicated to you by the academic, name the test, choose the save location for the test upload, then click start (the start button will be greyed out until you have completed the above steps.
+8. Once the program is complete, go to the relevant Blackboard course, navigate to tests in the course tools, then click on Import Test and select the zip file from the location you chose earlier, and finally click on Submit. Note: if you have a sandbox course you might upload the test there first to check it for errors before uploading to the intended course.
+9. Once the test has uploaded check it against the Word document to ensure that all questions have uploaded successfully, the correct answers are selected, and any feedback or topic information is also present and correct.
+
+If you encounter any errors either creating a test or with an uploaded test consult James Dunbar.
+
