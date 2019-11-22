@@ -12,3 +12,17 @@ D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard
 D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard Test Creator.csproj.CopyComplete
 D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard Test Creator.exe
 D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard Test Creator.pdb
+C:\Users\jdunbar\Github\Blackboard-Test-Creator\Blackboard Test Creator\bin\Release\Blackboard Test Creator.exe.config
+C:\Users\jdunbar\Github\Blackboard-Test-Creator\Blackboard Test Creator\bin\Release\Blackboard Test Creator.exe
+C:\Users\jdunbar\Github\Blackboard-Test-Creator\Blackboard Test Creator\bin\Release\Blackboard Test Creator.pdb
+C:\Users\jdunbar\Github\Blackboard-Test-Creator\Blackboard Test Creator\bin\Release\DocumentFormat.OpenXml.dll
+C:\Users\jdunbar\Github\Blackboard-Test-Creator\Blackboard Test Creator\bin\Release\WindowsBase.dll
+C:\Users\jdunbar\Github\Blackboard-Test-Creator\Blackboard Test Creator\bin\Release\DocumentFormat.OpenXml.xml
+C:\Users\jdunbar\Github\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard Test Creator.csprojAssemblyReference.cache
+C:\Users\jdunbar\Github\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard_Test_Creator.Form1.resources
+C:\Users\jdunbar\Github\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard_Test_Creator.Properties.Resources.resources
+C:\Users\jdunbar\Github\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard Test Creator.csproj.GenerateResource.cache
+C:\Users\jdunbar\Github\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard Test Creator.csproj.CoreCompileInputs.cache
+C:\Users\jdunbar\Github\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard Test Creator.csproj.CopyComplete
+C:\Users\jdunbar\Github\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard Test Creator.exe
+C:\Users\jdunbar\Github\Blackboard-Test-Creator\Blackboard Test Creator\obj\Release\Blackboard Test Creator.pdb
