@@ -26,3 +26,16 @@ D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Debug\DocumentForm
 D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Debug\WindowsBase.dll
 D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Debug\DocumentFormat.OpenXml.xml
 D:\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debug\Blackboard Test Creator.csproj.CopyComplete
+C:\Users\James\Documents\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Debug\Blackboard Test Creator.exe.config
+C:\Users\James\Documents\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Debug\Blackboard Test Creator.exe
+C:\Users\James\Documents\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Debug\Blackboard Test Creator.pdb
+C:\Users\James\Documents\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Debug\DocumentFormat.OpenXml.dll
+C:\Users\James\Documents\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Debug\WindowsBase.dll
+C:\Users\James\Documents\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\bin\Debug\DocumentFormat.OpenXml.xml
+C:\Users\James\Documents\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debug\Blackboard Test Creator.csprojAssemblyReference.cache
+C:\Users\James\Documents\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debug\Blackboard_Test_Creator.Form1.resources
+C:\Users\James\Documents\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debug\Blackboard_Test_Creator.Properties.Resources.resources
+C:\Users\James\Documents\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debug\Blackboard Test Creator.csproj.GenerateResource.cache
+C:\Users\James\Documents\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debug\Blackboard Test Creator.csproj.CopyComplete
+C:\Users\James\Documents\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debug\Blackboard Test Creator.exe
+C:\Users\James\Documents\GitHub\Blackboard-Test-Creator\Blackboard Test Creator\obj\Debug\Blackboard Test Creator.pdb

@@ -317,7 +317,7 @@ namespace Blackboard_Test_Creator
                     NewQuestion.AnswerParts = new List<OpenXmlElement>();
                     if(NewQuestion.QuestionType.InnerText == "True or False Question")
                     {
-                        NewQuestion.AnswerParts.Add(answerPart[0]);
+                        NewQuestion.AnswerParts.Add(answerPart[i]);
                     }
                     else if(NewQuestion.QuestionType.InnerText == "Essay Question" || NewQuestion.QuestionType.InnerText == "Short Answer Question")
                     {
